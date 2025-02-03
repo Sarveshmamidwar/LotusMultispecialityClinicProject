@@ -1,0 +1,186 @@
+.hidden {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.animate-on-load {
+    animation: fadeIn 3s ease-in-out forwards; /* Ensures the div stays in its final state */
+}
+.scroll-animation {
+  opacity: 0; /* Initially hidden */
+  transform: translateY(50px); /* Positioned below its original location */
+  transition: all 3s ease-in-out;
+}
+
+.scroll-animation.show {
+  opacity: 1; /* Fully visible */
+  transform: translateY(0); /* Slide to its original position */
+}
+.carousel-image {
+  object-fit: cover !important; /* Ensures the image covers the container */
+  height: 100% !important;      /* Matches the height of the parent container */
+  width: 100% !important;       /* Matches the width of the parent container */
+}
+.ouserservice {
+  height: 200px;
+  opacity: 0; /* Initially hidden */
+  transform: translateY(50px);
+  transition: all 3s ease-in-out; /* Smooth transition */
+}
+
+.ouserservice.show {
+  opacity: 1; /* Fully visible when in view */
+  transform: translateY(0);
+}
+.ouserspecialities {
+  height: 200px;
+  opacity: 0; /* Initially hidden */
+  transform: translateY(50px);
+  transition: all 3s ease-in-out; /* Smooth transition */
+}
+
+.ouserspecialities.show {
+  opacity: 1; /* Fully visible when in view */
+  transform: translateY(0);
+}
+.icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1.5px solid #FAFAFA;
+    height: 30%;
+    width: 25%;
+    text-align: center;
+    opacity: 0; /* Initially hidden */
+   transition: opacity 2s ease-in-out, background-color 0.3s ease; /* Smooth transition */
+    transform: translateY(20px); 
+}
+.icon:hover {
+    background-color: #00d9d9; /* Change background to light gray on hover */
+    cursor: pointer; /* Change cursor to pointer */
+}
+.icon.visible {
+    opacity: 1; /* Fully visible when in view */
+    transform: translateY(0); /* Reset to normal position */
+}
+.icon a, .icon span {
+    margin-top: 5px; /* Add spacing between the icon and the text */
+    font-size: 1rem; /* Adjust text size if necessary */
+    color: #333; /* Text color */
+}
+
+/* our service  */
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-20px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+    70% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Apply the bounce animation when the class 'bouncing' is added */
+.bounce-image img {
+    opacity: 0;
+    transform: translateY(0); /* Start from the normal position */
+    transition: opacity 1s ease-in-out;
+}
+
+.bounce-image.bouncing img {
+    opacity: 1;
+    animation: bounce 2s ease; /* Trigger the bounce animation */
+}
+
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slide-effect {
+	height: 130px;width: 200px;border: 1px solid black;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.slide-in {
+    animation: slideUp 0.5s ease forwards;
+}
+@keyframes slowBlink {
+    0% { opacity: 0; }
+    30% { opacity: 0.3; }
+    60% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+.blink-effect {
+    opacity: 0; /* Initially hidden */
+}
+
+.blink-in {
+    animation: slowBlink 3s ease-in-out forwards;
+}
+
+.contactbox{
+	height: 200px;
+	width: 200px;
+	display:flex;justify-content: center;align-items: center;border-radius: 5px; 
+	background-color: #C0EC83
+}
+.contactmainbody{
+	display: flex;justify-content: space-around;align-items: center;
+}
+
+/* Initially hidden and moved down */
+.ourdoctor {
+  opacity: 0;
+  transform: translateY(50px); /* Move down by 50px */
+  transition: all 0.8s ease-in-out;
+}
+
+/* When the element comes into view, fade in and move up */
+.ourdoctor.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+ .emergency-contact label, 
+    .emergency-contact a {
+        display: block;
+    }
+
+
+
