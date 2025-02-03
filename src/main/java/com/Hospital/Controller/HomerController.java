@@ -18,4 +18,10 @@ public class HomerController {
 		
 		return "Home/about";
 	}
+	
+	@GetMapping("/ouserService")
+	public String ouerService() {
+		
+		return "Home/ouserservice";
+	}
 }
