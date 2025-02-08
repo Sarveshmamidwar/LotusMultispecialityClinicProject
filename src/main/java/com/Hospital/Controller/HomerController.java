@@ -22,6 +22,25 @@ public class HomerController {
 	@GetMapping("/ouserService")
 	public String ouerService() {
 		
-		return "Home/ouserservice";
+		return "Home/services";
+	}
+	
+	
+	@GetMapping("/ouserDoctors")
+	public String ouerSDoctors() {
+		
+		return "Home/ourDoctors";
+	}
+	
+	@GetMapping("/contacts")
+	public String contact() {
+		
+		return "Home/contact";
+	}
+	
+	@GetMapping("/appointment")
+	public String appointment() {
+		
+		return "Home/appointment";
 	}
 }
