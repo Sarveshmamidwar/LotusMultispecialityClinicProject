@@ -182,5 +182,14 @@
         display: block;
     }
 
+.navtabs{
+	color: black;
+	text-decoration: none !important;
+}
+#navbarNavAltMarkup{
+	text-decoration: none;
+}
 
-
+.logo{
+	mix-blend-mode: multiply; 
+}

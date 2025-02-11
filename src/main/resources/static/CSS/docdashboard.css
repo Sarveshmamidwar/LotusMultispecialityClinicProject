@@ -1,0 +1,23 @@
+.aptab{
+	display: flex;
+	justify-content: space-around;
+}
+
+.appointType{
+	
+	width: 280px;
+	border: 1px solid black; 
+	border-radius:5px;
+	margin-right: 1%
+}
+.count{
+	font-size: 2rem;
+	font-weight: bold;
+}
+.navtabs{
+	color: black;
+}
+a{
+	text-decoration: none !important;
+	color: black;
+}
