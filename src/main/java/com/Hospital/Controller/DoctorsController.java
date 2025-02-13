@@ -21,7 +21,16 @@ public class DoctorsController {
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
     	
+    	int findtotalcount = appointmentrepository.findtotalcount();
     	
+    	int todayAppointmentsCount = appointmentrepository.findTodayAppointmentsCount();
+    	int cancleAppointmentsCount = appointmentrepository.findCancleAppointmentsCount();
+    	int tomorrowAppointmentsCount = appointmentrepository.findTomorrowAppointmentsCount();
+    	
+    	model.addAttribute("totalCount",findtotalcount);
+    	model.addAttribute("todayAppointmentsCount",todayAppointmentsCount);
+    	model.addAttribute("cancleAppointmentsCount",cancleAppointmentsCount);
+    	model.addAttribute("tomorrowAppointmentsCount",tomorrowAppointmentsCount);
         return "Doctors/dashboard"; // Ensure the view name matches your Thymeleaf template location
     }
     
@@ -29,6 +38,10 @@ public class DoctorsController {
     public String totalAppointment(Model model ) {
     	
     	List<appointmentform> all = appointmentrepository.findAll();
+    	
+    	
+    	int count = all.size();
+    	
     	
     	model.addAttribute("all",all);
         return "Doctors/totalappointment"; // Ensure the view name matches your Thymeleaf template location
@@ -50,5 +63,14 @@ public class DoctorsController {
     	
     	model.addAttribute("cancleAppointments",cancleAppointments);
         return "Doctors/cancleAppointment"; // Ensure the view name matches your Thymeleaf template location
+    }
+    
+    @GetMapping("/tommorowAppointment")
+    public String tommorowAppointment(Model model ) {
+    	
+    	List<appointmentform> tommorowAppointments = appointmentrepository.findTomorrowAppointments();
+    	
+    	model.addAttribute("tommorowAppointments",tommorowAppointments);
+        return "Doctors/tommorowAppointment"; // Ensure the view name matches your Thymeleaf template location
     }
 }

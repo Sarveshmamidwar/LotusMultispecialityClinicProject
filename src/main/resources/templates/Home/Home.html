@@ -104,7 +104,7 @@
 	<!-- Fullscreen Wrapper -->
 	<div style="height: 100vh; width: 100%; position: relative; overflow: hidden;">
 	    <!-- Blurred background image -->
-	    <img th:src="@{/images/blurrbackground.jpg}" 
+	    <img th:src="@{/images/blurrbackground.jpg}" class="img-fluid"
 	         style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
 
 	    <!-- Foreground content -->
@@ -121,7 +121,7 @@
 		    </div>
 
 		    <!-- Doctor image -->
-		    <img th:src="@{/images/doctor.jpg}" style="width: 30%;">
+		    <img class="img-fluid" th:src="@{/images/doctor.jpg}" style="width: 30%;">
 		</div>
 
 	</div>
@@ -181,10 +181,10 @@
 			<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" style="height: 400px;">
 			  <div class="carousel-inner h-100 w-100">
 			    <div class="carousel-item active h-100 w-100">
-			      <img th:src="@{/images/sliderimg1.jpg}" class="d-block w-100 h-100 carousel-image" alt="...">
+			      <img th:src="@{/images/sliderimg1.jpg}" class="d-block  carousel-image img-fluid" alt="...">
 			    </div>
 			    <div class="carousel-item h-100 w-100">
-			      <img th:src="@{/images/sliderimg2.jpg}" class="d-block w-100 h-100 carousel-image" alt="...">
+			      <img th:src="@{/images/sliderimg2.jpg}" class="d-block carousel-image img-fluid" alt="...">
 			    </div>
 			   <!-- <div class="carousel-item">
 			      <img src="..." class="d-block w-100 h-100 carousel-image" alt="...">
@@ -242,10 +242,10 @@
 			    </div>
 				<div class="col p-3 pt-5 mr-5">
 				    <div class="bounce-image" style="height: 200px;width: 100%;">
-				        <img th:src="@{/images/checkup.jpg}" class="w-100 h-100" style="object-fit: cover;">
+				        <img th:src="@{/images/checkup.jpg}" class="img-fluid" style="object-fit: cover;">
 				    </div>
 				    <div class="bounce-image mt-2" style="height: 200px;width: 100%;">
-				        <img th:src="@{/images/doctorgroup.jpg}" class="w-100 h-100">
+				        <img th:src="@{/images/doctorgroup.jpg}" class="img-fluid">
 				    </div>
 				</div>
 
@@ -375,7 +375,7 @@
 			
 			<div class="d-flex justify-content-around " >
 				<div class="card " style="width: 18rem;">
-				  <img th:src="@{/images/maledoctor.jpg}" class="card-img-top" alt="..." style="height: 50%;">
+				  <img th:src="@{/images/maledoctor.jpg}" class="card-img-top img-fluid" alt="..." >
 				  <div class="card-body">
 				    <h5 class="card-title">Card title</h5>
 				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -383,7 +383,7 @@
 				  </div>
 				</div>
 				<div class="card " style="width: 18rem;">
-				  <img th:src="@{/images/femaldoctor.jpg}" class="card-img-top" alt="..." style="height: 50%;">
+				  <img th:src="@{/images/femaldoctor.jpg}" class="card-img-top img-fluid" alt="..." >
 				  <div class="card-body">
 				    <h5 class="card-title">Card title</h5>
 				    <p class="card-text p-0 m-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

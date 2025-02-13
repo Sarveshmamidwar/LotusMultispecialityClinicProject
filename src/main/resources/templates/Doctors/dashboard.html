@@ -125,7 +125,9 @@
 <div class="aptab">
 <div class="appointType p-2">
 <div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
-  <div class="col-sm-4 count">32</div>
+  <div class="col-sm-4 count">
+   <h1 th:text="${totalCount}"></h1>
+  </div>
   <div class="col-sm-8">
   <a>Totals  Appointment</a>
   <a th:href="@{/doctors/totalAppointment}" > <i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
@@ -134,7 +136,8 @@
 </div>
 <div class="appointType p-2">
 <div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
-  <div class="col-sm-4 count">2</div>
+  <div class="col-sm-4 count">
+  <h1 th:text="${cancleAppointmentsCount}"></h1></div>
   <div class="col-sm-8">
   <a>Cancle Appointment</a>
   <a th:href="@{/doctors/cancleAppointment}" ><i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
@@ -143,7 +146,8 @@
 </div>
 <div class="appointType p-2">
 <div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
-  <div class="col-sm-4 count">50</div>
+  <div class="col-sm-4 count">
+  <h1 th:text="${todayAppointmentsCount}"></h1></div>
   <div class="col-sm-8">
   <a>Todays Appointment</a>
   <a th:href="@{/doctors/todyasAppointment}" ><i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
@@ -152,10 +156,11 @@
 </div>
 <div class="appointType p-2">
 <div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
-  <div class="col-sm-4 count">10</div>
+  <div class="col-sm-4 count">
+  <h1 th:text="${tomorrowAppointmentsCount}"></h1></div>
   <div class="col-sm-8">
-  <a>Tommorow's Appointment</a>
-  <i class="fa-solid fa-arrow-right fa-lg ps-3"></i>
+  <a >Tommorow's Appointment</a>
+ <a th:href="@{/doctors/tommorowAppointment}"> <i class="fa-solid fa-arrow-right fa-lg ps-3"></i></a>
   </div>
 </div>
 </div>
