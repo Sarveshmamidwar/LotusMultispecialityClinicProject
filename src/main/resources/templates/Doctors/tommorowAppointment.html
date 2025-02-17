@@ -19,28 +19,6 @@
             height: 400px;
             width: 100%;
         }
-         
-
-    .dropdown {
-        position: absolute;
-        display: none;
-        background-color: white;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 5px;
-        z-index: 100;
-    }
-
-    .dropdown button {
-        display: block;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-    }
-
-    .dropdown button:hover {
-        background-color: #ddd;
-    }
     </style>
 </head>
 <body>
@@ -144,8 +122,8 @@
 
 <div class="card  p-3" >
 
-<table class="table  table-hover text-center">
-  <thead class="table-light ">
+<table class="table table-hover">
+  <thead>
     <tr>
       <th scope="col">id</th>
       <th scope="col"> Patient Name</th>
@@ -153,35 +131,16 @@
       <th scope="col">Time</th>
       <th scope="col">Doctor Name</th>
       <th scope="col">Gender</th>
-      <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
-    <tr th:each="c : ${todayAppointments}">
+    <tr th:each="c : ${tommorowAppointments}">
       <th th:text="${c.id}">1</th>
       <td th:text="${c.name}">Mark</td>
       <td th:text="${c.AppointmentDate}">Otto</td>
       <td th:text="${c.AppointmentTime}">@mdo</td>
       <td th:text="${c.doctor}">@mdo</td>
       <td th:text="${c.gender}">@mdo</td>
-     <td>
-    <div class="appointment-status-container">
-        <button class="btn btn-secondary dropdown-toggle" 
-        th:text="${c.AppointmentStatus}" 
-        th:classappend="${c.AppointmentStatus == 'Done' ? ' btn-success' : (c.AppointmentStatus == 'Cancel' ? ' btn-danger' : (c.AppointmentStatus == 'Pending' ? ' btn-warning' : ''))}" 
-        th:onclick="toggleDropdown([[${c.id}]], event)">Status</button>
-
-    </div>
-
-    <div class="dropdown-menu dropdown p-2" style="display:none;">
-        <button class="p-2 btn btn-warning" th:onclick="updateStatus('Pending', [[${c.id}]], event)">Pending</button>
-        <button class="mt-1 p-2 btn btn-danger cancelbtn" th:onclick="updateStatus('Cancel', [[${c.id}]], event)">Cancel</button>
-        <button class="mt-1 p-2 btn btn-success donebtn" th:onclick="updateStatus('Done', [[${c.id}]], event)">Done</button>
-    </div>
-</td>
-
-
-
     </tr>
     
   </tbody>
@@ -194,55 +153,8 @@
 
 </main>
 
-  <script>
-  function toggleDropdown(appointmentId, event) {
-	    let container = event.target.closest('.appointment-status-container');
-	    let dropdown = container.nextElementSibling; // Get the dropdown div that comes after the container
-	    
-	    // Toggle the visibility of the dropdown
-	    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-	    dropdown.setAttribute('data-appointment-id', appointmentId);
-	}
+  
 
-  function updateStatus(status, appointmentId, event) {
-	    const dropdown = event.target.closest('.dropdown-menu');
-	    const selectedAppointmentId = dropdown.getAttribute('data-appointment-id');
-	    
-	    // Ensure the appointment ID matches to avoid discrepancies
-	    if (parseInt(selectedAppointmentId) !== appointmentId) {
-	        console.error('Appointment ID mismatch!');
-	        return;
-	    }
-
-	    // Perform the AJAX request to update the status
-	    fetch('/doctors/update-status', {
-	        method: 'POST',
-	        headers: {
-	            'Content-Type': 'application/json'
-	        },
-	        body: JSON.stringify({ 
-	            status: status, 
-	            appointmentId: appointmentId 
-	        })
-	    })
-	    .then(response => response.json())
-	    .then(data => {
-	        console.log('Status updated:', data);
-	
-	        
-	    })
-	    .catch(error => console.error('Error updating status:', error));
-	}
-
-
-
-
-</script>
-
-<script type="text/javascript">
-
-
-</script>
 	
 	
 	</body>

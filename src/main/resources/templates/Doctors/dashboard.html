@@ -13,11 +13,53 @@
 <link rel="stylesheet" th:href="@{/CSS/docdashboard.css}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+<script src=
+"https://d3js.org/d3.v4.min.js"></script>
+<script src=
+"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+<link rel="stylesheet"
+      href=
+"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css" />
+<link rel=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+      type="text/css" />
+ 
+<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+</script>
+<script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+</script>
+ 
+<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js">
+</script>
  <style>
         /* Set the map size */
         #map {
             height: 400px;
             width: 100%;
+        }
+        .viewall{
+            font-size: 0.9rem;       
+        }
+        .revenue{
+          font-size: 1.4rem;
+        }
+        .patientcount{
+           border-right: 1px solid black; 
+        }
+         #appointmentAlert {
+            position: fixed;
+            bottom: 20px;
+            left: 50px;
+            background: red;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            font-size: 16px;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -90,7 +132,7 @@
                 <a class="nav-link navtabs me-3" aria-current="page" href="#"  th:href="@{/doctors/dashboard}">Dashboard</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" th:href=@{/about}>About</a>
+                <a class="nav-link navtabs me-3" th:href="@{/doctors/Prescription}">prescription</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link navtabs me-3" href="#" th:href="@{/ouserService}">services</a>
@@ -120,7 +162,9 @@
 
 <main>
 
-<div class="card pt-3 p-2" style="  border: transparent;">
+<div class="card pt-3 p-2 rounded mt-2" style="  border: transparent;background-color: #adebb3">
+
+<div class="card-body rounded " style="background-color: white;">
 
 <div class="aptab">
 <div class="appointType p-2">
@@ -150,7 +194,7 @@
   <h1 th:text="${todayAppointmentsCount}"></h1></div>
   <div class="col-sm-8">
   <a>Todays Appointment</a>
-  <a th:href="@{/doctors/todyasAppointment}" ><i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
+  <a th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()" ><i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
   </div>
 </div>
 </div>
@@ -176,13 +220,79 @@
 
 </div>
  
+</div>
 
+<div class="card  mt-3 " style="background: transparent;border: none;">
+
+  <div class="d-flex rounded ">
+    <div class="card-body rounded w-50 me-3" style="background-color: white;display: flex;justify-content: center;align-items: center;">
+         <div id="donut-chart"></div>
+    
+    </div>
+    <div class="card-body rounded w-50 " style="background-color: white;">
+    
+       <div class="paitentmain m-3  align-items-center ">
+        <div class="row p-2 revenuebody">
+            <div class="patientcount col-6 rounded" style="background-color: gray;">
+                 <div class="row p-3">
+                   <div class="col-8">
+                      <a class="revenue">Todya's Patient count</a>
+                   </div>
+                   <div class="col-4">
+                      <h2>50</h2>
+                   </div>
+                 </div>
+            </div>
+            <div class="patientcount rounded col-6 ps-2 " style="border: none;background-color: gray;">
+                 <div class="row p-3">
+                   <div class="col-6">
+                      <a class="revenue">Todya Amount</a>
+                   </div>
+                   <div class="col">
+                      <h2>5000</h2>
+                   </div>
+                 </div>
+            </div>
+        </div>
+        <div class="row p-2 revenuebody">
+            <div class="patientcount rounded col-6" style="background-color: gray;">
+                 <div class="row p-3">
+                   <div class="col-6">
+                      <a class="revenue">This month</a>
+                   </div>
+                   <div class="col">
+                      <h2>50000</h2>
+                   </div>
+                 </div>
+            </div>
+            <div class="patientcount rounded col-6" style="border: none;background-color: gray;">
+                 <div class="row p-3">
+                   <div class="col-6">
+                      <a class="revenue">Card payment</a>
+                   </div>
+                   <div class="col ">
+                      <h2>500</h2>
+                   </div>
+                 </div>
+            
+            </div>
+        </div>
+    </div>
+    
+    </div>
+  </div>
+</div>
+<button id="enableSpeechButton" onclick="speakAlert()" style="display:none;">🔊 Enable Speech</button>
+<div id="appointmentAlert"></div>
 </div>
 
 
+<script  th:src="@{/js/DoctorsDashboard.js}"></script>
 </main>
 
+  <script>
   
+    </script>
 
 	
 	

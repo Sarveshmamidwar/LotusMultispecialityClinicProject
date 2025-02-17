@@ -1,12 +1,18 @@
 package com.Hospital.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Hospital.entity.appointmentform;
 import com.Hospital.repositories.appointmentrepository;
@@ -73,4 +79,38 @@ public class DoctorsController {
     	model.addAttribute("tommorowAppointments",tommorowAppointments);
         return "Doctors/tommorowAppointment"; // Ensure the view name matches your Thymeleaf template location
     }
+    
+    @GetMapping("/appointmentalert")
+    @ResponseBody
+    public List<appointmentform> todaysAppointmentAlert() {
+        List<appointmentform> todayAppointmentswithstatus = appointmentrepository.findTodayAppointmentswithstatus();
+        System.out.println("Total appointments today: " + todayAppointmentswithstatus.size());
+        return todayAppointmentswithstatus;
+    }
+
+
+    @PostMapping("/update-status")
+    public ResponseEntity<?> updateAppointmentStatus(@RequestBody Map<String, String> requestData) {
+        String status = requestData.get("status");
+        int appointmentId = Integer.parseInt(requestData.get("appointmentId"));
+        
+        System.out.println("appointmentId : " + appointmentId);
+        System.out.println("status : " + status);
+        
+        // Use the dynamic appointmentId
+        appointmentform appointment = appointmentrepository.findbyappointmentid(appointmentId);
+        appointment.setAppointmentStatus(status);
+        appointmentrepository.save(appointment);
+        
+        return ResponseEntity.ok("Status updated successfully");
+    }
+
+
+    @GetMapping("/Prescription")
+    public String Prescription () {
+    	
+    	return"Doctors/prescription";
+    }
+
+
 }

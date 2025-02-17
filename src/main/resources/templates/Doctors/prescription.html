@@ -140,111 +140,98 @@
 
 </header>
 
+
+
 <main>
 
-<div class="card  p-3" >
+		<div class="card p-3">
 
-<table class="table  table-hover text-center">
-  <thead class="table-light ">
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col"> Patient Name</th>
-      <th scope="col">Date</th>
-      <th scope="col">Time</th>
-      <th scope="col">Doctor Name</th>
-      <th scope="col">Gender</th>
-      <th scope="col">Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr th:each="c : ${todayAppointments}">
-      <th th:text="${c.id}">1</th>
-      <td th:text="${c.name}">Mark</td>
-      <td th:text="${c.AppointmentDate}">Otto</td>
-      <td th:text="${c.AppointmentTime}">@mdo</td>
-      <td th:text="${c.doctor}">@mdo</td>
-      <td th:text="${c.gender}">@mdo</td>
-     <td>
-    <div class="appointment-status-container">
-        <button class="btn btn-secondary dropdown-toggle" 
-        th:text="${c.AppointmentStatus}" 
-        th:classappend="${c.AppointmentStatus == 'Done' ? ' btn-success' : (c.AppointmentStatus == 'Cancel' ? ' btn-danger' : (c.AppointmentStatus == 'Pending' ? ' btn-warning' : ''))}" 
-        th:onclick="toggleDropdown([[${c.id}]], event)">Status</button>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-4">col-4</div>
+					<div class="col-8">
+						<div class="card p-3">
+							<div class="row">
+								<div class="col">
+								    <img th:src="@{/images/logo.jpg}" class="logo" style="width: 100%;mix-blend-mode: multiply !important; ">
+								</div>
+								<div class="col-5">
+								   <h1>LOTUS</h1>
+								   <p class="m-0 p-0">Multispeciality Clinic</p>
+								</div>
+								<div class="col-5">
+								   <div>
+								     <h5>Dr.Shraddha Dubewar (Kokadwar)</h5>
+								   <a>MBBS,DNB(Pediatrics),Reg No. : MCI-10/36893</a>
+								   </div>
+								   <div>
+								    <h5>Dr.Ganesh V.Kokadwar</h5>
+								    <a>MBBS,DGO,FIGE Reg No. : 2006/01/0167</a>
+								    <a>(Gynacologist & Infertillity Specialist)</a>
+								   </div>
+								</div>
+								
+							</div>
+							<hr style="border: none; border-top: 5px solid black;">
 
-    </div>
+							<div class="p-2">
+								<div class="row">
+									<div class="col-7 d-flex ">
+										<label class="">Patient Name : </label> <input class="ms-3"
+											type="text" placeholder="Enter Patient Name"
+											style="border: none; width: 70%">
+									</div>
+									<div class="col-2 d-flex align-items-center">
+										<label class="me-2">Age: </label> <input class="w-100"
+											type="text" placeholder="Enter Age" style="border: none;">
+									</div>
+									<div class="col-3 d-flex align-items-center">
+										<label class="me-2">Date:</label> <input class="w-100"
+											type="text" placeholder="Enter Date"
+											style="border: none; flex: 1;">
+									</div>
 
-    <div class="dropdown-menu dropdown p-2" style="display:none;">
-        <button class="p-2 btn btn-warning" th:onclick="updateStatus('Pending', [[${c.id}]], event)">Pending</button>
-        <button class="mt-1 p-2 btn btn-danger cancelbtn" th:onclick="updateStatus('Cancel', [[${c.id}]], event)">Cancel</button>
-        <button class="mt-1 p-2 btn btn-success donebtn" th:onclick="updateStatus('Done', [[${c.id}]], event)">Done</button>
-    </div>
-</td>
+								</div>
+
+								<div class="row mt-3">
+									<div class="col-4 ">
+										<label class="">D.O.B : </label> <input class=" " type="date"
+											placeholder="Date Of Birth" style="border: none;">
+									</div>
+									<div class="col-4">
+										<label>Gender : </label> <input class="" type="text"
+											placeholder="Enter Gender" style="border: none;">
+									</div>
+									<div class="col-4">
+										<label>VT(kg) : </label> <input class="" type="text"
+											placeholder="Enter Weight" style="border: none; width: 70%">
+									</div>
+								</div>
+
+								<div class="row mt-3 d-flex align-items-center">
+									<label class="col-auto">Address :</label>
+									<div class="col">
+										<input type="text" class="form-control"
+											placeholder="Enter Address" style="border: none;">
+									</div>
+								</div>
 
 
+							</div>
+							
+							<hr style="border: none; border-top: 2px solid black;">
+						</div>
 
-    </tr>
-    
-  </tbody>
-</table>
+					</div>
+				</div>
+			</div>
 
- 
+		</div>
 
-</div>
-
-
-</main>
-
-  <script>
-  function toggleDropdown(appointmentId, event) {
-	    let container = event.target.closest('.appointment-status-container');
-	    let dropdown = container.nextElementSibling; // Get the dropdown div that comes after the container
-	    
-	    // Toggle the visibility of the dropdown
-	    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-	    dropdown.setAttribute('data-appointment-id', appointmentId);
-	}
-
-  function updateStatus(status, appointmentId, event) {
-	    const dropdown = event.target.closest('.dropdown-menu');
-	    const selectedAppointmentId = dropdown.getAttribute('data-appointment-id');
-	    
-	    // Ensure the appointment ID matches to avoid discrepancies
-	    if (parseInt(selectedAppointmentId) !== appointmentId) {
-	        console.error('Appointment ID mismatch!');
-	        return;
-	    }
-
-	    // Perform the AJAX request to update the status
-	    fetch('/doctors/update-status', {
-	        method: 'POST',
-	        headers: {
-	            'Content-Type': 'application/json'
-	        },
-	        body: JSON.stringify({ 
-	            status: status, 
-	            appointmentId: appointmentId 
-	        })
-	    })
-	    .then(response => response.json())
-	    .then(data => {
-	        console.log('Status updated:', data);
-	
-	        
-	    })
-	    .catch(error => console.error('Error updating status:', error));
-	}
+	</main>
 
 
 
-
-</script>
-
-<script type="text/javascript">
-
-
-</script>
-	
-	
-	</body>
+</body>
 
 </html>

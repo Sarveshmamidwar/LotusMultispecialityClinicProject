@@ -1,9 +1,11 @@
 package com.Hospital.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.Hospital.entity.appointmentform;
 
@@ -30,4 +32,10 @@ public interface appointmentrepository  extends JpaRepository<appointmentform, I
 	
 	@Query(value = "SELECT count(*) FROM appointmentform WHERE appointment_date = CURRENT_DATE + INTERVAL 1 DAY", nativeQuery = true)
 	int findTomorrowAppointmentsCount();
+	
+	@Query(value = "SELECT * FROM appointmentform WHERE appointment_date = CURRENT_DATE and appointment_status = 'Pending' ", nativeQuery = true)
+	List<appointmentform> findTodayAppointmentswithstatus();
+
+	@Query(value = "SELECT * FROM appointmentform WHERE id = :id", nativeQuery = true)
+    appointmentform findbyappointmentid(@Param("id") int id);
 }
