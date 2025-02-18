@@ -15,6 +15,7 @@
 
  <style>
         /* Set the map size */
+        
         #map {
             height: 400px;
             width: 100%;
@@ -41,6 +42,18 @@
     .dropdown button:hover {
         background-color: #ddd;
     }
+    .imgstamp{
+        height: 100px;
+        width: 100px;
+        display: flex;
+    }
+    .prescriptiontable{
+       min-height: 300px; /* Start with a minimum height */
+    max-height: auto;
+    }
+    input {
+	text-transform: capitalize;
+}
     </style>
 </head>
 <body>
@@ -112,7 +125,7 @@
                 <a class="nav-link navtabs me-3" aria-current="page" href="#"  th:href="@{/doctors/dashboard}">Dashboard</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" th:href=@{/about}>About</a>
+                <a class="nav-link navtabs me-3" th:href="@{/doctors/Prescription}">About</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link navtabs me-3" href="#" th:href="@{/ouserService}">services</a>
@@ -148,23 +161,84 @@
 
 			<div class="card-body">
 				<div class="row">
-					<div class="col-4">col-4</div>
-					<div class="col-8">
-						<div class="card p-3">
+					<div class="col-4">
+					    <div class="card">
+					    <h2>Add Prescriptions</h2>
+					         <div class=" row mt-1 p-2 d-flex" style=" display:flex; justify-content: center;align-items: center;">
+					            <div class="col ">
+					                <label>Sr No. :</label>
+					                <input class="w-100" type="text" id="srNo">
+					            </div>
+								<div class="col">
+									  <label>Prescription :</label>
+		                              <input type="text" id="prescription">
+								</div>
+
+							</div>
+							<div class="row p-2 ">
+							    <div class="col">
+							   <label>Drug Name : </label>
+							   <input class="w-100" type="text" id="drugName1">
+							   </div>
+							</div>
+							
+							<div class="row p-2 ">
+							    <div class="col ">
+							   <label>Schedule : </label>
+							   <input class="w-100" type="text" id="schedule">
+							   </div>
+							   
+							   <div class="col w-100">
+							   <label>Duration : </label>
+							   <input class="w-100" type="text" id="duration">
+							   </div>
+							   
+							   <div class="col w-100">
+							   <label>QTY : </label>
+							   <input class="w-100" type="text" id="qty">
+							   </div>
+							</div>
+							
+							<div class="row mt-2 p-2 d-flex">
+							    <div class="d-flex justify-content-center">
+							       <button type="button" class="btn me-2 btn-primary" id="addPrescription">Add</button>
+							       <button type="button" class="btn " id="clearTable" style="border-color: red"><i class="fa-solid fa-trash" style="color: #fa0000;"></i></button>
+							    </div>
+							</div>
+					    </div>
+					  
+					  <div class="card mt-3">
+							<div class="row">
+								<div class="col-8">
+								    <input type="text"> 
+								    <i class="fa-solid fa-trash" style="color: #fa0000;"></i>
+								</div>
+								<div class="col-4"></div>
+							</div>
+						</div>
+					  
+					  <div class="card mt-2">
+					     <button type="button" class="btn" id="generatePdfBtn">genrate pdf</button>
+					  </div>
+					</div>
+					
+					
+					<div class="col-8 " id="pdfContent">
+						<div class="card p-3 precard" >
 							<div class="row">
 								<div class="col">
 								    <img th:src="@{/images/logo.jpg}" class="logo" style="width: 100%;mix-blend-mode: multiply !important; ">
 								</div>
-								<div class="col-5">
+								<div class="col-4">
 								   <h1>LOTUS</h1>
 								   <p class="m-0 p-0">Multispeciality Clinic</p>
 								</div>
-								<div class="col-5">
-								   <div>
+								<div class="col-6 drsection">
+								   <div class="drsection">
 								     <h5>Dr.Shraddha Dubewar (Kokadwar)</h5>
 								   <a>MBBS,DNB(Pediatrics),Reg No. : MCI-10/36893</a>
 								   </div>
-								   <div>
+								   <div class="drsection">
 								    <h5>Dr.Ganesh V.Kokadwar</h5>
 								    <a>MBBS,DGO,FIGE Reg No. : 2006/01/0167</a>
 								    <a>(Gynacologist & Infertillity Specialist)</a>
@@ -196,7 +270,7 @@
 								<div class="row mt-3">
 									<div class="col-4 ">
 										<label class="">D.O.B : </label> <input class=" " type="date"
-											placeholder="Date Of Birth" style="border: none;">
+											placeholder="Date Of Birth" style="border: none;text-transform: none;">
 									</div>
 									<div class="col-4">
 										<label>Gender : </label> <input class="" type="text"
@@ -220,6 +294,45 @@
 							</div>
 							
 							<hr style="border: none; border-top: 2px solid black;">
+
+							<div class="prescriptiontable">
+								<table class="table ">
+									<thead class="" style="border-radius: 5px;">
+										<tr>
+											<th scope="col">Sr No.</th>
+											<th scope="col">Prescription</th>
+											<th scope="col">Drug Name</th>
+											<th scope="col">Schedule</th>
+											<th scope="col">Duration</th>
+											<th scope="col">Qty</th>
+										</tr>
+									</thead>
+									<tbody id="prescriptionTableBody">
+										
+									</tbody>
+								</table>
+
+							</div>
+							
+							<div class="mt-5">
+
+								<div class="row " >
+									<div class="col-8"></div>
+									<div class="col-4" style="text-align: center; ">
+									   <div class="" style="display: flex;justify-content: center;" >
+									      <div class="imgstamp img-fluid "> 
+									          <img th:src="@{/images/stamp.jpg}"  class="img-fluid">
+ 									      </div>
+									      <div class="imgstamp">
+									          <img th:src="@{/images/Samantha_Signature.jpg}"  class="img-fluid">
+									      </div>
+									   
+									   </div>
+									   <label class="mt-2">Signature</label>
+									</div>
+								</div>
+
+							</div>
 						</div>
 
 					</div>
@@ -229,8 +342,119 @@
 		</div>
 
 	</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        loadTableData(); // Load stored data when page loads
+    });
+
+    document.getElementById("addPrescription").addEventListener("click", function () {
+        // Get input values
+        let srNo = document.getElementById("srNo").value;
+        let prescription = document.getElementById("prescription").value;
+        let drugName = document.getElementById("drugName1").value;
+        let schedule = document.getElementById("schedule").value;
+        let duration = document.getElementById("duration").value;
+        let qty = document.getElementById("qty").value;
+
+        if (!srNo || !prescription || !drugName || !schedule || !duration || !qty) {
+            alert("Please fill all fields before adding.");
+            return;
+        }
+
+        // Create a row object
+        let rowData = { srNo, prescription, drugName, schedule, duration, qty };
+
+        // Get existing data from localStorage
+        let storedData = JSON.parse(localStorage.getItem("prescriptions")) || [];
+
+        // Add new row to stored data
+        storedData.push(rowData);
+
+        // Save updated data to localStorage
+        localStorage.setItem("prescriptions", JSON.stringify(storedData));
+
+        // Append row to table
+        appendRowToTable(rowData);
+
+        // Clear input fields
+        document.getElementById("srNo").value = "";
+        document.getElementById("prescription").value = "";
+        document.getElementById("drugName1").value = "";
+        document.getElementById("schedule").value = "";
+        document.getElementById("duration").value = "";
+        document.getElementById("qty").value = "";
+    });
+
+    function appendRowToTable(rowData) {
+        let tableBody = document.getElementById("prescriptionTableBody");
+        let newRow = document.createElement("tr");
+
+        newRow.innerHTML = `
+            <td>${rowData.srNo}</td>
+            <td>${rowData.prescription}</td>
+            <td>${rowData.drugName}</td>
+            <td>${rowData.schedule}</td>
+            <td>${rowData.duration}</td>
+            <td>${rowData.qty}</td>
+        `;
+
+        tableBody.appendChild(newRow);
+    }
+
+    function loadTableData() {
+        let storedData = JSON.parse(localStorage.getItem("prescriptions")) || [];
+        let tableBody = document.getElementById("prescriptionTableBody");
+        tableBody.innerHTML = ""; // Clear table before adding stored rows
+
+        storedData.forEach(rowData => {
+            appendRowToTable(rowData);
+        });
+    }
+
+    document.getElementById("clearTable").addEventListener("click", function () {
+        localStorage.removeItem("prescriptions"); // Remove data from storage
+        document.getElementById("prescriptionTableBody").innerHTML = ""; // Clear table
+    });
+</script>
+
+<script>
+document.getElementById('generatePdfBtn').addEventListener('click', function () {
+    const element = document.getElementById('pdfContent');
+    const drSection = document.querySelector('.drsection'); 
+    const precard = document.querySelector('.precard'); 
+    
+    
+    
+    const inputs = element.querySelectorAll('input, textarea');
+    inputs.forEach(input => input.style.display = 'none');
+    
+    
+    drSection.style.fontSize = '0.5rem';
+    precard.style.border='none';
+    // Temporarily adjust the width to 100% for PDF
+    element.style.width = '100%';
+    element.style.maxWidth = '210mm';  // A4 width
+    element.style.minHeight = '297mm'; // A4 height
+    element.style.marginTop = '10px';  // Adds some spacing
+    
+    html2pdf().from(element).set({
+        margin: 0, // Ensure full-width usage
+        filename: 'Prescription.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, scrollY: 0 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    }).save().then(() => {
+        // Reset styles after PDF generation
+        element.style.width = '';
+        element.style.maxWidth = '';
+        element.style.minHeight = '';
+        element.style.padding = '';
+    });
+});
 
 
+</script>
 
 </body>
 
