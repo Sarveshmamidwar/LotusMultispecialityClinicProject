@@ -14,12 +14,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
  <style>
-        /* Set the map size */
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-         
 
     .dropdown {
         position: absolute;
@@ -112,10 +106,10 @@
                 <a class="nav-link navtabs me-3" aria-current="page" href="#"  th:href="@{/doctors/dashboard}">Dashboard</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" th:href=@{/about}>About</a>
+                <a class="nav-link navtabs me-3" th:href="@{/doctors/Prescription}">Prescription</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/ouserService}">services</a>
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link navtabs me-3" href="#" th:href="@{/ouserDoctors}">Doctors</a>
@@ -154,6 +148,7 @@
       <th scope="col">Doctor Name</th>
       <th scope="col">Gender</th>
       <th scope="col">Status</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -164,22 +159,27 @@
       <td th:text="${c.AppointmentTime}">@mdo</td>
       <td th:text="${c.doctor}">@mdo</td>
       <td th:text="${c.gender}">@mdo</td>
-     <td>
-    <div class="appointment-status-container">
+      
+     <td >
+       
+       <div class="col-auto appointment-status-container p-0 m-0">
         <button class="btn btn-secondary dropdown-toggle" 
-        th:text="${c.AppointmentStatus}" 
-        th:classappend="${c.AppointmentStatus == 'Done' ? ' btn-success' : (c.AppointmentStatus == 'Cancel' ? ' btn-danger' : (c.AppointmentStatus == 'Pending' ? ' btn-warning' : ''))}" 
-        th:onclick="toggleDropdown([[${c.id}]], event)">Status</button>
-
-    </div>
-
+                th:text="${c.AppointmentStatus}" 
+                th:classappend="${c.AppointmentStatus == 'Done' ? ' btn-success' : (c.AppointmentStatus == 'Cancel' ? ' btn-danger' : (c.AppointmentStatus == 'Pending' ? ' btn-warning' : ''))}" 
+                th:onclick="toggleDropdown([[${c.id}]], event)"></button>
+    </div> 
+    
     <div class="dropdown-menu dropdown p-2" style="display:none;">
         <button class="p-2 btn btn-warning" th:onclick="updateStatus('Pending', [[${c.id}]], event)">Pending</button>
         <button class="mt-1 p-2 btn btn-danger cancelbtn" th:onclick="updateStatus('Cancel', [[${c.id}]], event)">Cancel</button>
         <button class="mt-1 p-2 btn btn-success donebtn" th:onclick="updateStatus('Done', [[${c.id}]], event)">Done</button>
     </div>
+    
+    
+    </td>
+<td>
+<a th:href="@{/doctors/Prescription}"><img class="" alt="" th:src="@{/images/prescription.png}" style="width: 5%"></a>
 </td>
-
 
 
     </tr>

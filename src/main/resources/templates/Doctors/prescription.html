@@ -48,12 +48,40 @@
         display: flex;
     }
     .prescriptiontable{
-       min-height: 300px; /* Start with a minimum height */
+       min-height: 500px; /* Start with a minimum height */
     max-height: auto;
     }
     input {
 	text-transform: capitalize;
 }
+
+.drnamesect{
+font-size: 1.3rem;
+}
+.drdegree{
+font-size: 0.9rem;
+}
+.pdfContent{
+max-height: 300px;
+}
+
+#suggestions {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none; /* Hide by default */
+}
+.suggestion-item {
+    cursor: pointer;
+}
+.suggestion-item:hover {
+    background: #f0f0f0;
+}
+
     </style>
 </head>
 <body>
@@ -125,13 +153,13 @@
                 <a class="nav-link navtabs me-3" aria-current="page" href="#"  th:href="@{/doctors/dashboard}">Dashboard</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" th:href="@{/doctors/Prescription}">About</a>
+                <a class="nav-link navtabs me-3" th:href="@{/doctors/Prescription}">Prescription</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/ouserService}">services</a>
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/ouserDoctors}">Doctors</a>
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/medicinesLists}">Medicines</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link navtabs me-3" href="#" th:href="@{/contacts}">Contacts</a>
@@ -180,6 +208,7 @@
 							   <label>Drug Name : </label>
 							   <input class="w-100" type="text" id="drugName1">
 							   </div>
+							   <div id="suggestions"></div>
 							</div>
 							
 							<div class="row p-2 ">
@@ -224,24 +253,27 @@
 					
 					
 					<div class="col-8 " id="pdfContent">
-						<div class="card p-3 precard" >
-							<div class="row">
+						<div class="card p-3 precard " >
+							<div class="row align-items-center">
 								<div class="col">
 								    <img th:src="@{/images/logo.jpg}" class="logo" style="width: 100%;mix-blend-mode: multiply !important; ">
 								</div>
-								<div class="col-4">
-								   <h1>LOTUS</h1>
-								   <p class="m-0 p-0">Multispeciality Clinic</p>
-								</div>
-								<div class="col-6 drsection">
-								   <div class="drsection">
-								     <h5>Dr.Shraddha Dubewar (Kokadwar)</h5>
-								   <a>MBBS,DNB(Pediatrics),Reg No. : MCI-10/36893</a>
+								<div class="col-4 ">
+								   <div class="Hosname">
+								        <h1 class="mb-0 p-0 m-0" style="font-size: 5rem;">LOTUS</h1>
+								        <a class="m-0 ps-2 pt-0" style="font-size: 1.5rem;">Multispeciality Clinic</a>
 								   </div>
-								   <div class="drsection">
-								    <h5>Dr.Ganesh V.Kokadwar</h5>
-								    <a>MBBS,DGO,FIGE Reg No. : 2006/01/0167</a>
-								    <a>(Gynacologist & Infertillity Specialist)</a>
+								  
+								</div>
+								<div class="col-6 drsection ">
+								   <div class="drsection ms-4">
+								     <h5 class="drnamesect mb-0 row">Dr.Shraddha Dubewar (Kokadwar)</h5>
+								      <a class="drdegree row">MBBS,DNB(Pediatrics),Reg No. : MCI-10/36893</a>
+								   </div>
+								   <div class="drsection mt-2 ms-4 ">
+								    <h5 class="drnamesect mb-0 row">Dr.Ganesh V.Kokadwar</h5>
+								    <a class="drdegree row">MBBS,DGO,FIGE Reg No. : 2006/01/0167</a>
+								    <a class="drdegree row">(Gynacologist & Infertillity Specialist)</a>
 								   </div>
 								</div>
 								
@@ -295,7 +327,7 @@
 							
 							<hr style="border: none; border-top: 2px solid black;">
 
-							<div class="prescriptiontable">
+							<div class="prescriptiontable ">
 								<table class="table ">
 									<thead class="" style="border-radius: 5px;">
 										<tr>
@@ -314,7 +346,7 @@
 
 							</div>
 							
-							<div class="mt-5">
+							<div class=" signtab">
 
 								<div class="row " >
 									<div class="col-8"></div>
@@ -342,6 +374,7 @@
 		</div>
 
 	</main>
+	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -423,28 +456,41 @@ document.getElementById('generatePdfBtn').addEventListener('click', function () 
     const element = document.getElementById('pdfContent');
     const drSection = document.querySelector('.drsection'); 
     const precard = document.querySelector('.precard'); 
-    
-    
-    
+
+    // Hide inputs and adjust styles
     const inputs = element.querySelectorAll('input, textarea');
     inputs.forEach(input => input.style.display = 'none');
-    
-    
     drSection.style.fontSize = '0.5rem';
-    precard.style.border='none';
-    // Temporarily adjust the width to 100% for PDF
+    precard.style.border = 'none';
     element.style.width = '100%';
-    element.style.maxWidth = '210mm';  // A4 width
-    element.style.minHeight = '297mm'; // A4 height
-    element.style.marginTop = '10px';  // Adds some spacing
-    
+    element.style.maxWidth = '210mm';
+    element.style.marginTop = '10px';
+
+    // Optionally remove minHeight if content height is less than A4 height
+    const contentHeight = element.scrollHeight;
+    const a4HeightPx = 1122; // approx. A4 height in pixels at default resolution
+    if (contentHeight < a4HeightPx) {
+        element.style.minHeight = contentHeight + 'px';
+    } else {
+        element.style.minHeight = '297mm';
+    }
+
     html2pdf().from(element).set({
-        margin: 0, // Ensure full-width usage
-        filename: 'Prescription.pdf',
+        margin: 0,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, scrollY: 0 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    }).save().then(() => {
+    }).outputPdf('blob').then((pdfBlob) => {
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        const newWindow = window.open(pdfUrl);
+        if (newWindow) {
+            newWindow.onload = function () {
+                newWindow.print();
+            };
+        } else {
+            alert("Please allow pop-ups to print the document.");
+        }
+        
         // Reset styles after PDF generation
         element.style.width = '';
         element.style.maxWidth = '';
@@ -454,7 +500,52 @@ document.getElementById('generatePdfBtn').addEventListener('click', function () 
 });
 
 
+
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    $("#drugName1").on("input", function () {
+        let searchTerm = $(this).val().trim();
+        let suggestionsDiv = $("#suggestions");
+
+        if (searchTerm.length > 0) {
+            $.ajax({
+                url: "/doctors/search-tablets",
+                type: "GET",
+                data: { term: searchTerm },
+                success: function (response) {
+                    console.log("Response Data:", response); // Debugging
+                    suggestionsDiv.empty(); // Clear previous suggestions
+
+                    if (response.length > 0) {
+                        let list = $("<ul class='list-group'></ul>");
+                        response.forEach(function (tablet) {
+                            let itemContent = `<strong>${tablet.tabletName}</strong>`; // Corrected syntax
+                            let item = $("<li class='list-group-item suggestion-item'></li>")
+                                .html(itemContent)
+                                .on("click", function () {
+                                    $("#drugName1").val(tablet.tabletName); // Set input field value
+                                    suggestionsDiv.empty().hide(); // Hide suggestions after selection
+                                });
+                            list.append(item);
+                        });
+
+                        suggestionsDiv.append(list).show(); // Show suggestions when data is present
+                    } else {
+                        suggestionsDiv.hide(); // Hide if no results
+                    }
+                }
+            });
+        } else {
+            suggestionsDiv.empty().hide(); // Hide when input is empty
+        }
+    });
+});
+</script>
+
+
 
 </body>
 

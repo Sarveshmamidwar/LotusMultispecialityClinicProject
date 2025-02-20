@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Hospital.entity.appointmentform;
+import com.Hospital.entity.tablets;
 import com.Hospital.repositories.appointmentrepository;
+import com.Hospital.repositories.tabletsrepositories;
 
 @Controller
 @RequestMapping("/doctors")
@@ -23,6 +28,9 @@ public class DoctorsController {
 	
 	@Autowired
 	private appointmentrepository appointmentrepository;
+	
+	@Autowired
+	private tabletsrepositories medicinesrepositories;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -84,7 +92,7 @@ public class DoctorsController {
     @ResponseBody
     public List<appointmentform> todaysAppointmentAlert() {
         List<appointmentform> todayAppointmentswithstatus = appointmentrepository.findTodayAppointmentswithstatus();
-        System.out.println("Total appointments today: " + todayAppointmentswithstatus.size());
+        //System.out.println("Total appointments today: " + todayAppointmentswithstatus.size());
         return todayAppointmentswithstatus;
     }
 
@@ -112,5 +120,57 @@ public class DoctorsController {
     	return"Doctors/prescription";
     }
 
+    @GetMapping("/search-tablets")
+    @ResponseBody
+    public List<tablets> searchTablets(@RequestParam String term) {
+    	
+    	List<tablets> findtabletsbyname = medicinesrepositories.findtabletsbyname(term);
+        return findtabletsbyname;
+    }
+    
+    @GetMapping("/medicinesLists")
+    public String medicinesList(Model model) {
+    	 
+    	List<tablets> medicineslist = medicinesrepositories.findAll();
+    	
+    	model.addAttribute("medicineslist",medicineslist);
+    	return "Doctors/medicinesList";
+    }
+    
+    @PostMapping("/addmedicines")
+    public String addmedicines(@ModelAttribute tablets tablets) {
+    	
+    	medicinesrepositories.save(tablets);
+    	
+    	return "redirect:/doctors/medicinesLists";
+    }
+    
+    @PostMapping("/{id}/editmedicines")
+    public String editMedicines(@ModelAttribute tablets updatedTablet, @RequestParam("id") int id) {
+        // Find the existing tablet by id
+        List<tablets> foundTablets = medicinesrepositories.findtabletsbyid(id);
+        
+        if (!foundTablets.isEmpty()) {
+            tablets existingTablet = foundTablets.get(0);
+            // Update the fields
+            existingTablet.setTabletName(updatedTablet.getTabletName());
+            existingTablet.setMedicineCompanyName(updatedTablet.getMedicineCompanyName());
+            existingTablet.setMedecineType(updatedTablet.getMedecineType());
+            
+            // Save the updated tablet
+            medicinesrepositories.save(existingTablet);
+        }
+        
+        // Redirect to the medicines list page after update
+        return "redirect:/doctors/medicinesLists";
+    }
+    
+    
+    @DeleteMapping("/{id}/deletemedicines")
+    public ResponseEntity<Void> deletemedicine(@PathVariable("id") int id) {
+        // Delete medicine using the repository (assuming deleteById is available)
+        medicinesrepositories.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 
 }

@@ -132,13 +132,13 @@
                 <a class="nav-link navtabs me-3" aria-current="page" href="#"  th:href="@{/doctors/dashboard}">Dashboard</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" th:href="@{/doctors/Prescription}">prescription</a>
+                <a class="nav-link navtabs me-3" th:href="@{/doctors/Prescription}">Prescription</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/ouserService}">services</a>
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/ouserDoctors}">Doctors</a>
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/medicinesLists}">Medicines</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link navtabs me-3" href="#" th:href="@{/contacts}">Contacts</a>
@@ -287,15 +287,11 @@
 </div>
 
 
-<script  th:src="@{/js/DoctorsDashboard.js}"></script>
+
+
+		<script  th:src="@{/js/DoctorsDashboard.js}"></script>
 </main>
 
-  <script>
-  
-    </script>
-
-	
-	
 	</body>
 
 </html>
