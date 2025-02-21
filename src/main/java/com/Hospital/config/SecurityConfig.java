@@ -16,12 +16,14 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/doctors/**").hasRole("DOCTOR")
+                .requestMatchers("/recption/**").hasAnyRole("DOCTOR", "RECPTION")
                 .requestMatchers("/", "/about", "/ouserService","/ouserDoctors","/contacts","/appointment","/bookAppointment","/CSS/**", "/js/**","/images/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 //.loginPage("/login")
-                .defaultSuccessUrl("/doctors/dashboard", true)
+                //.defaultSuccessUrl("/doctors/dashboard", true)
+                .defaultSuccessUrl("/recption/recptionDashboard", true)
                 .permitAll()
             )
             .logout(logout -> logout

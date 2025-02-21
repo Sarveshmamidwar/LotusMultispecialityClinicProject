@@ -13,9 +13,55 @@
 <link rel="stylesheet" th:href="@{/CSS/docdashboard.css}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+<script src=
+"https://d3js.org/d3.v4.min.js"></script>
+<script src=
+"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+<link rel="stylesheet"
+      href=
+"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css" />
+<link rel=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+      type="text/css" />
+ 
+<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+</script>
+<script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+</script>
+ 
+<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js">
+</script>
  <style>
-
-    .dropdown {
+        /* Set the map size */
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        .viewall{
+            font-size: 0.9rem;       
+        }
+        .revenue{
+          font-size: 1.4rem;
+        }
+        .patientcount{
+           border-right: 1px solid black; 
+        }
+         #appointmentAlert {
+            position: fixed;
+            bottom: 20px;
+            left: 50px;
+            background: red;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            font-size: 16px;
+            z-index: 1000;
+        }
+        .dropdown {
         position: absolute;
         display: none;
         background-color: white;
@@ -103,16 +149,14 @@
 	            <div class="navbar-nav m-2" >
 	                <ul class="navbar-nav" >
               <li class="nav-item" >
-                <a class="nav-link navtabs me-3" aria-current="page" href="#"  th:href="@{/doctors/dashboard}">Dashboard</a>
+                <a class="nav-link navtabs me-3" aria-current="page" href="#"  th:href="@{/recption/recptionDashboard}">Dashboard</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/recption/listAppointment}" >Book Appointments</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" th:href="@{/doctors/Prescription}">Prescription</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/medicinesLists}">Medicines</a>
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/recption/medicinesLists}">Medicines</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link navtabs me-3" href="#" th:href="@{/contacts}">Contacts</a>
@@ -126,7 +170,7 @@
 	        
 	        <div class="p-2 me-5">
 	        <!-- <button type="button" class="btn btn-primary me-3">Primary</button> -->
-	        <i class="fa-solid fa-power-off fa-xl " style="color: #f90101;"></i>
+	        <a th:href="@{/logout}"><i class="fa-solid fa-power-off fa-xl " style="color: #f90101;"></i></a>
 	        
 	        </div>
 	    </div>
@@ -136,9 +180,16 @@
 
 <main>
 
-<div class="card  p-3" >
-
-<table class="table  table-hover text-center">
+<div class="card">
+     
+     <div class="card-body" style="display: flex;justify-content: flex-end;">
+        
+         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#AppointmentForm">Book Appointment</button>
+     </div>
+     
+     <div class="card-body ">
+     
+         <table class="table  table-hover text-center">
   <thead class="table-light ">
     <tr>
       <th scope="col">id</th>
@@ -149,6 +200,7 @@
       <th scope="col">Gender</th>
       <th scope="col">Status</th>
       <th scope="col">Action</th>
+      
     </tr>
   </thead>
   <tbody>
@@ -177,24 +229,104 @@
     
     
     </td>
-<td>
-<a th:href="@{/doctors/Prescription}"><img class="" alt="" th:src="@{/images/prescription.png}" style="width: 5%"></a>
-</td>
+     <td style="width: 10%;">
+        <a th:href="@{/recption/getInvoice}"><img alt="" th:src="@{/images/wallet.png}"  th:onclick="deleteMedicine([[${c.id}]])" width="20%"></a>
+     </td>
+     
 
 
     </tr>
     
   </tbody>
 </table>
-
- 
-
+     
+     </div>
 </div>
 
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="AppointmentForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Book Appointment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form th:action="@{/recption/BookAppointment}" id="appointmentForm" method="post" class="d-flex flex-column" style="overflow-y: auto;">
+				             <!-- Full Name -->
+				             <div class=" d-flex justify-content-around p-3 pb-0">
+								<div class="w-100 me-2">
+				                 <label for="fullname" class="form-label">Full Name</label>
+				                 <input type="text" id="fullname" name="name" class="form-control" placeholder="Enter your full name" required>
+								</div>
+								<div class="w-100">
+									<label for="gender" class="form-label">Gender</label>
+													                 <select id="gender" name="gender" class="form-select" required>
+													                     <option value="">Select Gender</option>
+													                     <option value="Male">Male</option>
+													                     <option value="Female">Female</option>
+													                 </select>
+									
+								</div>
+							  </div>
+
+							  <div class="  d-flex justify-content-around p-3 pb-0">
+								<div class="w-100 me-2">
+							  		<label for="date" class="form-label">Appointment Date</label>
+							  		<input type="date" id="date" name="AppointmentDate" class="form-control" required>
+								</div>	
+								<div class="w-100">
+						             <label for="time" class="form-label">Appointment Time</label>
+						             <input type="time" id="time" name="AppointmentTime"  class="form-control" required>
+								 </div>
+							  </div>
+
+							<div class=" d-flex justify-content-around p-3 pb-0">
+								<div class="w-100 me-2">
+									<label for="phone" class="form-label">Phone</label>
+									<input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
+								</div>
+								<div class="w-100">
+									<label for="doctor" class="form-label">Select Doctor</label>
+									<select id="doctor" name="doctor" class="form-select" required>
+										<option value="">Select a Doctor</option>
+										<option value="Dr.ganesh">Dr. Ganesh</option>
+										<option value="Dr.shradha">Dr. Shradha</option>
+									</select>
+								</div>
+							</div>
+							  
+							  			             			             
+
+				             <!-- Email -->
+				             <div class="ps-3 pe-3">
+				                 <label for="email" class="form-label">Email</label>
+				                 <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+				             </div>
+
+				             <div class="p-3">
+				                 <label for="message" class="form-label">Message</label>
+				                 <textarea id="message" class="form-control" name="message" rows="3" placeholder="Enter any message"></textarea>
+				             </div>
+
+				             <!-- Submit Button -->
+				             <div class="text-center">
+				                 <button type="submit" class="btn btn-primary rounded-pill" style="width: 80%;">Submit</button>
+				             </div>
+				         </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
 </main>
 
-  <script>
+
+ <script>
   function toggleDropdown(appointmentId, event) {
 	    let container = event.target.closest('.appointment-status-container');
 	    let dropdown = container.nextElementSibling; // Get the dropdown div that comes after the container
@@ -215,7 +347,7 @@
 	    }
 
 	    // Perform the AJAX request to update the status
-	    fetch('/doctors/update-status', {
+	    fetch('/recption/update-status', {
 	        method: 'POST',
 	        headers: {
 	            'Content-Type': 'application/json'
@@ -239,12 +371,9 @@
 
 </script>
 
-<script type="text/javascript">
-
-
-</script>
-	
-	
-	</body>
+</body>
 
 </html>
+
+
+

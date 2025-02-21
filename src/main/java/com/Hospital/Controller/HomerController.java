@@ -1,9 +1,11 @@
 package com.Hospital.Controller;
 
 import java.lang.ProcessBuilder.Redirect;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,7 +54,8 @@ public class HomerController {
 	}
 	
 	@GetMapping("/appointment")
-	public String appointment() {
+	public String appointment(Model model) {
+		 
 		
 		return "Home/appointment";
 	}
@@ -60,7 +63,7 @@ public class HomerController {
 	@PostMapping("/bookAppointment")
 	public String BookAppointment(@ModelAttribute appointmentform appointmentform) {
 		
-		
+		appointmentform.setAppointmentStatus("Pending");
 		appointmentrepository.save(appointmentform);
 		
 		return "redirect:/appointment";

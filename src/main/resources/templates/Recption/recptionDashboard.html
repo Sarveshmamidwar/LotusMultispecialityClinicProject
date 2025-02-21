@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" th:href="@{/CSS/docdashboard.css}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script src=
+"https://d3js.org/d3.v4.min.js"></script>
+<script src=
+"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+<link rel="stylesheet"
+      href=
+"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css" />
+<link rel=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+      type="text/css" />
+ 
+<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+</script>
+<script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+</script>
+ 
+<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js">
+</script>
+ <style>
+        /* Set the map size */
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        .viewall{
+            font-size: 0.9rem;       
+        }
+        .revenue{
+          font-size: 1.4rem;
+        }
+        .patientcount{
+           border-right: 1px solid black; 
+        }
+         #appointmentAlert {
+            position: fixed;
+            bottom: 20px;
+            left: 50px;
+            background: red;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            font-size: 16px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+<nav class="navbar navbar-expand-lg  ">
+        
+            <div class="container-fluid">
+              <a class="navbar-brand" style="text-decoration: none;color: black;font-size: 1.8rem" >
+                <img th:src="@{/images/logo.jpg}" class="logo" style="width: 10%;mix-blend-mode: multiply !important; ">
+                Lotus Multispeciality Clinic
+              </a>
+            </div>
+        
+        <div class="container-fluid d-flex">
+          
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+         <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ">
+						<li class="nav-item m-3">
+							<div class="d-flex align-items-center gap-2">
+								<i class="fa-solid fa-phone-volume fa-xl"></i>
+								<div style="">
+									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">EMERGENCY</a>
+								    <a class="navtabs">+91 2345678901</a>
+								</div>
+							</div>
+
+						</li>
+						
+						<li class="nav-item m-3">
+							<div class="d-flex align-items-center gap-2">
+								<i class="fa-regular fa-clock fa-xl"></i>
+								<div style="">
+									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">WORKING HOURS</a>
+								    <a class="navtabs">+91 2345678901</a>
+								</div>
+							</div>
+
+						</li>
+						
+						<li class="nav-item m-3">
+							<div class="d-flex align-items-center gap-2">
+								<i class="fa-solid fa-location-dot fa-xl"></i>
+								<div style="">
+									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">EMERGENCY</a>
+								    <a class="navtabs">+91 2345678901</a>
+								</div>
+							</div>
+
+						</li>
+
+				
+              
+            </ul>
+          </div>
+        </div>
+    </nav>
+	<nav class="navbar navbar-expand-lg p-0" style="background-color: #C0EC83;">
+	    <div class="container-fluid" >
+	       
+	        
+	        <div class="collapse navbar-collapse justify-content-around " id="navbarNavAltMarkup">
+	            <div class="navbar-nav m-2" >
+	                <ul class="navbar-nav" >
+              <li class="nav-item" >
+                <a class="nav-link navtabs me-3" aria-current="page" href="#"  th:href="@{/recption/recptionDashboard}">Dashboard</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/recption/listAppointment}" >Book Appointments</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/recption/medicinesLists}">Medicines</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/contacts}">Contacts</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/appointment}">Appointment</a>
+              </li>
+            </ul>
+	            </div>
+	        </div>
+	        
+	        <div class="p-2 me-5">
+	        <!-- <button type="button" class="btn btn-primary me-3">Primary</button> -->
+	        <a th:href="@{/logout}"><i class="fa-solid fa-power-off fa-xl " style="color: #f90101;"></i></a>
+	        
+	        </div>
+	    </div>
+	</nav>
+
+</header>
+
+<main>
+
+<div class="card pt-3 p-2 rounded mt-2" style="  border: transparent;background-color: #adebb3">
+
+<div class="card-body rounded " style="background-color: white;">
+
+<div class="aptab">
+<div class="appointType p-2">
+<div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
+  <div class="col-sm-4 count">
+   <h1 th:text="${totalCount}"></h1>
+  </div>
+  <div class="col-sm-8">
+  <a>Totals  Appointment</a>
+  <a th:href="@{/doctors/totalAppointment}" > <i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
+  </div>
+</div>
+</div>
+<div class="appointType p-2">
+<div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
+  <div class="col-sm-4 count">
+  <h1 th:text="${cancleAppointmentsCount}"></h1></div>
+  <div class="col-sm-8">
+  <a>Cancle Appointment</a>
+  <a th:href="@{/doctors/cancleAppointment}" ><i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
+  </div>
+</div>
+</div>
+<div class="appointType p-2">
+<div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
+  <div class="col-sm-4 count">
+  <h1 th:text="${todayAppointmentsCount}"></h1></div>
+  <div class="col-sm-8">
+  <a>Todays Appointment</a>
+  <a th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()" ><i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
+  </div>
+</div>
+</div>
+<div class="appointType p-2">
+<div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
+  <div class="col-sm-4 count">
+  <h1 th:text="${tomorrowAppointmentsCount}"></h1></div>
+  <div class="col-sm-8">
+  <a >Tommorow's Appointment</a>
+ <a th:href="@{/doctors/tommorowAppointment}"> <i class="fa-solid fa-arrow-right fa-lg ps-3"></i></a>
+  </div>
+</div>
+</div>
+<div class="appointType p-2">
+<div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
+  <div class="col-sm-4 count">8</div>
+  <div class="col-sm-8">
+  <a>Rutine CheckUp Appointment</a>
+  <i class="fa-solid fa-arrow-right fa-xl ps-3"></i>
+  </div>
+</div>
+</div>
+
+</div>
+ 
+</div>
+
+<div class="card  mt-3 " style="background: transparent;border: none;">
+
+  <div class="d-flex rounded ">
+    <div class="card-body rounded w-50 me-3" style="background-color: white;display: flex;justify-content: center;align-items: center;">
+         <div id="donut-chart"></div>
+    
+    </div>
+    <div class="card-body rounded w-50 " style="background-color: white;">
+    
+       <div class="paitentmain m-3  align-items-center ">
+        <div class="row p-2 revenuebody">
+            <div class="patientcount col-6 rounded" style="background-color: gray;">
+                 <div class="row p-3">
+                   <div class="col-8">
+                      <a class="revenue">Todya's Patient count</a>
+                   </div>
+                   <div class="col-4">
+                      <h2>50</h2>
+                   </div>
+                 </div>
+            </div>
+            <div class="patientcount rounded col-6 ps-2 " style="border: none;background-color: gray;">
+                 <div class="row p-3">
+                   <div class="col-6">
+                      <a class="revenue">Todya Amount</a>
+                   </div>
+                   <div class="col">
+                      <h2>5000</h2>
+                   </div>
+                 </div>
+            </div>
+        </div>
+        <div class="row p-2 revenuebody">
+            <div class="patientcount rounded col-6" style="background-color: gray;">
+                 <div class="row p-3">
+                   <div class="col-6">
+                      <a class="revenue">This month</a>
+                   </div>
+                   <div class="col">
+                      <h2>50000</h2>
+                   </div>
+                 </div>
+            </div>
+            <div class="patientcount rounded col-6" style="border: none;background-color: gray;">
+                 <div class="row p-3">
+                   <div class="col-6">
+                      <a class="revenue">Card payment</a>
+                   </div>
+                   <div class="col ">
+                      <h2>500</h2>
+                   </div>
+                 </div>
+            
+            </div>
+        </div>
+    </div>
+    
+    </div>
+  </div>
+</div>
+<button id="enableSpeechButton" onclick="speakAlert()" style="display:none;">🔊 Enable Speech</button>
+<div id="appointmentAlert"></div>
+</div>
+
+
+
+
+		<script  th:src="@{/js/DoctorsDashboard.js}"></script>
+</main>
+
+	</body>
+
+</html>
