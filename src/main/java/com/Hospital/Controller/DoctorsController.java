@@ -2,8 +2,10 @@ package com.Hospital.Controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -173,4 +175,21 @@ public class DoctorsController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/{id}/UpdatePaymentStatus")
+    public ResponseEntity<String> updatePaymentStatus(@PathVariable("id") int id, @RequestParam("status") String status) {
+        try {
+            Optional<appointmentform> appointmentOpt = appointmentrepository.findById(id);
+            if (appointmentOpt.isPresent()) {
+                appointmentform appointment = appointmentOpt.get();
+                appointment.setPaymentStatus(status); // Assuming a paymentStatus field
+                appointmentrepository.save(appointment);
+                return ResponseEntity.ok(status); // Return the updated status
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Appointment not found");
+            }
+        } catch (Exception e) {
+            // Log the exception (optional)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating payment status");
+        }
+    }
 }

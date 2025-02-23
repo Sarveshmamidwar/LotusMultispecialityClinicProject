@@ -13,6 +13,16 @@
 <link rel="stylesheet" th:href="@{/CSS/home.css}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+<style type="text/css">
+.tabs3{
+ font-size: 1.5rem;
+width: 20%; background-color: #C0EC83; margin-right: 2%;
+display: flex;justify-content: center;align-items: center;
+}
+
+
+</style>
+
 </head>
 <body>
 	<section class="main">
@@ -126,35 +136,38 @@
 
 	</div>
 
-	<div style="height: 100px; width: 100%; ">
+	
 		<div style=" height: 100px; width: 100%; position: absolute;">
 	    <div style="height: 100%; position: relative; top:-25%; " class="d-flex justify-content-center scroll-div hidden">
-	        <div class="d-flex" style="height: 75%; width: 20%; background-color: lightgray; margin-right: 2%;">
-				<div> 
-					Book Appointement</div>
-				<div>
-					<img th:src="@{/images/shedule (1).png}" style="width: 20%;">
+	        <div class="row rounded tabs3" >
+				<div class="col-8 "> 
+					Book Appointement
 				</div>
+			
+				<div class="col-4 p-0" >
+					<img th:src="@{/images/shedule (1).png}" style="width: 50%">
+				</div>
+			
 			</div>
-	        <div class="d-flex" style="height: 75%; width: 20%; background-color: lightgray; margin-right: 2%;">
-				<div> Appointment Sehedule</div>
-			    <div>
-					<img th:src="@{/images/group.png}" style="width: 20%;">
+	        <div class="row rounded tabs3" >
+				<div class="col-8 p-2 "> Appointment Sehedule</div>
+			    <div class="col-4 p-0" >
+					<img th:src="@{/images/group.png}" style="width: 50%;">
 					
 				</div>
 			</div>
-	        <div class="d-flex" style="height: 75%; width: 20%; background-color: lightgray; ">
-				<div> reports</div>
-				<div>
-					<img th:src="@{/images/health-report.png}" style="width: 20%;">
+	        <div class="row rounded tabs3" >
+				<div class="col-8 p-2 "> Reports</div>
+				<div class="col-4 p-0" >
+					<img th:src="@{/images/health-report.png}" style="width: 50%;">
 					
 				</div>
 			</div>
 	    </div>
 		
 		</div>
-	</div>
-	<div  class="p-5">
+	
+	<div  class="card p-5 mt-5" style="background: transparent;border: none;">
 		<div>
 			
 		
@@ -176,19 +189,17 @@
 		</div>
 	</div>
 		
-		<div class="mt-5">
+		<div class="card " style="border: none;">
 			
-			<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" style="height: 400px;">
-			  <div class="carousel-inner h-100 w-100">
+			<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" style="height: 300px;">
+			  <div class="carousel-inner h-100">
 			    <div class="carousel-item active h-100 w-100">
-			      <img th:src="@{/images/sliderimg1.jpg}" class="d-block  carousel-image img-fluid" alt="...">
+			      <img class="img-fluid d-block carousel-image h-100 w-100" th:src="@{/images/sliderimg1.jpg}"  alt="...">
 			    </div>
 			    <div class="carousel-item h-100 w-100">
-			      <img th:src="@{/images/sliderimg2.jpg}" class="d-block carousel-image img-fluid" alt="...">
+			      <img class="img-fluid d-block carousel-image h-100 w-100" th:src="@{/images/sliderimg2.jpg}"  alt="...">
 			    </div>
-			   <!-- <div class="carousel-item">
-			      <img src="..." class="d-block w-100 h-100 carousel-image" alt="...">
-			    </div>-->
+			  
 			  </div>
 			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
 			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -203,8 +214,8 @@
 			
 		</div>
 		
-		<div class="ouserservice">
-			<div class="p-5  inner-content" style="text-align: center; " >
+		<div class="card ouserservice" style="border: none;">
+			<div class="p-5 pb-3 inner-content" style="text-align: center; " >
 				<a style="font-size: 2.35rem;font-family: Arial, Helvetica, sans-serif;color: #00d9d9;">Care you can belive in</a>
 				
 				<h1>Our Services</h1>
@@ -215,10 +226,19 @@
 		<div class="card " style="border: transparent;">
 			<div class="row w-100 h-100">
 				<div class="col p-5">
-				    <div class="slide-effect" ></div>
-				    <div class="slide-effect" ></div>
-				    <div class="slide-effect" ></div>
-				    <div class="slide-effect" style="height: 50px;width: 200px;border: 1px solid black;"></div>
+				    <div class="slide-effect" >
+				        <img th:src="@{/images/bloodtest.jpg}" class="img-fluid" style="object-fit: cover;">
+				    </div>
+				    <div class="slide-effect" >
+				    
+				       <img th:src="@{/images/checkup.jpg}" class="img-fluid" style="object-fit: cover;">
+				     </div>
+				    <div class="slide-effect" >
+				    <img th:src="@{/images/checkup.jpg}" class="img-fluid" style="object-fit: cover;">
+				    </div>
+				    <div class="slide-effect" style="height: 50px;width: 200px;border: 1px solid black;text-align: center;">
+				         <a class="" style="text-decoration: none;color: black;">More</a>
+				    </div>
 				</div>
 
 			    <div class="col-6 p-5 blink-effect">
@@ -290,23 +310,23 @@
 			</div>
 		</div>
 		
-		<div class="card position-relative" style="border: transparent;">
-		    <img th:src="@{/images/appointment.jpg}" class="w-100  cover">
+		<div class="card position-relative pt-2" style="border: transparent;height: 600px;width: 100%;">
+		    <img th:src="@{/images/appointment.jpg}" class="h-100 w-100 img-fluid ">
 
 		    <!-- Positioned div on the right side above the image -->
-		    <div class="position-absolute p-4 " 
-		         style="top: 20px; right: 10%;margin-top: 10%;  width: 40%; border: 1px solid black;background: white;">
+		    <div class="position-absolute " 
+		         style="top: 20px; right: 10%; width: 40%; border: 1px solid black;background: white;">
 				 
 				 <h4 class="text-center">Book an Appointment</h4>
 
 				         <form class="d-flex flex-column" style="overflow-y: auto;">
 				             <!-- Full Name -->
 				             <div class=" d-flex justify-content-around p-3 pb-0">
-								<div class="w-100">
+								<div class="w-100 me-2">
 				                 <label for="fullname" class="form-label">Full Name</label>
 				                 <input type="text" id="fullname" class="form-control" placeholder="Enter your full name" required>
 								</div>
-								<div class="w-100">
+								<div class="w-100 me-2">
 									<label for="gender" class="form-label">Gender</label>
 													                 <select id="gender" class="form-select" required>
 													                     <option value="">Select Gender</option>
@@ -317,8 +337,8 @@
 								</div>
 							  </div>
 
-							  <div class="  d-flex justify-content-around p-3 pb-0">
-								<div class="w-100">
+							  <div class="  d-flex justify-content-around p-3 pb-0 ">
+								<div class="w-100 me-2">
 							  		<label for="date" class="form-label">Appointment Date</label>
 							  		<input type="date" id="date" class="form-control" required>
 								</div>	
@@ -329,7 +349,7 @@
 							  </div>
 
 							<div class=" d-flex justify-content-around p-3 pb-0">
-								<div class="w-100">
+								<div class="w-100 me-2">
 									<label for="phone" class="form-label">Phone</label>
 									<input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
 								</div>
@@ -374,19 +394,19 @@
 		<div class="card p-5" style="display: flex;justify-content: center;align-items: center;border: transparent;">
 			
 			<div class="d-flex justify-content-around " >
-				<div class="card " style="width: 18rem;">
-				  <img th:src="@{/images/maledoctor.jpg}" class="card-img-top img-fluid" alt="..." >
+				<div class="card me-3" style="width: 18rem;height: 400px">
+				  <img th:src="@{/images/maledoctor.jpg}" class="img-fluid card-img-top " style="height: 200px;" alt="..." >
 				  <div class="card-body">
 				    <h5 class="card-title">Card title</h5>
 				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 				    <a href="#" class="btn btn-primary">Go somewhere</a>
 				  </div>
 				</div>
-				<div class="card " style="width: 18rem;">
-				  <img th:src="@{/images/femaldoctor.jpg}" class="card-img-top img-fluid" alt="..." >
+				<div class="card " style="width: 18rem;height: 400px">
+				  <img th:src="@{/images/femaldoctor.jpg}" class="card-img-top img-fluid" style="height: 200px;" alt="..." >
 				  <div class="card-body">
 				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text p-0 m-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				    <p class="card-text ">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 				    <a href="#" class="btn btn-primary ">Go somewhere</a>
 				  </div>
 				</div>
@@ -394,10 +414,10 @@
 			
 		</div>
 		
-		<div class="card  mt-3 ourdoctor"  style="display: flex;justify-content: center;align-items: center;border: transparent;">
-						<div class="" style="text-align: center;">
-							<a>GET IN TOUCH</a>
-							<h2 style="color: #C0EC83 ;">Contact</h2>
+		<div class="card  mt-3 ourdoctor"  style="border: transparent;">
+						<div class="" style="text-align: center;flex-wrap: wrap;">
+							<a >GET IN TOUCH</a>
+							<h1 class="p-0 m-0" style="color: #C0EC83 ;font-size: 3rem">Contact</h1>
 						</div>	
 							
 	    </div>
@@ -432,7 +452,7 @@
 					
 					</div>
 				</div>
-				<div class="contactbox"  style="background-color: white !important; border: 1px solid #C0EC83;">
+				<a th:href="@{/appointment}" style="text-decoration: none;"><div class="contactbox"  style="background-color: white !important; border: 1px solid #C0EC83;color: black;">
 					<div class="workinghour">
 						<i class="fa-regular fa-clock fa-lg"></i>
 						<h6 class="mt-2">WORKING HOURS</h6>
@@ -440,7 +460,7 @@
 						<h6>Sunday Emergency Call</h6>
 					
 					</div>
-				</div>
+				</div></a>
 			</div>
 		</div>
 
@@ -448,10 +468,10 @@
 		</div>
 		
 	</div>
-	<footer class="" style="background-color: #000053;">
+	 <footer class="" style="background-color: #000053;">
 		<div class="card p-3" style="background-color: #000053;color: white;">
 			<div class="row align-items-center p-5">
-			    <div class="col">
+			    <div class="col ">
 					<img th:src="@{/images/logo.jpg}" style="width: 50%;">
 			      <h4 class="mt-2">Lotu Multispeciality Clinic</h4>
 				  <div class="d-flex justify-content-aroun mt-3 " >
@@ -501,7 +521,7 @@
 			 
 		</div>
 		
-	</footer>
+	</footer> 
 
 	<script>
 	document.addEventListener("DOMContentLoaded", function () {

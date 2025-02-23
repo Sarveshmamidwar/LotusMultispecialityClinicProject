@@ -37,7 +37,7 @@
   width: 100% !important;       /* Matches the width of the parent container */
 }
 .ouserservice {
-  height: 200px;
+  
   opacity: 0; /* Initially hidden */
   transform: translateY(50px);
   transition: all 3s ease-in-out; /* Smooth transition */

@@ -20,6 +20,8 @@ public class appointmentform {
 	private String email;
 	private String message;
 	private String AppointmentStatus;
+	private String PaymentStatus;
+	
 	public int getId() {
 		return id;
 	}
@@ -79,9 +81,17 @@ public class appointmentform {
 	}
 	public void setAppointmentStatus(String appointmentStatus) {
 		AppointmentStatus = appointmentStatus;
+	}	
+	
+	public String getPaymentStatus() {
+		return PaymentStatus;
 	}
+	public void setPaymentStatus(String paymentStatus) {
+		PaymentStatus = paymentStatus;
+	}
+	
 	public appointmentform(int id, String name, String gender, String appointmentDate, String appointmentTime,
-			String phone, String doctor, String email, String message, String appointmentStatus) {
+			String phone, String doctor, String email, String message, String appointmentStatus, String paymentStatus) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -93,6 +103,7 @@ public class appointmentform {
 		this.email = email;
 		this.message = message;
 		AppointmentStatus = appointmentStatus;
+		PaymentStatus = paymentStatus;
 	}
 	public appointmentform() {
 		super();
@@ -102,8 +113,10 @@ public class appointmentform {
 	public String toString() {
 		return "appointmentform [id=" + id + ", name=" + name + ", gender=" + gender + ", AppointmentDate="
 				+ AppointmentDate + ", AppointmentTime=" + AppointmentTime + ", phone=" + phone + ", doctor=" + doctor
-				+ ", email=" + email + ", message=" + message + ", AppointmentStatus=" + AppointmentStatus + "]";
+				+ ", email=" + email + ", message=" + message + ", AppointmentStatus=" + AppointmentStatus
+				+ ", PaymentStatus=" + PaymentStatus + "]";
 	}
+	
 	
 	
 	
