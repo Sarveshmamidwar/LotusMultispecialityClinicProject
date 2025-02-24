@@ -1,17 +1,16 @@
 package com.Hospital.Controller;
 
-import java.lang.ProcessBuilder.Redirect;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import com.Hospital.entity.Doctors;
 import com.Hospital.entity.appointmentform;
+import com.Hospital.repositories.DoctorsRepositories;
 import com.Hospital.repositories.appointmentrepository;
 
 
@@ -21,6 +20,11 @@ public class HomerController {
 	@Autowired
 	private appointmentrepository  appointmentrepository;
 
+	@Autowired
+	private DoctorsRepositories doctorsRepositories;
+	
+	@Autowired
+	private PasswordEncoder bCryptPasswordEncoder;
 	
 	@GetMapping("/")
 	public String Home() {
@@ -69,4 +73,25 @@ public class HomerController {
 		return "redirect:/appointment";
 	}
 	
+	@GetMapping("/getsignUp")
+	public String getSignUp() {
+		
+		
+		return "Home/SignUp";
+	}
+	
+	@PostMapping("/signUp")
+	public String postSignup(@ModelAttribute Doctors doctors) {
+		
+		 String encodedPassword = bCryptPasswordEncoder.encode(doctors.getPassword());
+	       doctors.setPassword(encodedPassword);
+		doctorsRepositories.save(doctors);
+		return "redirect:/getsignUp";
+	}
+	
+	@GetMapping("/getsignin")
+	public String getSignin() {
+
+		return "Home/Signin";
+	}
 }

@@ -107,6 +107,10 @@ display: flex;justify-content: center;align-items: center;
               </li>
             </ul>
 	            </div>
+	            
+	            <div>
+	               <a th:href="@{/getsignUp}"><button type="button" class="btn btn-secondary">Sign Up</button></a>
+	            </div>
 	        </div>
 	    </div>
 	</nav>
@@ -314,13 +318,13 @@ display: flex;justify-content: center;align-items: center;
 		    <img th:src="@{/images/appointment.jpg}" class="h-100 w-100 img-fluid ">
 
 		    <!-- Positioned div on the right side above the image -->
-		    <div class="position-absolute " 
-		         style="top: 20px; right: 10%; width: 40%; border: 1px solid black;background: white;">
+		    <div class="position-absolute mt-5 " 
+		         style="top: 20px; right: 3%; width: 50%; background: white;">
 				 
-				 <h4 class="text-center">Book an Appointment</h4>
+				 <!-- <h4 class="text-center">Book an Appointment</h4>
 
 				         <form class="d-flex flex-column" style="overflow-y: auto;">
-				             <!-- Full Name -->
+				             Full Name
 				             <div class=" d-flex justify-content-around p-3 pb-0">
 								<div class="w-100 me-2">
 				                 <label for="fullname" class="form-label">Full Name</label>
@@ -365,7 +369,7 @@ display: flex;justify-content: center;align-items: center;
 							  
 							  			             			             
 
-				             <!-- Email -->
+				             Email
 				             <div class="ps-3 pe-3">
 				                 <label for="email" class="form-label">Email</label>
 				                 <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
@@ -376,11 +380,13 @@ display: flex;justify-content: center;align-items: center;
 				                 <textarea id="message" class="form-control" rows="3" placeholder="Enter any message"></textarea>
 				             </div>
 
-				             <!-- Submit Button -->
+				             Submit Button
 				             <div class="text-center">
 				                 <button type="submit" class="btn btn-primary rounded-pill" style="width: 80%;">Submit</button>
 				             </div>
-				         </form>
+				         </form> -->
+				         
+				         <img th:src="@{/images/appointment_form.jpg}" class="img-fluid card-img-top h-100 w-100" alt="..." >
 		    </div>
 		</div>
 		<div class="card ourdoctor" style="display: flex;justify-content: center;align-items: center;border: transparent;">
