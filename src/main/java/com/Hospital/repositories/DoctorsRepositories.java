@@ -17,4 +17,7 @@ public interface DoctorsRepositories extends JpaRepository<Doctors, Integer>{
 	
 	@Query(value = "SELECT * FROM doctors WHERE email = :email", nativeQuery = true)
 	List<Doctors> findByemails(@Param("email") String Email);
+	
+	@Query(value = "SELECT * FROM doctors WHERE doctor_id = :id", nativeQuery = true)
+	List<Doctors> findemployeebydoctors(@Param("id") int doctorId);
 }

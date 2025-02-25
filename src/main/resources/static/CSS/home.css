@@ -128,9 +128,14 @@
         opacity: 1;
     }
 }
-
+.more{
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .slide-effect {
-	height: 130px;width: 200px;border: 1px solid black;
+	height: 130px;width: 200px;
     opacity: 0;
     transform: translateY(100px);
     transition: opacity 0.5s ease, transform 0.5s ease;

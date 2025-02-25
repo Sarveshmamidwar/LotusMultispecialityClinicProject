@@ -16,6 +16,11 @@ public class Doctors {
 	private String Password;
 	private String Gender;
 	private String Role;
+	private String Address;
+	private int doctorId;
+	private String employeetype;
+	private String mobileNumber;
+	
 	public int getId() {
 		return id;
 	}
@@ -51,25 +56,61 @@ public class Doctors {
 	}
 	public void setRole(String role) {
 		Role = role;
+	}	
+	public String getAddress() {
+		return Address;
+	}
+	public void setAddress(String address) {
+		Address = address;
+	}
+	
+	
+	public String getEmployeetype() {
+		return employeetype;
+	}
+	public void setEmployeetype(String employeetype) {
+		this.employeetype = employeetype;
+	}
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+	public int getDoctorId() {
+		return doctorId;
+	}
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
 	}
 	public Doctors() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Doctors(int id, String name, String email, String password, String gender, String role) {
+	public Doctors(int id, String name, String email, String password, String gender, String role, String address,
+			int doctorId, String employeetype, String mobileNumber) {
 		super();
 		this.id = id;
 		Name = name;
-		email = email;
+		this.email = email;
 		Password = password;
 		Gender = gender;
 		Role = role;
+		Address = address;
+		this.doctorId = doctorId;
+		this.employeetype = employeetype;
+		this.mobileNumber = mobileNumber;
 	}
 	@Override
 	public String toString() {
-		return "Doctors [id=" + id + ", Name=" + Name + ", Email=" + email + ", Password=" + Password + ", Gender="
-				+ Gender + ", Role=" + Role + "]";
+		return "Doctors [id=" + id + ", Name=" + Name + ", email=" + email + ", Password=" + Password + ", Gender="
+				+ Gender + ", Role=" + Role + ", Address=" + Address + ", doctorId=" + doctorId + ", employeetype="
+				+ employeetype + ", mobileNumber=" + mobileNumber + "]";
 	}
+	
+	
+	
+	
 	
 	
 }

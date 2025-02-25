@@ -1,5 +1,6 @@
 package com.Hospital.Controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -7,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.Hospital.entity.Doctors;
 import com.Hospital.entity.appointmentform;
 import com.Hospital.entity.tablets;
+import com.Hospital.repositories.DoctorsRepositories;
 import com.Hospital.repositories.appointmentrepository;
 import com.Hospital.repositories.tabletsrepositories;
 
@@ -33,6 +37,12 @@ public class DoctorsController {
 	
 	@Autowired
 	private tabletsrepositories medicinesrepositories;
+	
+	@Autowired
+	private DoctorsRepositories  doctorsRepositories;
+	
+	@Autowired
+	private PasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -192,4 +202,30 @@ public class DoctorsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating payment status");
         }
     }
+    
+    @GetMapping("/GetAddEmployee")
+    public String Employee(Principal principal,Model model) {
+    	System.out.println("name  : "+ principal.getName());
+        Doctors user = doctorsRepositories.findByEmail(principal.getName());
+        
+        List<Doctors> findemployeebydoctors = doctorsRepositories.findemployeebydoctors(user.getId());
+        
+        model.addAttribute("employee",findemployeebydoctors);
+        System.out.println(user);
+        
+    	return "Doctors/AddEmployee";
+    }
+    
+    @PostMapping("/Addemployee")
+    public String AddEmployee(@ModelAttribute Doctors doctors,Principal principal) {
+    	Doctors user = doctorsRepositories.findByEmail(principal.getName());
+    	String encodedPassword = bCryptPasswordEncoder.encode(doctors.getPassword());
+    	
+    	doctors.setPassword(encodedPassword);
+    	doctors.setDoctorId(user.getId());
+    	doctors.setRole("RECPTION");
+    	doctorsRepositories.save(doctors);
+    	 return "redirect:/doctors/GetAddEmployee";
+    }
+    
 }
