@@ -28,7 +28,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/doctors/**").hasRole("DOCTOR")
                 .requestMatchers("/recption/**").hasAnyRole("RECPTION")
-                .requestMatchers("/", "/about", "/ouserService","/ouserDoctors","/contacts","/appointment","/getsignUp","/getsignin","/bookAppointment","/CSS/**", "/js/**","/images/**").permitAll()
+                .requestMatchers("/patient/**").hasAnyRole("PATIENT")
+                .requestMatchers("/", "/about", "/ouserService","/ouserDoctors","/contacts","/appointment","/signUp","/getsignUp","/getsignin","/bookAppointment","/CSS/**", "/js/**","/images/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -53,8 +54,11 @@ public class SecurityConfig {
             
             if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_DOCTOR"))) {
                 response.sendRedirect("/doctors/dashboard");
-            } else {
+            } else if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_RECPTION"))) {
                 response.sendRedirect("/recption/recptionDashboard");
+            }
+            else if(userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_PATIENT"))) {
+            	response.sendRedirect("/patient/patDashboard");
             }
         };
     }

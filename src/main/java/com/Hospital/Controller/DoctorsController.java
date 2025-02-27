@@ -1,6 +1,7 @@
 package com.Hospital.Controller;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -22,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Hospital.entity.Doctors;
+import com.Hospital.entity.Patient;
 import com.Hospital.entity.appointmentform;
 import com.Hospital.entity.tablets;
 import com.Hospital.repositories.DoctorsRepositories;
 import com.Hospital.repositories.appointmentrepository;
+import com.Hospital.repositories.patientrepository;
 import com.Hospital.repositories.tabletsrepositories;
 
 @Controller
@@ -43,6 +46,9 @@ public class DoctorsController {
 	
 	@Autowired
 	private PasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private patientrepository patientrepository;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -228,4 +234,31 @@ public class DoctorsController {
     	 return "redirect:/doctors/GetAddEmployee";
     }
     
+    
+    @GetMapping("/patient")
+    public String patient() {
+    	
+    	return "Doctors/Patient";
+    }
+    
+    @PostMapping("/AddPatient")
+    public String AddPatient(@ModelAttribute Patient patient,Principal principal) {
+    	Doctors user = doctorsRepositories.findByEmail(principal.getName());
+    	String encodedPassword = bCryptPasswordEncoder.encode(patient.getBirthdate());
+    	
+    	Doctors doctors =new Doctors();
+    	   doctors.setName(patient.getName());
+    	   doctors.setEmail(patient.getEmail());
+    	   doctors.setPassword(encodedPassword);
+    	   doctors.setRole("PATIENT");
+    	   doctors.setMobileNumber(patient.getNumber());
+    	   doctors.setAddress(patient.getAddress());
+    	   doctors.setDoctorId(user.getId());
+    	   doctorsRepositories.save(doctors);
+           patientrepository.save(patient);
+    	return "redirect:/doctors/patient";
+    }
+    
+    
+
 }

@@ -21,6 +21,7 @@ public class appointmentform {
 	private String message;
 	private String AppointmentStatus;
 	private String PaymentStatus;
+	private int patientid;
 	
 	public int getId() {
 		return id;
@@ -90,8 +91,17 @@ public class appointmentform {
 		PaymentStatus = paymentStatus;
 	}
 	
+	
+	public int getPatientid() {
+		return patientid;
+	}
+	public void setPatientid(int patientid) {
+		this.patientid = patientid;
+	}
+	
 	public appointmentform(int id, String name, String gender, String appointmentDate, String appointmentTime,
-			String phone, String doctor, String email, String message, String appointmentStatus, String paymentStatus) {
+			String phone, String doctor, String email, String message, String appointmentStatus, String paymentStatus,
+			int patientid) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -104,6 +114,7 @@ public class appointmentform {
 		this.message = message;
 		AppointmentStatus = appointmentStatus;
 		PaymentStatus = paymentStatus;
+		this.patientid = patientid;
 	}
 	public appointmentform() {
 		super();

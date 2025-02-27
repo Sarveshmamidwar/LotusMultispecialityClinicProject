@@ -1,9 +1,12 @@
 package com.Hospital.entity;
 
+
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 
 @Entity
 public class Doctors {
@@ -11,16 +14,15 @@ public class Doctors {
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
 	private int id ;
-	private String Name;
+	private String name;
 	private String email;
-	private String Password;
-	private String Gender;
-	private String Role;
-	private String Address;
+	private String password;
+	private String gender;
+	private String role;
+	private String address;
 	private int doctorId;
 	private String employeetype;
 	private String mobileNumber;
-	
 	public int getId() {
 		return id;
 	}
@@ -28,43 +30,47 @@ public class Doctors {
 		this.id = id;
 	}
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
-		email = email;
+		this.email = email;
 	}
 	public String getPassword() {
-		return Password;
+		return password;
 	}
 	public void setPassword(String password) {
-		Password = password;
+		this.password = password;
 	}
 	public String getGender() {
-		return Gender;
+		return gender;
 	}
 	public void setGender(String gender) {
-		Gender = gender;
+		this.gender = gender;
 	}
 	public String getRole() {
-		return Role;
+		return role;
 	}
 	public void setRole(String role) {
-		Role = role;
-	}	
+		this.role = role;
+	}
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
-	
-	
+	public int getDoctorId() {
+		return doctorId;
+	}
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
+	}
 	public String getEmployeetype() {
 		return employeetype;
 	}
@@ -77,34 +83,28 @@ public class Doctors {
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
-	public int getDoctorId() {
-		return doctorId;
-	}
-	public void setDoctorId(int doctorId) {
+	public Doctors(int id, String name, String email, String password, String gender, String role, String address,
+			int doctorId, String employeetype, String mobileNumber) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.gender = gender;
+		this.role = role;
+		this.address = address;
 		this.doctorId = doctorId;
+		this.employeetype = employeetype;
+		this.mobileNumber = mobileNumber;
 	}
 	public Doctors() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Doctors(int id, String name, String email, String password, String gender, String role, String address,
-			int doctorId, String employeetype, String mobileNumber) {
-		super();
-		this.id = id;
-		Name = name;
-		this.email = email;
-		Password = password;
-		Gender = gender;
-		Role = role;
-		Address = address;
-		this.doctorId = doctorId;
-		this.employeetype = employeetype;
-		this.mobileNumber = mobileNumber;
-	}
 	@Override
 	public String toString() {
-		return "Doctors [id=" + id + ", Name=" + Name + ", email=" + email + ", Password=" + Password + ", Gender="
-				+ Gender + ", Role=" + Role + ", Address=" + Address + ", doctorId=" + doctorId + ", employeetype="
+		return "Doctors [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", gender="
+				+ gender + ", role=" + role + ", address=" + address + ", doctorId=" + doctorId + ", employeetype="
 				+ employeetype + ", mobileNumber=" + mobileNumber + "]";
 	}
 	

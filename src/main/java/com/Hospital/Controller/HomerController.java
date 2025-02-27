@@ -83,9 +83,17 @@ public class HomerController {
 	@PostMapping("/signUp")
 	public String postSignup(@ModelAttribute Doctors doctors) {
 		
-		 String encodedPassword = bCryptPasswordEncoder.encode(doctors.getPassword());
-	       doctors.setPassword(encodedPassword);
-		doctorsRepositories.save(doctors);
+		try {
+			String encodedPassword = bCryptPasswordEncoder.encode(doctors.getPassword());
+			System.out.println("xzdfdfsfbgfgb");
+		       doctors.setPassword(encodedPassword);
+		       doctors.setDoctorId(0);
+			    doctorsRepositories.save(doctors);
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return "redirect:/getsignUp";
 	}
 	
