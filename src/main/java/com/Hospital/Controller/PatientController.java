@@ -1,7 +1,9 @@
 package com.Hospital.Controller;
 
 import java.security.Principal;
+import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,19 +14,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.Hospital.entity.Patient;
+import com.Hospital.entity.Reports;
 import com.Hospital.entity.appointmentform;
 import com.Hospital.repositories.appointmentrepository;
 import com.Hospital.repositories.patientrepository;
+import com.Hospital.repositories.reportsrepository;
 
 @Controller
 @RequestMapping("/patient")
 public class PatientController {
 
 	@Autowired
-	patientrepository patientrepository;
+	private patientrepository patientrepository;
 	
 	@Autowired
 	private appointmentrepository appointmentrepository;
+	
+	@Autowired
+	private reportsrepository reportsrepository;
 	
 	@GetMapping("/patDashboard")
 	public String patientDashboard(Principal principal,Model model ) {
@@ -46,5 +53,21 @@ public class PatientController {
 		appointmentform.setPatientid(patient.getId());
 		appointmentrepository.save(appointmentform);
 		return "redirect:/patient/patDashboard";
+	}
+	
+	@GetMapping("/getreports")
+	public String GetReports(Model model, Principal principal) {
+	    Patient patient = patientrepository.findByemail(principal.getName());
+	    
+	    List<Reports> reports = reportsrepository.findreportsbypatientid(patient.getId());
+	    
+	    // Convert byte[] to Base64
+	    List<String> reportBase64List = reports.stream()
+	        .map(report -> Base64.getEncoder().encodeToString(report.getReport())) // Convert byte[] to Base64 String
+	        .collect(Collectors.toList());
+
+	    model.addAttribute("reports", reportBase64List);
+	    model.addAttribute("PatientName",patient.getName());
+	    return "Patient/Reports"; // Ensure this matches your template filename
 	}
 }

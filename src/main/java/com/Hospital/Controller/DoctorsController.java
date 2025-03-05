@@ -236,8 +236,11 @@ public class DoctorsController {
     
     
     @GetMapping("/patient")
-    public String patient() {
+    public String patient(Model model) {
     	
+    	List<Patient> allpatient = patientrepository.findAll();
+    	
+    	model.addAttribute("allpatient",allpatient);
     	return "Doctors/Patient";
     }
     

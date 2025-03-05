@@ -163,11 +163,9 @@
                 <a class="nav-link navtabs me-3" href="#" th:href="@{/recption/medicinesLists}">Medicines</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/contacts}">Contacts</a>
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/recption/patientlist}">Patients</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/appointment}">Appointment</a>
-              </li>
+              
             </ul>
 	            </div>
 	        </div>
@@ -259,14 +257,18 @@
 
 							</td>
 
-							<td style="width: 10%;"><a th:href="@{/recption/getInvoice}"><img
+							<td style="width: 10%;">
+							<a th:href="@{/recption/getInvoice}"><img
 									alt="" th:src="@{/images/invoice.png}" title="Invoice"
 									th:onclick="deleteMedicine([[${c.id}]])" width="20%"></a>
 									
+									<img data-bs-toggle="modal" data-bs-target="#addreports"
+									alt="" th:src="@{/images/Reports.png}" title="add reports"
+									 width="20%">
 							</td>
 							
-
-
+                            
+                      
 
 
 						</tr>
@@ -351,6 +353,31 @@
 				                 <button type="submit" class="btn btn-primary rounded-pill" style="width: 80%;">Submit</button>
 				             </div>
 				         </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="addreports" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Reports</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <form th:action="@{/recption/addReports}" method="post" enctype="multipart/form-data">
+    <div >
+        <label>Add Reports :</label>
+        <input type="file" name="report">
+    </div>
+    <div class="mt-5 text-center">
+    
+    <button type="submit" class="btn btn-primary rounded-pill" style="width: 80%;">Upload</button>
+    </div>
+</form>
       </div>
       
     </div>

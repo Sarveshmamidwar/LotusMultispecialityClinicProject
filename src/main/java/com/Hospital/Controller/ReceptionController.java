@@ -1,5 +1,7 @@
 package com.Hospital.Controller;
 
+import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -7,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,10 +20,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.Hospital.entity.Doctors;
+import com.Hospital.entity.Patient;
+import com.Hospital.entity.Reports;
 import com.Hospital.entity.appointmentform;
 import com.Hospital.entity.tablets;
+import com.Hospital.repositories.DoctorsRepositories;
 import com.Hospital.repositories.appointmentrepository;
+import com.Hospital.repositories.patientrepository;
+import com.Hospital.repositories.reportsrepository;
 import com.Hospital.repositories.tabletsrepositories;
 
 
@@ -33,6 +43,18 @@ public class ReceptionController {
 	
 	@Autowired
 	private tabletsrepositories medicinesrepositories;
+	
+	@Autowired
+	private reportsrepository reportsrepository;
+	
+	@Autowired
+	private patientrepository patientrepository;
+	
+	@Autowired
+	private DoctorsRepositories doctorsRepositories;
+	
+	@Autowired
+	private PasswordEncoder bCryptPasswordEncoder;
 	
 	@GetMapping("/recptionDashboard")
 	public String recptionDashboard() {
@@ -140,6 +162,58 @@ public class ReceptionController {
         } catch (Exception e) {
             // Log the exception (optional)
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating payment status");
+        }
+    }
+
+    
+    @PostMapping("/addReports")
+    public String addReports(@RequestParam("report") MultipartFile file,@RequestParam("id") int id ) {
+    	
+    	try {
+            Reports report = new Reports();
+            System.out.println("data : " + file.getBytes());
+            report.setReport(file.getBytes());
+            System.out.println("id ;' " + id);// Convert file to byte array
+            report.setPatientid(id);
+            reportsrepository.save(report);  // Save to DB
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    	
+    	return "redirect:/recption/patientlist";
+    }
+    
+    @GetMapping("/patientlist")
+    public String patientlist(Model model) {
+    	
+       List<Patient> allpatient = patientrepository.findAll();
+    	
+    	model.addAttribute("allpatient",allpatient);
+    	return "Recption/patientlist";
+    }
+    
+    @PostMapping("/AddPatient")
+    public String AddPatient(@ModelAttribute Patient patient, Principal principal) {
+        try {
+            Doctors user = doctorsRepositories.findByEmail(principal.getName());
+            String encodedPassword = bCryptPasswordEncoder.encode(patient.getBirthdate());
+
+            Doctors doctors = new Doctors();
+            doctors.setName(patient.getName());
+            doctors.setEmail(patient.getEmail());
+            doctors.setPassword(encodedPassword);
+            doctors.setRole("PATIENT");
+            doctors.setMobileNumber(patient.getNumber());
+            doctors.setAddress(patient.getAddress());
+            doctors.setDoctorId(user.getId());
+
+            doctorsRepositories.save(doctors);
+            patientrepository.save(patient);
+            
+            return "redirect:/recption/patientlist";
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the error for debugging
+            return "error"; // You can return an error page or message
         }
     }
 
