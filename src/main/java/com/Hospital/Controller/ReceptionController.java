@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Hospital.entity.Doctors;
@@ -217,5 +218,12 @@ public class ReceptionController {
         }
     }
 
+    @GetMapping("/search-tablets")
+    @ResponseBody
+    public List<tablets> searchTablets(@RequestParam String term) {
+    	
+    	List<tablets> findtabletsbyname = medicinesrepositories.findtabletsbyname(term);
+        return findtabletsbyname;
+    }
 
 }

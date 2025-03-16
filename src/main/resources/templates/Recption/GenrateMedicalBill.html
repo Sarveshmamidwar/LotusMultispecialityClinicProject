@@ -16,11 +16,7 @@
  <style>
         /* Set the map size */
         
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-         
+       
 
     .dropdown {
         position: absolute;
@@ -48,8 +44,7 @@
         display: flex;
     }
     .prescriptiontable{
-       min-height: 300px; /* Start with a minimum height */
-    max-height: auto;
+       max-height: 300px; overflow-y: auto;min-height: 300px;
     }
     input {
 	text-transform: capitalize;
@@ -86,8 +81,10 @@ max-height: 300px;
 </head>
 <body>
 
-<header>
-<nav class="navbar navbar-expand-lg  ">
+
+		<div class="card" style="height: 100vh;border: none;">
+		
+		<div class="navbar navbar-expand-lg  ">
         
             <div class="container-fluid">
               <a class="navbar-brand" style="text-decoration: none;color: black;font-size: 1.8rem" >
@@ -141,8 +138,8 @@ max-height: 300px;
             </ul>
           </div>
         </div>
-    </nav>
-	<nav class="navbar navbar-expand-lg p-0" style="background-color: #C0EC83;">
+    </div>
+	<div class="navbar navbar-expand-lg p-0" style="background-color: #C0EC83;">
 	    <div class="container-fluid" >
 	       
 	        
@@ -172,21 +169,16 @@ max-height: 300px;
 	        
 	        </div>
 	    </div>
-	</nav>
+	</div>
 
-</header>
-
-
-
-<main>
-
-		<div class="card p-3">
-
-			<div class="card-body">
-				<div class="row">
-					<div class="col-4">
-					    <div class="card">
+			<div class="card h-100" style="border: none;">
+				<div class="row h-100 w-100 p-3">
+					<div class="col-4 h-100" style="border: 1px solid #D3D3D3;border-radius: 5px">
+					    <div class="card pt-3" style="border: none;">
+					    <div class="row p-2 pb-0">
 					    <h2>Add Prescriptions</h2>
+					    </div>
+					          
 					         <div class=" row mt-1 p-2 d-flex" style=" display:flex; justify-content: center;align-items: center;">
 					            <div class="col ">
 					                <label>Sr No. :</label>
@@ -194,7 +186,8 @@ max-height: 300px;
 					            </div>
 								<div class="col">
 									  <label>Prescription :</label>
-		                              <input type="text" id="prescription">
+		                              <input type="text" id="prescription"  oninput="validateText()">
+		                              <span id="error-message" style="color: red;"></span>
 								</div>
 
 							</div>
@@ -209,33 +202,35 @@ max-height: 300px;
 							<div class="row p-2 ">
 								<div class="col w-100">
 									<label>QTY : </label>
-									 <input class="w-100" type="text" id="qty">
+									 <input class="w-100" type="text" id="qty" oninput="validateNumber('qty', 'error-qty')">
+									 <span id="error-qty" style="color: red; display: none;"></span>
 								</div>
 
 								<div class="col ">
 									<label>Price : </label>
 									 <input class="w-100" type="text"
-										id="price">
+										id="price" oninput="validateNumber('price', 'error-price')">
+										<span id="error-price" style="color: red; display: none;"></span>
 								</div>
 
-								<div class="col w-100">
+								<!-- <div class="col w-100">
 									<label>Total Amount : </label> 
 									<input class="w-100" type="text"
 										id="total">
-								</div>
+								</div> -->
 
 
 							</div>
 
 							<div class="row mt-2 p-2 d-flex">
 							    <div class="d-flex justify-content-center">
-							       <button type="button" class="btn me-2 btn-primary" id="addPrescription">Add</button>
-							       <button type="button" class="btn " id="clearTable" style="border-color: red"><i class="fa-solid fa-trash" style="color: #fa0000;"></i></button>
+							       <button type="button" class="btn me-2 btn-primary" onclick="addPrescription()" id="addPrescription">Add</button>
+							       <button type="button" class="btn " onclick="clearTableData()" id="clearTable" style="border-color: red"><i class="fa-solid fa-trash" style="color: #fa0000;"></i></button>
 							    </div>
 							</div>
 					    </div>
 					  
-					  <div class="card mt-3">
+					  <!-- <div class="card mt-3">
 							<div class="row">
 								<div class="col-8">
 								    <input type="text"> 
@@ -243,16 +238,16 @@ max-height: 300px;
 								</div>
 								<div class="col-4"></div>
 							</div>
-						</div>
+						</div> -->
 					  
 					  <div class="card mt-2">
-					     <button type="button" class="btn" id="generatePdfBtn">genrate pdf</button>
+					     <button type="button" style="background-color: #C0EC83;" class="btn" id="generatePdfBtn" onclick="generatePDF()">Genrate PDF</button>
 					  </div>
 					</div>
 					
 					
-					<div class="col-8 " id="pdfContent">
-						<div class="card p-3 precard " >
+					<div class="col-8 h-100" id="pdfContent">
+						<div class="card p-3 precard h-100" >
 							<div class="row ">
 								<div class="col ms-2">
 								    <h3>INVOICE</h3>
@@ -264,7 +259,7 @@ max-height: 300px;
 								<div class="col drsection ">
 								  <div class="">
 								   <div class=" ">
-								       <img th:src="@{/images/logo.jpg}" class="logo mt-3 " style="width: 40%;mix-blend-mode: multiply !important; ">
+								       <img th:src="@{/images/logo.jpg}" class="logo prelogo" style="width: 20%;mix-blend-mode: multiply !important; ">
 								   </div>
 								   <div style="display: flex; flex-direction: column;font-size: 1.5rem">
                                      <a >LOTUS</a>
@@ -311,7 +306,7 @@ max-height: 300px;
 							
 							<hr style="border: none; border-top: 2px solid black;">
 
-							<div class="prescriptiontable ">
+							<div class="scrollspy-example prescriptiontable h-100" >
 								<table class="table ">
 									<thead class="" style="border-radius: 5px;">
 										<tr>
@@ -324,15 +319,14 @@ max-height: 300px;
 											
 										</tr>
 									</thead>
-									<tbody id="prescriptionTableBody">
+									<tbody id="prescriptionTableBody" >
 										
 									</tbody>
 								</table>
-
-							</div>
-							
-							<div class="totalamounttab">
-							    <div class="row">
+								
+								
+								<div class="totalamounttab w-100 ">
+							    <div class="row w-100 mt-5">
 							        <div class="col-8 text-end">
 							             <h5>Total Amount</h5>
 							        </div>
@@ -343,9 +337,9 @@ max-height: 300px;
 							
 							</div>
 							
-							<div class=" signtab mt-2">
+							<div class=" signtab m-2 mb-3">
 
-								<div class="row " >
+								<div class="row w-100" >
 									<div class="col-8"></div>
 									<div class="col-4" style="text-align: center; ">
 									   <div class="" style="display: flex;justify-content: center;" >
@@ -362,6 +356,11 @@ max-height: 300px;
 								</div>
 
 							</div>
+
+							</div>
+							
+							
+							 
 						</div>
 
 					</div>
@@ -370,204 +369,12 @@ max-height: 300px;
 
 		</div>
 
-	</main>
+	
 	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    loadTableData(); // Load stored data when page loads
-    updateTotalAmount(); // Update total amount on page load
-});
 
-document.getElementById("addPrescription").addEventListener("click", function () {
-    let srNo = document.getElementById("srNo").value;
-    let prescription = document.getElementById("prescription").value;
-    let drugName = document.getElementById("drugName1").value;
-    let schedule = document.getElementById("price").value;
-    let qty = document.getElementById("qty").value;
-
-    if (!srNo || !prescription || !drugName || !schedule || !qty) {
-        alert("Please fill all fields before adding.");
-        return;
-    }
-
-    const total = qty * schedule;
-    console.log("total", total);
-
-    let rowData = { srNo, prescription, drugName, schedule, total, qty };
-
-    let storedData = JSON.parse(localStorage.getItem("prescriptions")) || [];
-    storedData.push(rowData);
-    localStorage.setItem("prescriptions", JSON.stringify(storedData));
-
-    appendRowToTable(rowData);
-    updateTotalAmount(); // Update total after adding a row
-
-    document.getElementById("srNo").value = "";
-    document.getElementById("prescription").value = "";
-    document.getElementById("drugName1").value = "";
-    document.getElementById("price").value = "";
-    document.getElementById("qty").value = "";
-});
-
-function appendRowToTable(rowData) {
-    let tableBody = document.getElementById("prescriptionTableBody");
-    let newRow = document.createElement("tr");
-
-    newRow.innerHTML = `
-        <td>${rowData.srNo}</td>
-        <td>${rowData.prescription}</td>
-        <td>${rowData.drugName}</td>
-        <td>${rowData.qty}</td>
-        <td>${rowData.schedule}</td>
-        <td class="totalColumn">${rowData.total}</td>
-    `;
-
-    tableBody.appendChild(newRow);
-    updateTotalAmount(); // Update total amount whenever a new row is added
-}
-
-function loadTableData() {
-    let storedData = JSON.parse(localStorage.getItem("prescriptions")) || [];
-    let tableBody = document.getElementById("prescriptionTableBody");
-    tableBody.innerHTML = ""; 
-
-    storedData.forEach(rowData => {
-        appendRowToTable(rowData);
-    });
-
-    updateTotalAmount(); // Update total amount after loading data
-}
-
-function updateTotalAmount() {
-    let totalAmount = 0;
-    document.querySelectorAll(".totalColumn").forEach(td => {
-        totalAmount += parseFloat(td.textContent) || 0;
-    });
-    document.getElementById("totalAmount").textContent = totalAmount.toFixed(2); // Show total with 2 decimal places
-}
-
-document.getElementById("clearTable").addEventListener("click", function () {
-    localStorage.removeItem("prescriptions");
-    document.getElementById("prescriptionTableBody").innerHTML = "";
-    updateTotalAmount(); // Reset total amount when clearing the table
-});
-
-</script>
-
-<script>
-document.getElementById('generatePdfBtn').addEventListener('click', function () {
-    const element = document.getElementById('pdfContent');
-    const drSection = document.querySelector('.drsection'); 
-    const precard = document.querySelector('.precard'); 
-
-    // Get all input fields
-    const inputs = element.querySelectorAll('input, textarea');
-
-    inputs.forEach(input => {
-        // Create a span element to store input value
-        const span = document.createElement('span');
-        span.textContent = input.value || ''; // Set span text to input value
-        span.style.fontWeight = 'bold'; // Make it bold like labels
-        span.style.marginLeft = '10px';
-        span.style.textTransform = 'capitalize';
-        // Place span next to the input
-        input.parentNode.insertBefore(span, input);
-        input.style.marginLeft = '15px';
-        // Hide the input
-        input.style.display = 'none';
-    });
-
-    drSection.style.fontSize = '0.5rem';
-    precard.style.border = 'none';
-    element.style.width = '100%';
-    element.style.maxWidth = '210mm';
-    element.style.marginTop = '10px';
-
-    // Adjust height for A4 size
-    const contentHeight = element.scrollHeight;
-    const a4HeightPx = 1122;
-    if (contentHeight < a4HeightPx) {
-        element.style.minHeight = contentHeight + 'px';
-    } else {
-        element.style.minHeight = '297mm';
-    }
-
-    html2pdf().from(element).set({
-        margin: 0,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, scrollY: 0 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    }).outputPdf('blob').then((pdfBlob) => {
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-        const newWindow = window.open(pdfUrl);
-        if (newWindow) {
-            newWindow.onload = function () {
-                newWindow.print();
-            };
-        } else {
-            alert("Please allow pop-ups to print the document.");
-        }
-
-        // Restore inputs and remove spans after PDF is generated
-        inputs.forEach(input => {
-            input.style.display = ''; // Show input again
-            input.previousSibling.remove(); // Remove the added span
-        });
-
-        // Reset styles
-        element.style.width = '';
-        element.style.maxWidth = '';
-        element.style.minHeight = '';
-        element.style.padding = '';
-    });
-});
-
-
-
-
-</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function () {
-    $("#drugName1").on("input", function () {
-        let searchTerm = $(this).val().trim();
-        let suggestionsDiv = $("#suggestions");
-
-        if (searchTerm.length > 0) {
-            $.ajax({
-                url: "/doctors/search-tablets",
-                type: "GET",
-                data: { term: searchTerm },
-                success: function (response) {
-                    console.log("Response Data:", response); // Debugging
-                    suggestionsDiv.empty(); // Clear previous suggestions
-
-                    if (response.length > 0) {
-                        let list = $("<ul class='list-group'></ul>");
-                        response.forEach(function (tablet) {
-                            let itemContent = `<strong>${tablet.tabletName}</strong>`; // Corrected syntax
-                            let item = $("<li class='list-group-item suggestion-item'></li>")
-                                .html(itemContent)
-                                .on("click", function () {
-                                    $("#drugName1").val(tablet.tabletName); // Set input field value
-                                    suggestionsDiv.empty().hide(); // Hide suggestions after selection
-                                });
-                            list.append(item);
-                        });
-
-                        suggestionsDiv.append(list).show(); // Show suggestions when data is present
-                    } else {
-                        suggestionsDiv.hide(); // Hide if no results
-                    }
-                }
-            });
-        } else {
-            suggestionsDiv.empty().hide(); // Hide when input is empty
-        }
-    });
-});
-</script>
+<script th:src="@{/js/Reception-genrateMedicalBill.js}"></script>
 
 
 
