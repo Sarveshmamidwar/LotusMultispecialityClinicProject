@@ -25,8 +25,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.Hospital.entity.Doctors;
 import com.Hospital.entity.Patient;
 import com.Hospital.entity.appointmentform;
+import com.Hospital.entity.staff;
 import com.Hospital.entity.tablets;
 import com.Hospital.repositories.DoctorsRepositories;
+import com.Hospital.repositories.HositalStaffrepository;
 import com.Hospital.repositories.appointmentrepository;
 import com.Hospital.repositories.patientrepository;
 import com.Hospital.repositories.tabletsrepositories;
@@ -49,6 +51,9 @@ public class DoctorsController {
 	
 	@Autowired
 	private patientrepository patientrepository;
+	
+	@Autowired
+	private HositalStaffrepository hospitalStaffrepository;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -58,11 +63,17 @@ public class DoctorsController {
     	int todayAppointmentsCount = appointmentrepository.findTodayAppointmentsCount();
     	int cancleAppointmentsCount = appointmentrepository.findCancleAppointmentsCount();
     	int tomorrowAppointmentsCount = appointmentrepository.findTomorrowAppointmentsCount();
+    	int rutineApointmentCount = appointmentrepository.findRutineAppointmentsCount();
+    	int DoneAppointmentCount = appointmentrepository.findDoneAppointmentsCount();
+    	int OnlinePaymentCount = appointmentrepository.findOnlinePaymentCount();
     	
     	model.addAttribute("totalCount",findtotalcount);
     	model.addAttribute("todayAppointmentsCount",todayAppointmentsCount);
     	model.addAttribute("cancleAppointmentsCount",cancleAppointmentsCount);
     	model.addAttribute("tomorrowAppointmentsCount",tomorrowAppointmentsCount);
+    	model.addAttribute("rutineApointmentCount",rutineApointmentCount);
+    	model.addAttribute("DoneAppointmentCount",DoneAppointmentCount);
+    	model.addAttribute("OnlinePaymentCount",OnlinePaymentCount);
         return "Doctors/dashboard"; // Ensure the view name matches your Thymeleaf template location
     }
     
@@ -230,6 +241,17 @@ public class DoctorsController {
     	doctors.setPassword(encodedPassword);
     	doctors.setDoctorId(user.getId());
     	doctors.setRole("RECPTION");
+    	doctors.setEmployeetype("Reception");
+    	
+    	staff hospitaStaff = new staff();
+    	hospitaStaff.setName(doctors.getName());
+    	hospitaStaff.setEmail(doctors.getEmail());
+    	hospitaStaff.setNumber(doctors.getMobileNumber());
+    	hospitaStaff.setGender(doctors.getGender());
+    	hospitaStaff.setAddress(doctors.getAddress());
+    	hospitaStaff.setEmpType("Reception");
+    	hospitaStaff.setDocid(user.getId());
+    	hospitalStaffrepository.save(hospitaStaff);
     	doctorsRepositories.save(doctors);
     	 return "redirect:/doctors/GetAddEmployee";
     }

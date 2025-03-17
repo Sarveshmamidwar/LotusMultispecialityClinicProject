@@ -99,10 +99,10 @@
                 <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/medicinesLists}">Medicines</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/contacts}">Contacts</a>
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/GetAddEmployee}">Staff</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/appointment}">Appointment</a>
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/patient}">Patient</a>
               </li>
             </ul>
 	            </div>
@@ -110,7 +110,7 @@
 	        
 	        <div class="p-2 me-5">
 	        <!-- <button type="button" class="btn btn-primary me-3">Primary</button> -->
-	        <i class="fa-solid fa-power-off fa-xl " style="color: #f90101;"></i>
+	       <a th:href="@{/logout}"><i class="fa-solid fa-power-off fa-xl " style="color: #f90101;"></i></a>
 	        
 	        </div>
 	    </div>

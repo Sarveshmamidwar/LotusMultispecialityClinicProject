@@ -20,9 +20,9 @@ function addPrescription() {
 
     let rowData = { srNo, prescription, drugName, schedule, total, qty };
 
-    let storedData = JSON.parse(localStorage.getItem("prescriptions")) || [];
+    let storedData = JSON.parse(localStorage.getItem("Invoiceprescriptions")) || [];
     storedData.push(rowData);
-    localStorage.setItem("prescriptions", JSON.stringify(storedData));
+    localStorage.setItem("Invoiceprescriptions", JSON.stringify(storedData));
 
     appendRowToTable(rowData);
     updateTotalAmount(); // Update total after adding a row
@@ -36,7 +36,7 @@ function addPrescription() {
 }
 
 function appendRowToTable(rowData) {
-    let tableBody = document.getElementById("prescriptionTableBody");
+    let tableBody = document.getElementById("InvoiceprescriptionTableBody");
     let newRow = document.createElement("tr");
 
     newRow.innerHTML = `
@@ -63,8 +63,8 @@ function appendRowToTable(rowData) {
 
 
 function loadTableData() {
-    let storedData = JSON.parse(localStorage.getItem("prescriptions")) || [];
-    let tableBody = document.getElementById("prescriptionTableBody");
+    let storedData = JSON.parse(localStorage.getItem("Invoiceprescriptions")) || [];
+    let tableBody = document.getElementById("InvoiceprescriptionTableBody");
     tableBody.innerHTML = ""; 
 
     storedData.forEach(rowData => {
@@ -83,13 +83,13 @@ function updateTotalAmount() {
 }
 
 function clearTableData() {
-    localStorage.removeItem("prescriptions"); // Remove stored data
-    document.getElementById("prescriptionTableBody").innerHTML = ""; // Clear table
+    localStorage.removeItem("Invoiceprescriptions"); // Remove stored data
+    document.getElementById("InvoiceprescriptionTableBody").innerHTML = ""; // Clear table
     updateTotalAmount(); // Reset total amount
 }
 
 function generatePDF() {
-    const element = document.getElementById('pdfContent');
+    const element = document.getElementById('InvoicepdfContent');
     const drSection = document.querySelector('.drsection'); 
     const precard = document.querySelector('.precard');
     const logo = document.querySelector('.prelogo');

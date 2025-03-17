@@ -39,6 +39,12 @@ public interface appointmentrepository  extends JpaRepository<appointmentform, I
 	@Query(value = "SELECT count(*) FROM appointmentform WHERE appointment_type = 'Rutine CheckUp' ", nativeQuery = true)
 	int findRutineAppointmentsCount();
 	
+	@Query(value = "SELECT COUNT(*) FROM appointmentform WHERE payment_status IN ('UPI', 'CARD') and appointment_date = CURRENT_DATE ", nativeQuery = true)
+	int findOnlinePaymentCount();
+	
+	@Query(value = "SELECT count(*) FROM appointmentform WHERE appointment_status = 'Cancle' and appointment_date = CURRENT_DATE ", nativeQuery = true)
+	int findTodaysCancleAppointmentsCount();
+	
 	@Query(value = "SELECT * FROM appointmentform WHERE appointment_date = CURRENT_DATE and appointment_status = 'Pending' ", nativeQuery = true)
 	List<appointmentform> findTodayAppointmentswithstatus();
 

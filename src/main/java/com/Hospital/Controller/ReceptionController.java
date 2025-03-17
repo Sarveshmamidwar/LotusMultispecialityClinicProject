@@ -68,10 +68,11 @@ public class ReceptionController {
 int findtotalcount = appointmentrepository.findtotalcount();
     	
     	int todayAppointmentsCount = appointmentrepository.findTodayAppointmentsCount();
-    	int cancleAppointmentsCount = appointmentrepository.findCancleAppointmentsCount();
+    	int cancleAppointmentsCount = appointmentrepository.findTodaysCancleAppointmentsCount();
     	int tomorrowAppointmentsCount = appointmentrepository.findTomorrowAppointmentsCount();
     	int rutineApointmentCount = appointmentrepository.findRutineAppointmentsCount();
     	int DoneAppointmentCount = appointmentrepository.findDoneAppointmentsCount();
+    	int OnlinePaymentCount = appointmentrepository.findOnlinePaymentCount();
     	
     	model.addAttribute("totalCount",findtotalcount);
     	model.addAttribute("todayAppointmentsCount",todayAppointmentsCount);
@@ -79,6 +80,7 @@ int findtotalcount = appointmentrepository.findtotalcount();
     	model.addAttribute("tomorrowAppointmentsCount",tomorrowAppointmentsCount);
     	model.addAttribute("rutineApointmentCount",rutineApointmentCount);
     	model.addAttribute("DoneAppointmentCount",DoneAppointmentCount);
+    	model.addAttribute("OnlinePaymentCount",OnlinePaymentCount);
 		
 		return "Recption/recptionDashboard";
 	}

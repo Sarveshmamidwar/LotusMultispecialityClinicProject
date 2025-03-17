@@ -165,7 +165,7 @@ max-height: 300px;
 	        
 	        <div class="p-2 me-5">
 	        <!-- <button type="button" class="btn btn-primary me-3">Primary</button> -->
-	        <i class="fa-solid fa-power-off fa-xl " style="color: #f90101;"></i>
+	        <a th:href="@{/logout}"><i class="fa-solid fa-power-off fa-xl " style="color: #f90101;"></i></a>
 	        
 	        </div>
 	    </div>
@@ -248,7 +248,7 @@ max-height: 300px;
 					</div>
 					
 					
-					<div class="col-8 h-100" id="pdfContent">
+					<div class="col-8 h-100" id="InvoicepdfContent">
 						<div class="card p-3 precard h-100" >
 						  <form th:action="@{/recption/addbill}" method="post"> 
 							<div class="row ">
@@ -319,7 +319,7 @@ max-height: 300px;
 											
 										</tr>
 									</thead>
-									<tbody id="prescriptionTableBody" >
+									<tbody id="InvoiceprescriptionTableBody" >
 										
 									</tbody>
 								</table>								

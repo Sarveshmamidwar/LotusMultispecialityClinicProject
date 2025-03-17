@@ -35,10 +35,9 @@
 "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js">
 </script>
  <style>
-        /* Set the map size */
-        #map {
-            height: 400px;
-            width: 100%;
+        *{
+          padding: 0%;
+          margin: 0%;
         }
         .viewall{
             font-size: 0.9rem;       
@@ -61,12 +60,28 @@
             font-size: 16px;
             z-index: 1000;
         }
+        .counttitle{
+          font-size: 1.7rem;
+          padding: 0%;
+          margin: 0%;
+        }
+        .countsubtit{
+           font-size: 0.8rem;
+           text-decoration: none;
+            padding: 0%;
+          margin: 0%;
+        }
+        .count{
+        text-align: center;
+        font-size: 2.4rem;
+        }
     </style>
 </head>
 <body>
 
-<header>
-<nav class="navbar navbar-expand-lg  ">
+<div class="card  w-100 " style="height: 100vh;" >
+
+<div class="navbar navbar-expand-lg  ">
         
             <div class="container-fluid">
               <a class="navbar-brand" style="text-decoration: none;color: black;font-size: 1.8rem" >
@@ -120,8 +135,8 @@
             </ul>
           </div>
         </div>
-    </nav>
-	<nav class="navbar navbar-expand-lg p-0" style="background-color: #C0EC83;">
+    </div>
+	<div class="navbar navbar-expand-lg p-0" style="background-color: #C0EC83;">
 	    <div class="container-fluid" >
 	       
 	        
@@ -141,7 +156,7 @@
                 <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/medicinesLists}">Medicines</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/GetAddEmployee}">Employee</a>
+                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/GetAddEmployee}">Staff</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/patient}">Patient</a>
@@ -156,15 +171,14 @@
 	        
 	        </div>
 	    </div>
-	</nav>
+	</div>
 
-</header>
+<div class="card h-100" >
 
-<main>
 
-<div class="card pt-3 p-2 rounded mt-2" style="  border: transparent;background-color: #adebb3">
 
-<div class="card-body rounded " style="background-color: white;">
+
+<div class="card mt-3 p-1  w-100" style="border: none;">
 
 <div class="aptab">
 <div class="appointType p-2">
@@ -183,7 +197,7 @@
   <div class="col-sm-4 count">
   <h1 th:text="${cancleAppointmentsCount}"></h1></div>
   <div class="col-sm-8">
-  <a>Cancle Appointment</a>
+  <a>Cancelled Appointment</a>
   <a th:href="@{/doctors/cancleAppointment}" ><i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
   </div>
 </div>
@@ -210,7 +224,9 @@
 </div>
 <div class="appointType p-2">
 <div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
-  <div class="col-sm-4 count">8</div>
+  <div class="col-sm-4 count">
+     <h1 th:text="${rutineApointmentCount}"></h1>
+  </div>
   <div class="col-sm-8">
   <a>Rutine CheckUp Appointment</a>
   <i class="fa-solid fa-arrow-right fa-xl ps-3"></i>
@@ -222,75 +238,123 @@
  
 </div>
 
-<div class="card  mt-3 " style="background: transparent;border: none;">
+<div class="card h-100 mt-3" style="border: none;">
 
-  <div class="d-flex rounded ">
-    <div class="card-body rounded w-50 me-3" style="background-color: white;display: flex;justify-content: center;align-items: center;">
-         <div id="donut-chart"></div>
-    
-    </div>
-    <div class="card-body rounded w-50 " style="background-color: white;">
-    
-       <div class="paitentmain m-3  align-items-center ">
-        <div class="row p-2 revenuebody">
-            <div class="patientcount col-6 rounded" style="background-color: gray;">
-                 <div class="row p-3">
-                   <div class="col-8">
-                      <a class="revenue">Todya's Patient count</a>
-                   </div>
-                   <div class="col-4">
-                      <h2>50</h2>
-                   </div>
-                 </div>
-            </div>
-            <div class="patientcount rounded col-6 ps-2 " style="border: none;background-color: gray;">
-                 <div class="row p-3">
-                   <div class="col-6">
-                      <a class="revenue">Todya Amount</a>
-                   </div>
-                   <div class="col">
-                      <h2>5000</h2>
-                   </div>
-                 </div>
-            </div>
+<div class="row h-100 w-100">
+
+<div class="col "> 
+ <div class="card  h-100 ">
+ 
+ <div class="mt-5" id="donut-chart"></div>
+ </div>
+ 
+</div>
+
+
+<div class="col h-100">
+ <div class="card p-3 h-100 d-flex justify-content-center align-items-center">
+   
+   <div class="row w-100">
+   
+     <div class="col d-flex justify-content-center align-items-center">
+          <div class="card" style="width: 12rem;">
+  <div class="card-body">
+    <div class="row">
+        <div class="col-3 d-flex justify-content-center align-items-center">
+           <div>           
+              <h1 class="count" th:text="${DoneAppointmentCount}">2</h1>
+           </div>
         </div>
-        <div class="row p-2 revenuebody">
-            <div class="patientcount rounded col-6" style="background-color: gray;">
-                 <div class="row p-3">
-                   <div class="col-6">
-                      <a class="revenue">This month</a>
-                   </div>
-                   <div class="col">
-                      <h2>50000</h2>
-                   </div>
-                 </div>
-            </div>
-            <div class="patientcount rounded col-6" style="border: none;background-color: gray;">
-                 <div class="row p-3">
-                   <div class="col-6">
-                      <a class="revenue">Card payment</a>
-                   </div>
-                   <div class="col ">
-                      <h2>500</h2>
-                   </div>
-                 </div>
-            
-            </div>
+        <div class="col-9">
+          <p class="p-0 m-0 counttitle">Today's</p>
+          <p class="countsubtit">Patient Count</p>
         </div>
     </div>
     
+  </div>
+</div>
+     
+     
+     </div>
+     <div class="col d-flex justify-content-center align-items-center">
+         <div class="card" style="width: 12rem;">
+  <div class="card-body">
+    <div class="row">
+        <div class="col-3 d-flex justify-content-center align-items-center">
+           <div>
+              <h1 class="count">3</h1>
+           </div>
+        </div>
+        <div class="col-9">
+          <p class="p-0 m-0 counttitle">Today's</p>
+          <p class="countsubtit">Total Revenue</p>
+        </div>
+    </div>
+    
+  </div>
+</div>
+     
+     </div>
+   
+   </div> 
+   
+   
+   <div class="row w-100 mt-5">
+   
+     <div class="col d-flex justify-content-center align-items-center">
+          <div class="card" style="width: 12rem;">
+  <div class="card-body">
+    <div class="row">
+        <div class="col-3 d-flex justify-content-center align-items-center">
+          <div>
+           <h1 class="count">5</h1>
+           </div>
+        </div>
+        <div class="col-9">
+          <p class="p-0 m-0 counttitle">Today's</p>
+          <p class="countsubtit">Medical Revenue</p>
+        </div>
     </div>
   </div>
 </div>
+     
+     
+     </div>
+     <div class="col d-flex justify-content-center align-items-center">
+         <div class="card" style="width: 12rem;">
+  <div class="card-body">
+    <div class="row">
+        <div class="col-3 d-flex justify-content-center align-items-center">
+          <div>
+            <h1 class="count" th:text="${OnlinePaymentCount}">8</h1>
+          </div>
+        </div>
+        <div class="col-9">
+          <p class="p-0 m-0 counttitle">Online</p>
+          <p class="countsubtit">Payment Count</p>
+        </div>
+    </div>
+    
+  </div>
+</div>
+     
+     </div> 
+   </div>  
+ </div>
+</div>
+</div>
+</div>
+
+
 <button id="enableSpeechButton" onclick="speakAlert()" style="display:none;">🔊 Enable Speech</button>
 <div id="appointmentAlert"></div>
 </div>
 
-
+</div>
 
 
 		<script  th:src="@{/js/DoctorsDashboard.js}"></script>
-</main>
+
 
 	</body>
 
