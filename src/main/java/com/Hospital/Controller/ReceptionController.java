@@ -24,11 +24,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Hospital.entity.Doctors;
+import com.Hospital.entity.MedicalBills;
 import com.Hospital.entity.Patient;
 import com.Hospital.entity.Reports;
 import com.Hospital.entity.appointmentform;
 import com.Hospital.entity.tablets;
 import com.Hospital.repositories.DoctorsRepositories;
+import com.Hospital.repositories.MedicalBillrepository;
 import com.Hospital.repositories.appointmentrepository;
 import com.Hospital.repositories.patientrepository;
 import com.Hospital.repositories.reportsrepository;
@@ -57,8 +59,26 @@ public class ReceptionController {
 	@Autowired
 	private PasswordEncoder bCryptPasswordEncoder;
 	
+	@Autowired
+	private MedicalBillrepository medicalBillrepository;
+	
 	@GetMapping("/recptionDashboard")
-	public String recptionDashboard() {
+	public String recptionDashboard(Model model) {
+		
+int findtotalcount = appointmentrepository.findtotalcount();
+    	
+    	int todayAppointmentsCount = appointmentrepository.findTodayAppointmentsCount();
+    	int cancleAppointmentsCount = appointmentrepository.findCancleAppointmentsCount();
+    	int tomorrowAppointmentsCount = appointmentrepository.findTomorrowAppointmentsCount();
+    	int rutineApointmentCount = appointmentrepository.findRutineAppointmentsCount();
+    	int DoneAppointmentCount = appointmentrepository.findDoneAppointmentsCount();
+    	
+    	model.addAttribute("totalCount",findtotalcount);
+    	model.addAttribute("todayAppointmentsCount",todayAppointmentsCount);
+    	model.addAttribute("cancleAppointmentsCount",cancleAppointmentsCount);
+    	model.addAttribute("tomorrowAppointmentsCount",tomorrowAppointmentsCount);
+    	model.addAttribute("rutineApointmentCount",rutineApointmentCount);
+    	model.addAttribute("DoneAppointmentCount",DoneAppointmentCount);
 		
 		return "Recption/recptionDashboard";
 	}
@@ -226,4 +246,12 @@ public class ReceptionController {
         return findtabletsbyname;
     }
 
+    
+    @PostMapping("/addbill")
+    public String Genratemedicalbill(@ModelAttribute MedicalBills medicalBills) {
+    	
+    	medicalBillrepository.save(medicalBills);
+    	
+    	return "redirect:/recption/getInvoice";
+    }
 }

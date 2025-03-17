@@ -22,6 +22,7 @@ public class appointmentform {
 	private String AppointmentStatus;
 	private String PaymentStatus;
 	private int patientid;
+	private String AppointmentType;
 	
 	public int getId() {
 		return id;
@@ -97,11 +98,24 @@ public class appointmentform {
 	}
 	public void setPatientid(int patientid) {
 		this.patientid = patientid;
+	}	
+	
+	public String getAppointmentType() {
+		return AppointmentType;
 	}
+	public void setAppointmentType(String appointmentType) {
+		AppointmentType = appointmentType;
+	}
+	
+	public appointmentform() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	
 	public appointmentform(int id, String name, String gender, String appointmentDate, String appointmentTime,
 			String phone, String doctor, String email, String message, String appointmentStatus, String paymentStatus,
-			int patientid) {
+			int patientid, String appointmentType) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -115,17 +129,15 @@ public class appointmentform {
 		AppointmentStatus = appointmentStatus;
 		PaymentStatus = paymentStatus;
 		this.patientid = patientid;
-	}
-	public appointmentform() {
-		super();
-		// TODO Auto-generated constructor stub
+		AppointmentType = appointmentType;
 	}
 	@Override
 	public String toString() {
 		return "appointmentform [id=" + id + ", name=" + name + ", gender=" + gender + ", AppointmentDate="
 				+ AppointmentDate + ", AppointmentTime=" + AppointmentTime + ", phone=" + phone + ", doctor=" + doctor
 				+ ", email=" + email + ", message=" + message + ", AppointmentStatus=" + AppointmentStatus
-				+ ", PaymentStatus=" + PaymentStatus + "]";
+				+ ", PaymentStatus=" + PaymentStatus + ", patientid=" + patientid + ", AppointmentType="
+				+ AppointmentType + "]";
 	}
 	
 	

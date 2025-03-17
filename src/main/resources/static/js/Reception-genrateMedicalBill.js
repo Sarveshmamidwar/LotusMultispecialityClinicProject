@@ -79,7 +79,7 @@ function updateTotalAmount() {
     document.querySelectorAll(".totalColumn").forEach(td => {
         totalAmount += parseFloat(td.textContent) || 0;
     });
-    document.getElementById("totalAmount").textContent = totalAmount.toFixed(2); // Show total with 2 decimal places
+    document.getElementById("totalAmount").value = totalAmount.toFixed(2); // Show total with 2 decimal places
 }
 
 function clearTableData() {
@@ -95,7 +95,8 @@ function generatePDF() {
     const logo = document.querySelector('.prelogo');
     const deleteIcons = document.querySelectorAll('.delete-icon'); 
     const tableContainer = document.querySelector('.prescriptiontable'); // Get table container
-
+    
+	document.getElementById("formsubmit").click();
     // Expand table to show all rows
     tableContainer.style.maxHeight = 'none';
     tableContainer.style.overflowY = 'visible';
@@ -233,3 +234,11 @@ function validateText() {
 		                errorMessage.style.display = "none";
 		            }
 		        }
+				
+				
+				
+				document.addEventListener("DOMContentLoaded", function () {
+				    let today = new Date();
+				    let formattedDate = today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
+				    document.getElementById("todate").value = formattedDate;
+				});				
