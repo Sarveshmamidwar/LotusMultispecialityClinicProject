@@ -10,95 +10,93 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 <link rel="stylesheet" th:href="@{/CSS/about.css}">
+<script  th:src="@{/js/home.js}"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 <body>
 	<section>
 	
-	 <nav class="navbar navbar-expand-lg  ">
-        
-            <div class="container-fluid">
-              <a class="navbar-brand" style="text-decoration: none;color: black;font-size: 1.8rem" >
-                <img th:src="@{/images/logo.jpg}" style="width: 10%;">
-                Lotus Multispeciality Clinic
-              </a>
-            </div>
-        
-        <div class="container-fluid d-flex">
-          
-          
-          <div class="collapse navbar-collapse" id="navbarNav">
-             <ul class="navbar-nav ">
-						<li class="nav-item m-2 me-5">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-solid fa-phone-volume fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">EMERGENCY</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
+	<nav class="navbar navbar-expand-lg info-navbar">
+  <div class="container-fluid justify-content-center justify-content-lg-between">
+    <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+      <img th:src="@{/images/logo.jpg}" alt="Logo" class="logo" />
+      <span class="brand-name">Lotus Multispeciality Clinic</span>
+    </a>
 
-						</li>
-						
-						<li class="nav-item m-2 me-5">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-regular fa-clock fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">WORKING HOURS</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
-
-						</li>
-						
-						<li class="nav-item m-2">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-solid fa-location-dot fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">EMERGENCY</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
-
-						</li>
-
-				
-              
-            </ul>
-          </div>
+    <ul class="navbar-nav d-flex flex-row gap-5 align-items-center mb-0 info-list">
+      <li class="nav-item info-item animate-fade-slide" style="animation-delay: 0s;">
+        <i class="fa-solid fa-phone-volume"></i>
+        <div>
+          <small>Emergency</small>
+          <a href="tel:+912345678901">+91 23456 78901</a>
         </div>
-    </nav>
-	<nav class="navbar navbar-expand-lg p-0" style="background-color: #C0EC83;">
-	    <div class="container-fluid" >
-	       
-	        
-	        <div class="collapse navbar-collapse justify-content-around " id="navbarNavAltMarkup">
-	            <div class="navbar-nav m-2" >
-	                <ul class="navbar-nav" >
-              <li class="nav-item me-3" >
-                <a class="nav-link navtabs" aria-current="page" href="#"  th:href="@{/}">Home</a>
-              </li>
-              <li class="nav-item me-3">
-                <a class="nav-link navtabs" th:href=@{/about}>About</a>
-              </li>
-              <li class="nav-item me-3">
-                <a class="nav-link navtabs" href="#" th:href="@{/ouserService}">services</a>
-              </li>
-              <li class="nav-item me-3">
-                <a class="nav-link navtabs" href="#" th:href="@{/ouserDoctors}">Doctors</a>
-              </li>
-              <li class="nav-item me-3">
-                <a class="nav-link navtabs" href="#" th:href="@{/contacts}">Contacts</a>
-              </li>
-              <li class="nav-item me-3">
-                <a class="nav-link navtabs" href="#" th:href="@{/appointment}">Appointment</a>
-              </li>
-            </ul>
-	            </div>
-	        </div>
-	    </div>
-	</nav>
+      </li>
+      <li class="nav-item info-item animate-fade-slide" style="animation-delay: 0.2s;">
+        <i class="fa-regular fa-clock"></i>
+        <div>
+          <small>Working Hours</small>
+          <span>Mon - Sat, 9AM - 8PM</span>
+        </div>
+      </li>
+      <li class="nav-item info-item animate-fade-slide" style="animation-delay: 0.4s;">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <small>Location</small>
+          <span>Mahalunge, Pune</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Main Navigation -->
+<nav class="navbar navbar-expand-lg main-navbar">
+  <div class="container-fluid justify-content-between align-items-center">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavbar"
+      aria-controls="mainNavbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
+      <ul class="navbar-nav gap-4 fw-semibold fs-5">
+        <li class="nav-item animate-slide-in" style="animation-delay: 0s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/}">Home</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay: 0.1s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/about}">About</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay: 0.2s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/ouserService}">Services</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay: 0.3s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/ouserDoctors}">Doctors</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay: 0.4s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/contacts}">Contacts</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay: 0.5s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/appointment}">Appointment</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-none d-lg-block">
+      <a th:href="@{/getsignUp}">
+        <button type="button" class="btn signup-btn">
+          Sign Up
+        </button>
+      </a>
+    </div>
+  </div>
+</nav>
 
 
 		<div class="card " style="border: transparent;">
@@ -220,30 +218,34 @@
 					
 	    </div>
 		
-		<div class="card p-5" style="display: flex;justify-content: center;align-items: center;border: transparent;">
-			
-			<div class="d-flex justify-content-around " >
-				<div class="card " style="width: 18rem;">
-				  <img th:src="@{/images/maledoctor.jpg}" class="card-img-top" alt="..." style="height: 50%;">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				    <a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div>
-				</div>
-				<div class="card " style="width: 18rem;">
-				  <img th:src="@{/images/femaldoctor.jpg}" class="card-img-top" alt="..." style="height: 50%;">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text p-0 m-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				    <a href="#" class="btn btn-primary ">Go somewhere</a>
-				  </div>
-				</div>
-			</div>
-			
-		</div>
+		<div class="doctors-section mt-3" style="display: flex; justify-content: center; align-items: center; border: transparent; background: transparent;">
+    <div class="d-flex justify-content-around flex-wrap">
+
+        <!-- Male Doctor Card -->
+        <div class="card doctor-card me-3">
+            <img src="/images/maledoctor.jpg" class="card-img-top" alt="Male Doctor" >
+            <div class="card-body">
+                <h5 class="card-title">Dr. John Smith</h5>
+                <p class="card-text">Specialist in Cardiology with 10+ years of experience in patient care and treatment.</p>
+                <a href="#" class="btn btn-primary">Know More</a>
+            </div>
+        </div>
+
+        <!-- Female Doctor Card -->
+        <div class="card doctor-card">
+            <img src="/images/femaldoctor.jpg" class="card-img-top" alt="Female Doctor">
+            <div class="card-body">
+                <h5 class="card-title">Dr. Sarah Lee</h5>
+                <p class="card-text">Expert in Pediatrics, providing compassionate care for children and families.</p>
+                <a href="#" class="btn btn-primary">Know More</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 		
-		<div class="card  mt-3 ourdoctor"  style="display: flex;justify-content: center;align-items: center;border: transparent;">
+		<div class="card  mt-5 ourdoctor"  style="display: flex;justify-content: center;align-items: center;border: transparent;">
 						<div class="" style="text-align: center;">
 							<a>GET IN TOUCH</a>
 							<h2 style="color: #C0EC83 ;">Contact</h2>
@@ -251,106 +253,100 @@
 							
 	    </div>
 		
-		<div class="card p-5" style="  border: transparent;">
-			
-			<div class="card-body contactmainbody">
-				<div class="contactbox">
-					<div class="emergency">
-						<i class="fa-solid fa-phone-volume fa-lg"></i>
-						<h6 class="mt-2">EMERGENCY</h6>
-						<h6>838747343</h6>
-						<h6>396372436</h6>
-						
-					</div>
-				</div>
-				<div class="contactbox"  style="background-color: white !important; border: 1px solid #C0EC83;" >
-					<div class="location">
-						<i class="fa-solid fa-location-dot fa-lg"></i>
-						<h6 class="mt-2">LOCATION</h6>
-						<h6>Mahalunge Baner</h6>
-						<h6>Baner Pune</h6>
-					
-					</div>
-				</div>
-				<div class="contactbox">
-					<div class="email">
-						<i class="fa-regular fa-envelope fa-lg"></i>
-						<h6 class="mt-2">EMAIL</h6>
-						<h6>ABC@gmail.com</h6>
-						<h6>xyz@gmail.com</h6>
-					
-					</div>
-				</div>
-				<div class="contactbox"  style="background-color: white !important; border: 1px solid #C0EC83;">
-					<div class="workinghour">
-						<i class="fa-regular fa-clock fa-lg"></i>
-						<h6 class="mt-2">WORKING HOURS</h6>
-						<h6>Mon-Sat 09:00:00</h6>
-						<h6>Sunday Emergency Call</h6>
-					
-					</div>
-				</div>
-			</div>
-		</div>
+		<div class="card p-5" style="border: transparent;">
+    <div class="card-body contactmainbody">
+        
+        <div class="contactbox">
+            <div class="emergency">
+                <i class="fa-solid fa-phone-volume"></i>
+                <h6 class="mt-2">EMERGENCY</h6>
+                <h6>838747343</h6>
+                <h6>396372436</h6>
+            </div>
+        </div>
+
+        <a class="nav-link" href="#" th:href="@{/contacts}" style="text-decoration:none;">
+            <div class="contactbox">
+                <div class="location">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h6 class="mt-2">LOCATION</h6>
+                    <h6>Mahalunge Baner</h6>
+                    <h6>Baner Pune</h6>
+                </div>
+            </div>
+        </a>
+
+        <div class="contactbox">
+            <div class="email">
+                <i class="fa-regular fa-envelope"></i>
+                <h6 class="mt-2">EMAIL</h6>
+                <h6>ABC@gmail.com</h6>
+                <h6>xyz@gmail.com</h6>
+            </div>
+        </div>
+
+        <a th:href="@{/appointment}" style="text-decoration: none;">
+            <div class="contactbox">
+                <div class="workinghour">
+                    <i class="fa-regular fa-clock"></i>
+                    <h6 class="mt-2">WORKING HOURS</h6>
+                    <h6>Mon-Sat 09:00:00</h6>
+                    <h6>Sunday Emergency Call</h6>
+                </div>
+            </div>
+        </a>
+
+    </div>
+</div>
 
 			
-		</div>
 		
-	</div>
-	<footer class="" style="background-color: #000053;">
-		<div class="card p-3" style="background-color: #000053;color: white;">
-			<div class="row align-items-center p-5">
-			    <div class="col">
-					<img th:src="@{/images/logo.jpg}" style="width: 50%;">
-			      <h4 class="mt-2">Lotu Multispeciality Clinic</h4>
-				  <div class="d-flex justify-content-aroun mt-3 " >
-					<i class="fa-brands fa-facebook fa-lg p-3"></i>
-					<i class="fa-brands fa-instagram fa-lg p-3"></i>
-					<i class="fa-brands fa-twitter fa-lg p-3"></i>
-					<i class="fa-brands fa-linkedin fa-lg p-3"></i>
-				  </div>
-			    </div>
-			    <div class="col">
-			       <div>
-					<h4>Hospital Address</h4>
-					<a>Lotus Multispecilality Clinic,</a>
-					<a>Mahalunge road,Pune</a>
-					<a>Maharashtra 411001</a>
-					<a>abc2gmail.com</a>
-				   </div>
-			    </div>
-			    <div class="col">
-					<div  class="emergency-contact">
-						<h4>Emergency Contact</h4>
-						<label>Enquiry</label>
-						<a>351546565</a>
-						<label>Emergency</label>
-						<a>3767665</a>
-						<label>Ambulance</label>
-						<a>5738567488</a>
-						
-					</div>
-			    </div>
-				<div class="col">
-					<div  class="emergency-contact">
-						<h4>Quick Links</h4>
-						<a>Our Doctor</a>
-						<a>Specialities</a>
-						<a>International Patients Services</a>
-						<a>Contact</a>
-						<a>Our Services</a>
-						
-					</div>
-				</div>
-			  </div>
-			  <hr>
-			  <div style="text-align: center;">
-				<a >© 2023-24 Ruby Hall Clinic. All Rights Reserved. Website designed and developed by SourceKode</a>
-			  </div>
-			 
-		</div>
-		
-	</footer>
+	<footer style="background-color: #000053;">
+    <div class="card p-3" style="background-color: #000053; color: white; border: none;">
+        <div class="container">
+            <div class="row align-items-start justify-content-center text-start p-5" style="flex-wrap: nowrap;">
+                <div class="col-3">
+                    <img th:src="@{/images/logo.jpg}" style="width: 50%;">
+                    <h4 class="mt-2">Lotu Multispeciality Clinic</h4>
+                    <div class="d-flex mt-3">
+                        <i class="fa-brands fa-facebook fa-lg p-3"></i>
+                        <i class="fa-brands fa-instagram fa-lg p-3"></i>
+                        <i class="fa-brands fa-twitter fa-lg p-3"></i>
+                        <i class="fa-brands fa-linkedin fa-lg p-3"></i>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <h4>Hospital Address</h4>
+                    <p>Lotus Multispecilality Clinic,</p>
+                    <p>Mahalunge road, Pune</p>
+                    <p>Maharashtra 411001</p>
+                    <p>abc2gmail.com</p>
+                </div>
+                <div class="col-3">
+                    <h4>Emergency Contact</h4>
+                    <label>Enquiry</label>
+                    <p>351546565</p>
+                    <label>Emergency</label>
+                    <p>3767665</p>
+                    <label>Ambulance</label>
+                    <p>5738567488</p>
+                </div>
+                <div class="col-3">
+                    <h4>Quick Links</h4>
+                    <p>Our Doctor</p>
+                    <p>Specialities</p>
+                    <p>International Patients Services</p>
+                    <p>Contact</p>
+                    <p>Our Services</p>
+                </div>
+            </div>
+        </div>
+        <hr style="border-color: rgba(255,255,255,0.2);">
+        <div style="text-align: center;">
+            <p>© 2023-24 Ruby Hall Clinic. All Rights Reserved. Website designed and developed by SourceKode</p>
+        </div>
+    </div>
+</footer>
 
 
 

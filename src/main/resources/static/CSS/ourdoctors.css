@@ -1,0 +1,212 @@
+/* nav */
+
+.info-navbar {
+    background-color: #e7f0d7; /* light pastel green */
+    box-shadow: 0 4px 12px rgba(192, 236, 131, 0.2);
+    padding: 0.3rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .info-navbar .navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #4f7321;
+  }
+
+  .logo {
+    width: 50px;
+    border-radius: 12px;
+  }
+
+  .info-list {
+    color: #557a17;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .info-item i {
+    font-size: 1.2rem;
+    color: #9bc53d;
+  }
+
+  .info-item small {
+    display: block;
+    font-weight: 600;
+    letter-spacing: 1.1px;
+  }
+
+  .info-item a,
+  .info-item span {
+    color: #4f7321;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .info-item a:hover {
+    color: #7cbc34;
+  }
+
+  /* Main Navbar */
+  .main-navbar {
+    background: #ffffff;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+
+  .navbar-toggler {
+    border-color: #9bc53d;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='%239bc53d' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+
+  .nav-link.navtabs {
+    color: #557a17;
+    position: relative;
+    padding-bottom: 6px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link.navtabs::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: #a8d14b;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+    border-radius: 2px;
+  }
+
+  .nav-link.navtabs:hover {
+    color: #7cbc34;
+  }
+
+  .nav-link.navtabs:hover::after {
+    width: 60%;
+  }
+
+  .signup-btn {
+    background-color: #9bc53d;
+    color: white;
+    font-weight: 700;
+    border: none;
+    padding: 8px 26px;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(155, 197, 61, 0.4);
+    transition: background-color 0.4s ease;
+  }
+
+  .signup-btn:hover {
+    background-color: #7cbc34;
+  }
+
+  /* Animations */
+  @keyframes fadeSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-fade-slide {
+    animation: fadeSlideIn 0.6s ease forwards;
+  }
+
+  .animate-slide-in {
+    animation: slideInLeft 0.5s ease forwards;
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    .navbar-nav {
+      justify-content: center !important;
+    }
+    .signup-btn {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+  
+  
+  /*last 4 cards  */
+ .contactmainbody {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .contactbox {
+        width: 220px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        transform: translateX(-100px) rotate(-180deg);
+        opacity: 0;
+        transition: transform 1s ease, opacity 1s ease;
+    }
+
+    /* Alternate colors */
+    .contactbox:nth-child(odd) {
+        background-color: #C0EC83;
+        color: black;
+    }
+
+    .contactbox:nth-child(even) {
+        background-color: white;
+        border: 1px solid #C0EC83;
+        color: black;
+    }
+
+    /* Animation when visible */
+    .contactbox.show {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    /* Hover effect */
+    .contactbox:hover {
+        transform: scale(1.05) rotate(3deg);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Icon styling */
+    .contactbox i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        color: #2d572c;
+    }
+
+    /* Text styling */
+    .contactbox h6 {
+        margin: 4px 0;
+        font-weight: 500;
+    }
