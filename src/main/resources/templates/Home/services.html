@@ -106,14 +106,49 @@
 
 
 
-<div class="card" style="position: relative;">
+<div class="card border-0 m-5" style="border-radius: 25px !important">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner" style="border-radius: 25px !important">
 
-    <img th:src="@{/images/servicesgrp.jpg}" style="height: 300px; width: 100%;">
+            <div class="carousel-item active cover">
+                <div class="carousel-overlay"></div>
+                <img th:src="@{/images/grpabout.avif}" class="d-block w-100 carousel-img">
+                <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp">
+                    <h2>Welcome to Our Hospital</h2>
+                    <p>Providing quality healthcare with compassion and excellence.</p>
+                </div>
+            </div>
 
-    <div style="position: absolute; bottom: 30%; left: 15%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.5); color: white; padding: 10px; border-radius: 5px;">
-        <h1 style="margin: 0; font-size: 3rem;">Our Services</h1>
+            <div class="carousel-item">
+                <div class="carousel-overlay"></div>
+                <img th:src="@{/images/grpabout.avif}" class="d-block w-100 carousel-img">
+                <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp">
+                    <h2>Advanced Medical Facilities</h2>
+                    <p>State-of-the-art technology for better diagnosis and treatment.</p>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="carousel-overlay"></div>
+                <img th:src="@{/images/grpabout.avif}" class="d-block w-100 carousel-img">
+                <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp">
+                    <h2>Trusted by Thousands</h2>
+                    <p>Serving the community with dedication and care.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-
 </div>
 
 
@@ -126,7 +161,7 @@
 						<h5 class="card-title">Card title</h5>
 						<p class="card-text">Some quick example text to build on the
 							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
+						
 					</div>
 				</div>
 
@@ -136,7 +171,7 @@
 						<h5 class="card-title">Card title</h5>
 						<p class="card-text">Some quick example text to build on the
 							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
+						
 					</div>
 				</div>
 
@@ -147,7 +182,7 @@
 						<h5 class="card-title">Card title</h5>
 						<p class="card-text">Some quick example text to build on the
 							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
+						
 					</div>
 				</div>
 
@@ -160,7 +195,7 @@
 						<h5 class="card-title">Card title</h5>
 						<p class="card-text">Some quick example text to build on the
 							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
+						
 					</div>
 				</div>
 
@@ -170,7 +205,7 @@
 						<h5 class="card-title">Card title</h5>
 						<p class="card-text">Some quick example text to build on the
 							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
+						
 					</div>
 				</div>
 
@@ -181,7 +216,7 @@
 						<h5 class="card-title">Card title</h5>
 						<p class="card-text">Some quick example text to build on the
 							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
+						
 					</div>
 				</div>
 				
@@ -334,6 +369,29 @@
         </div>
     </div>
 </footer>
+
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".servicecard");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            } else {
+                entry.target.classList.remove("visible"); // Replay animation on re-scroll
+            }
+        });
+    }, { threshold: 0.15 });
+
+    cards.forEach((card, index) => {
+        card.style.transitionDelay = `${index * 0.15}s`; // slight stagger
+        observer.observe(card);
+    });
+});
+
+
+</script>
 
 </section>
 </body>

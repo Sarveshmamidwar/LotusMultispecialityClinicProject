@@ -210,3 +210,229 @@
         margin: 4px 0;
         font-weight: 500;
     }
+    
+    /*our doctors  */
+    .ourdoctor {
+  opacity: 0;
+  transform: translateY(50px); /* Move down by 50px */
+  transition: all 0.8s ease-in-out;
+}
+
+/* When the element comes into view, fade in and move up */
+.ourdoctor.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+ .emergency-contact label, 
+    .emergency-contact a {
+        display: block;
+    }
+
+.navtabs{
+	color: black;
+	text-decoration: none !important;
+}
+#navbarNavAltMarkup{
+	text-decoration: none;
+}
+
+.logo{
+	mix-blend-mode: multiply; 
+}
+.contactbox {
+    box-shadow: 0 4px 8px #C0EC83; /* X-offset, Y-offset, blur, color */
+    padding: 20px; /* optional, for spacing */
+    border-radius: 8px; /* optional, for rounded edges */
+     /* optional, makes the shadow more visible */
+}
+
+/* Base card style */
+.doctor-card {
+    width: 18rem;
+    height: 400px;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform-style: preserve-3d;
+}
+
+/* Images */
+.doctor-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 15px;
+}
+
+/* Initial states */
+.doctor-card.from-left {
+    transform: perspective(1000px) translateX(-150%) rotateY(70deg);
+}
+.doctor-card.from-right {
+    transform: perspective(1000px) translateX(150%) rotateY(-70deg);
+}
+
+/* Animation triggers */
+.doctor-card.visible.from-left {
+    animation: creativeSlideLeft 1.4s ease-out forwards;
+}
+.doctor-card.visible.from-right {
+    animation: creativeSlideRight 1.4s ease-out forwards;
+}
+
+/* Creative Animations */
+@keyframes creativeSlideLeft {
+    0% {
+        opacity: 0;
+        transform: perspective(1000px) translateX(-150%) rotateY(70deg);
+    }
+    50% {
+        opacity: 1;
+        transform: perspective(1000px) translateX(15px) rotateY(-10deg);
+    }
+    70% {
+        transform: perspective(1000px) translateX(0) rotateY(5deg) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: perspective(1000px) translateX(0) rotateY(0deg) scale(1);
+    }
+}
+
+@keyframes creativeSlideRight {
+    0% {
+        opacity: 0;
+        transform: perspective(1000px) translateX(150%) rotateY(-70deg);
+    }
+    50% {
+        opacity: 1;
+        transform: perspective(1000px) translateX(-15px) rotateY(10deg);
+    }
+    70% {
+        transform: perspective(1000px) translateX(0) rotateY(-5deg) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: perspective(1000px) translateX(0) rotateY(0deg) scale(1);
+    }
+}
+    
+    .carousel {
+    position: relative;
+     border-radius: 25px !important;
+}
+
+.carousel-img {
+    height: 400px;
+    object-fit: cover;
+    animation: zoomPan 8s ease-in-out infinite;
+    border-radius: 25px;
+}
+
+@keyframes zoomPan {
+    0% { transform: scale(1) translateX(0); }
+    50% { transform: scale(1.1) translateX(-10px); }
+    100% { transform: scale(1) translateX(0); }
+}
+
+/* Overlay for better text contrast */
+.carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+    z-index: 1;
+}
+
+/* Text Styling */
+.carousel-caption {
+    z-index: 2;
+    bottom: 20%;
+}
+
+.carousel-caption h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.carousel-caption p {
+    font-size: 1.1rem;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+/* Animation from Animate.css (optional CDN link) */
+.animate__animated {
+    animation-duration: 1.5s;
+}
+
+/* service cards */
+.servicecard {
+    width: 18rem;
+    height: 360px; /* Reduced total height */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    margin-bottom:15px;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+
+    /* Rotating wheel animation start */
+    transform: rotateY(90deg) translateY(50px);
+    opacity: 0;
+    transition:
+        transform 1s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 0.8s ease;
+    background: #fff;
+}
+
+/* When visible on scroll */
+.servicecard.visible {
+    opacity: 1;
+    transform: rotateY(0deg) translateY(0px);
+}
+
+/* Uniform image size */
+.servicecard img {
+    height: 180px; /* Smaller image height */
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    transition: transform 0.6s ease;
+}
+
+/* Hover image zoom */
+.servicecard:hover img {
+    transform: scale(1.05);
+}
+
+/* Card body tighter spacing */
+.servicecard .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.3rem; /* Smaller gap */
+    padding: 0.8rem;
+}
+
+/* Title styling */
+.servicecard .card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+
+/* Button styling */
+

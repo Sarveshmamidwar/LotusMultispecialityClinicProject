@@ -210,3 +210,116 @@
         margin: 4px 0;
         font-weight: 500;
     }
+    
+    /*our doctors  */
+    .ourdoctor {
+  opacity: 0;
+  transform: translateY(50px); /* Move down by 50px */
+  transition: all 0.8s ease-in-out;
+}
+
+/* When the element comes into view, fade in and move up */
+.ourdoctor.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+ .emergency-contact label, 
+    .emergency-contact a {
+        display: block;
+    }
+
+.navtabs{
+	color: black;
+	text-decoration: none !important;
+}
+#navbarNavAltMarkup{
+	text-decoration: none;
+}
+
+.logo{
+	mix-blend-mode: multiply; 
+}
+.contactbox {
+    box-shadow: 0 4px 8px #C0EC83; /* X-offset, Y-offset, blur, color */
+    padding: 20px; /* optional, for spacing */
+    border-radius: 8px; /* optional, for rounded edges */
+     /* optional, makes the shadow more visible */
+}
+
+/* Base card style */
+.doctor-card {
+    width: 18rem;
+    height: 400px;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform-style: preserve-3d;
+}
+
+/* Images */
+.doctor-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 15px;
+}
+
+/* Initial states */
+.doctor-card.from-left {
+    transform: perspective(1000px) translateX(-150%) rotateY(70deg);
+}
+.doctor-card.from-right {
+    transform: perspective(1000px) translateX(150%) rotateY(-70deg);
+}
+
+/* Animation triggers */
+.doctor-card.visible.from-left {
+    animation: creativeSlideLeft 1.4s ease-out forwards;
+}
+.doctor-card.visible.from-right {
+    animation: creativeSlideRight 1.4s ease-out forwards;
+}
+
+/* Creative Animations */
+@keyframes creativeSlideLeft {
+    0% {
+        opacity: 0;
+        transform: perspective(1000px) translateX(-150%) rotateY(70deg);
+    }
+    50% {
+        opacity: 1;
+        transform: perspective(1000px) translateX(15px) rotateY(-10deg);
+    }
+    70% {
+        transform: perspective(1000px) translateX(0) rotateY(5deg) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: perspective(1000px) translateX(0) rotateY(0deg) scale(1);
+    }
+}
+
+@keyframes creativeSlideRight {
+    0% {
+        opacity: 0;
+        transform: perspective(1000px) translateX(150%) rotateY(-70deg);
+    }
+    50% {
+        opacity: 1;
+        transform: perspective(1000px) translateX(-15px) rotateY(10deg);
+    }
+    70% {
+        transform: perspective(1000px) translateX(0) rotateY(-5deg) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: perspective(1000px) translateX(0) rotateY(0deg) scale(1);
+    }
+}
+    

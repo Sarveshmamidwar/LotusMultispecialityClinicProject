@@ -110,196 +110,85 @@
 </header>
 
 <main>
-<div class="card" style="position: relative;height: 300px;">
-
-    <img th:src="@{/images/appointmentimg.jpg}" style="height: 100%; width: 100%;object-fit: cover;">
-
-    <div style="position: absolute; bottom: 15%; left: 25%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.5); color: white; padding: 10px; border-radius: 5px;">
-        <h1 style="margin: 0; font-size: 3rem;">Book an Appointment</h1>
+<div class="appointment-card m-5">
+    <img th:src="@{/images/appointmentimg.jpg}" alt="Book Appointment">
+    <div class="appointment-text">
+        <h1>Book an Appointment</h1>
     </div>
-
 </div>
 
 
-<div class="card p-5" style="  border: transparent;">
 
-<div class="card-body p-5">
-<div class="row align-items-start">
-    <div class="col">
-      <!-- <p class="p-3">Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna,
-       tempus molestie, porttitor ut, iaculis quis, sem. Phasellus rhoncus. Aenean id metus id velit ullamcorper pulvinar. 
-      Vestibulum fermentum tortor id mi. Pellentesque ipsum. Nulla non arcu lacinia neque faucibus fringilla. Nulla non</p> -->
-      <h3 class="mt-5" style="text-align: center;">Appointment Form</h3>
-      <div class="mt-4" 
-		         style="width: 100%; background: white;">
-				 
-				         <form th:action="@{/bookAppointment}" id="appointmentForm" method="post" class="d-flex flex-column" style="overflow-y: auto;">
-				             <!-- Full Name -->
-				             <div class=" d-flex justify-content-around p-3 pb-0">
-								<div class="w-100">
-				                 <label for="fullname" class="form-label">Full Name</label>
-				                 <input type="text" id="fullname" name="name" class="form-control" placeholder="Enter your full name" required>
-								</div>
-								<div class="w-100">
-									<label for="gender" class="form-label">Gender</label>
-													                 <select id="gender" name="gender" class="form-select" required>
-													                     <option value="">Select Gender</option>
-													                     <option value="Male">Male</option>
-													                     <option value="Female">Female</option>
-													                 </select>
-									
-								</div>
-							  </div>
-
-							  <div class="  d-flex justify-content-around p-3 pb-0">
-								<div class="w-100">
-							  		<label for="date" class="form-label">Appointment Date</label>
-							  		<input type="date" id="date" name="AppointmentDate" class="form-control" required>
-								</div>	
-								<div class="w-100">
-						             <label for="time" class="form-label">Appointment Time</label>
-						             <input type="time" id="time" name="AppointmentTime"  class="form-control" required>
-								 </div>
-							  </div>
-
-							<div class=" d-flex justify-content-around p-3 pb-0">
-								<div class="w-100">
-									<label for="phone" class="form-label">Phone</label>
-									<input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
-								</div>
-								<div class="w-100">
-									<label for="doctor" class="form-label">Select Doctor</label>
-									<select id="doctor" name="doctor" class="form-select" required>
-										<option value="">Select a Doctor</option>
-										<option value="Dr.ganesh">Dr. Ganesh</option>
-										<option value="Dr.shradha">Dr. Shradha</option>
-									</select>
-								</div>
-							</div>
-							  
-							  			             			             
-
-				             <!-- Email -->
-				             <div class="ps-3 pe-3">
-				                 <label for="email" class="form-label">Email</label>
-				                 <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
-				             </div>
-
-				             <div class="p-3">
-				                 <label for="message" class="form-label">Message</label>
-				                 <textarea id="message" class="form-control" name="message" rows="3" placeholder="Enter any message"></textarea>
-				             </div>
-
-				             <!-- Submit Button -->
-				             <div class="text-center">
-				                 <button type="submit" class="btn btn-primary rounded-pill" style="width: 80%;">Submit</button>
-				             </div>
-				         </form>
-
-							<!-- Toast Notification -->
-<div  class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
-    <div id="appointmentToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="polite" aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body">
-                Appointment booked successfully!
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+<div class="appointment-wrapper m-5">
+  <div class="appointment-cardform" id="appointmentCard">
+    <div class="appointment-card-inner">
+      <!-- Front -->
+      <div class="appointment-front">
+        <h1 class="mb-4 text-center">Schedule Hours</h1>
+        <div class="schedule-list">
+          <div><span>Monday</span><span>09:00 AM - 10:00 PM</span></div>
+          <div><span>Tuesday</span><span>09:00 AM - 10:00 PM</span></div>
+          <div><span>Wednesday</span><span>09:00 AM - 10:00 PM</span></div>
+          <div><span>Thursday</span><span>09:00 AM - 10:00 PM</span></div>
+          <div><span>Friday</span><span>09:00 AM - 10:00 PM</span></div>
+          <div><span>Saturday</span><span>09:00 AM - 10:00 PM</span></div>
+          <div><span>Sunday</span><span>09:00 AM - 10:00 PM</span></div>
         </div>
+        <div class="text-center mt-4">
+          <button id="flipButton" class="btn btn-primary btn-lg">Book Appointment</button>
+        </div>
+      </div>
+
+      <!-- Back -->
+      <div class="appointment-back">
+        <h3 class="text-center mb-4">Appointment Form</h3>
+        <form id="appointmentForm">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+            </div>
+            <div class="col-md-6">
+              <select name="gender" class="form-select" required>
+                <option value="">Select Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <input type="date" name="AppointmentDate" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <input type="time" name="AppointmentTime" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <input type="tel" name="phone" class="form-control" placeholder="Phone" required>
+            </div>
+            <div class="col-md-6">
+              <select name="doctor" class="form-select" required>
+                <option value="">Select Doctor</option>
+                <option>Dr. Ganesh</option>
+                <option>Dr. Shradha</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="col-12">
+              <textarea name="message" class="form-control" rows="3" placeholder="Message"></textarea>
+            </div>
+            <div class="col-12 text-center mt-3">
+              <button type="submit" class="btn btn-success rounded-pill px-5">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
-						</div>
-    </div>
-					<div class="col p-3 mt-4 " style="background-color: #C0EC83;height: 100%;border-radius: 5px">
 
-						<div class=" w-100 pb-5 mb-5" style="text-align: center;margin-top: 15%">
-							<h1 style="font-size: 3rem;font-family: cursive;">Shedule Hours</h1>
 
-							<div class="row align-items-strat mt-5 w-100">
-								<div class="col">
-									<h6>Monday</h6>
-								</div>
-								<div class="col" style="display: flex; justify-content: center;">
-									<hr style="width: 10%; color: black;">
-								</div>
-								<div class="col">
-									<h6>09:00 AM To 10:00 PM</h6>
-								</div>
-							</div>
-							<div class="row align-items-start mt-2  w-100 ">
-								<div class="col">
-									<h6>Tuesday</h6>
-								</div>
-								<div class="col" style="display: flex; justify-content: center;">
-									<hr style="width: 10%; color: black;">
-								</div>
-								<div class="col">
-									<h6>09:00 AM To 10:00 PM</h6>
-								</div>
-							</div>
-							<div class="row align-items-start mt-2  w-100 ">
-								<div class="col">
-									<h6>Wednesday</h6>
-								</div>
-								<div class="col" style="display: flex; justify-content: center;">
-									<hr style="width: 10%; color: black;">
-								</div>
-								<div class="col">
-									<h6>09:00 AM To 10:00 PM</h6>
-								</div>
-							</div>
-							<div class="row align-items-start mt-2 w-100 ">
-								<div class="col">
-									<h6>Thursday</h6>
-								</div>
-								<div class="col" style="display: flex; justify-content: center;">
-									<hr style="width: 10%; color: black;">
-								</div>
-								<div class="col">
-									<h6>09:00 AM To 10:00 PM</h6>
-								</div>
-							</div>
-							<div class="row align-items-start mt-2 w-100 ">
-								<div class="col">
-									<h6>Friday</h6>
-								</div>
-								<div class="col" style="display: flex; justify-content: center;">
-									<hr style="width: 10%; color: black;">
-								</div>
-								<div class="col">
-									<h6>09:00 AM To 10:00 PM</h6>
-								</div>
-							</div>
-							<div class="row align-items-start mt-2 w-100 ">
-								<div class="col">
-									<h6>Saturday</h6>
-								</div>
-								<div class="col" style="display: flex; justify-content: center;">
-									<hr style="width: 10%; color: black;">
-								</div>
-								<div class="col">
-									<h6>09:00 AM To 10:00 PM</h6>
-								</div>
-							</div>
-							<div class="row align-items-start mt-2 w-100">
-								<div class="col">
-									<h6>Sunday</h6>
-								</div>
-								<div class="col" style="display: flex; justify-content: center;">
-									<hr style="width: 10%; color: black;">
-								</div>
-								<div class="col">
-									<h6>09:00 AM To 10:00 PM</h6>
-								</div>
-							</div>
-						</div>
-					</div>
 
-				</div>
-
-</div>
-
-</div>
 
 
 
@@ -442,6 +331,50 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Error:", error));
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const appointmentCard = document.querySelector(".appointment-card");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                appointmentCard.classList.add("visible");
+            } else {
+                appointmentCard.classList.remove("visible"); // Replay on re-scroll
+            }
+        });
+    }, { threshold: 0.2 });
+
+    observer.observe(appointmentCard);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+	  const cardForm = document.getElementById("appointmentCard");
+	  const cardInner = cardForm.querySelector(".appointment-card-inner");
+
+	  // Intersection Observer for scroll animation
+	  const observer = new IntersectionObserver(entries => {
+	    entries.forEach(entry => {
+	      if (entry.isIntersecting) {
+	        cardForm.classList.add("visible");
+	      } else {
+	        cardForm.classList.remove("visible");
+	      }
+	    });
+	  }, { threshold: 0.2 });
+
+	  observer.observe(cardForm);
+
+	  // Flip card on button click
+	  document.getElementById("flipButton").addEventListener("click", () => {
+	    cardInner.classList.add("flipped");
+	  });
+	});
+
+
+
+
+
 </script>
 
 	
