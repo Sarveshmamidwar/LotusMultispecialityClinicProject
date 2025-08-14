@@ -13,274 +13,211 @@
 <link rel="stylesheet" th:href="@{/CSS/home.css}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<style type="text/css">
-.tabs3{
- font-size: 1.5rem;
-width: 20%; background-color: #C0EC83; margin-right: 2%;
-display: flex;justify-content: center;align-items: center;
-}
 
-
-</style>
 
 </head>
 <body>
 	<section class="main">
     
-    <nav class="navbar navbar-expand-lg  ">
-        
-            <div class="container-fluid">
-              <a class="navbar-brand" style="text-decoration: none;color: black;font-size: 1.8rem" >
-                <img th:src="@{/images/logo.jpg}" style="width: 10%;">
-                Lotus Multispeciality Clinic
-              </a>
-            </div>
-        
-        <div class="container-fluid d-flex">
-          
-          
-          <div class="collapse navbar-collapse" id="navbarNav">
-             <ul class="navbar-nav ">
-						<li class="nav-item m-2 me-5">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-solid fa-phone-volume fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">EMERGENCY</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
+    <!-- Top Info Navbar -->
+<nav class="navbar navbar-expand-lg info-navbar">
+  <div class="container-fluid justify-content-center justify-content-lg-between">
+    <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+      <img th:src="@{/images/logo.jpg}" alt="Logo" class="logo" />
+      <span class="brand-name">Lotus Multispeciality Clinic</span>
+    </a>
 
-						</li>
-						
-						<li class="nav-item m-2 me-5">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-regular fa-clock fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">WORKING HOURS</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
-
-						</li>
-						
-						<li class="nav-item m-2">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-solid fa-location-dot fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">EMERGENCY</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
-
-						</li>
-
-				
-              
-            </ul>
-          </div>
+    <ul class="navbar-nav d-flex flex-row gap-5 align-items-center mb-0 info-list">
+      <li class="nav-item info-item animate-fade-slide" style="animation-delay: 0s;">
+        <i class="fa-solid fa-phone-volume"></i>
+        <div>
+          <small>Emergency</small>
+          <a href="tel:+912345678901">+91 23456 78901</a>
         </div>
-    </nav>
-	<nav class="navbar navbar-expand-lg p-0" style="background-color: #C0EC83;">
-	    <div class="container-fluid" >
-	       
-	        
-	        <div class="collapse navbar-collapse justify-content-around " id="navbarNavAltMarkup">
-	            <div class="navbar-nav m-2" >
-	                <ul class="navbar-nav" >
-              <li class="nav-item me-3" >
-                <a class="nav-link navtabs" aria-current="page" href="#"  th:href="@{/}">Home</a>
-              </li>
-              <li class="nav-item me-3">
-                <a class="nav-link navtabs" th:href=@{/about}>About</a>
-              </li>
-              <li class="nav-item me-3">
-                <a class="nav-link navtabs" href="#" th:href="@{/ouserService}">services</a>
-              </li>
-              <li class="nav-item me-3">
-                <a class="nav-link navtabs" href="#" th:href="@{/ouserDoctors}">Doctors</a>
-              </li>
-              <li class="nav-item me-3">
-                <a class="nav-link navtabs" href="#" th:href="@{/contacts}">Contacts</a>
-              </li>
-              <li class="nav-item me-3">
-                <a class="nav-link navtabs" href="#" th:href="@{/appointment}">Appointment</a>
-              </li>
-            </ul>
-	            </div>
-	            
-	            <div>
-	               <a th:href="@{/getsignUp}"><button type="button" class="btn btn-secondary">Sign Up</button></a>
-	            </div>
-	        </div>
-	    </div>
-	</nav>
+      </li>
+      <li class="nav-item info-item animate-fade-slide" style="animation-delay: 0.2s;">
+        <i class="fa-regular fa-clock"></i>
+        <div>
+          <small>Working Hours</small>
+          <span>Mon - Sat, 9AM - 8PM</span>
+        </div>
+      </li>
+      <li class="nav-item info-item animate-fade-slide" style="animation-delay: 0.4s;">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <small>Location</small>
+          <span>Mahalunge, Pune</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Main Navigation -->
+<nav class="navbar navbar-expand-lg main-navbar">
+  <div class="container-fluid justify-content-between align-items-center">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavbar"
+      aria-controls="mainNavbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
+      <ul class="navbar-nav gap-4 fw-semibold fs-5">
+        <li class="nav-item animate-slide-in" style="animation-delay: 0s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/}">Home</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay: 0.1s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/about}">About</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay: 0.2s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/ouserService}">Services</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay: 0.3s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/ouserDoctors}">Doctors</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay: 0.4s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/contacts}">Contacts</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay: 0.5s;">
+          <a class="nav-link navtabs" href="#" th:href="@{/appointment}">Appointment</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-none d-lg-block">
+      <a th:href="@{/getsignUp}">
+        <button type="button" class="btn signup-btn">
+          Sign Up
+        </button>
+      </a>
+    </div>
+  </div>
+</nav>
 
 	<!-- Fullscreen Wrapper -->
-	<div style="height: 100vh; width: 100%; position: relative; overflow: hidden;">
-	    <!-- Blurred background image -->
-	    <img th:src="@{/images/blurrbackground.jpg}" class="img-fluid"
-	         style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+	<section class="service-section m-5" id="serviceSection">
+  <div class="floating-shape"></div>
+  <div class="service-content">
+    <div class="service-text">
+      <h1>Our Service</h1>
+      <p>
+        In sem justo, commodo ut, suscipit at, pharetra vitae, orci. Duis sapien nunc, commodo et, 
+        interdum suscipit, sollicitudin et, dolor. Pellentesque habitant morbi tristique senectus et 
+        netus et malesuada fames ac turpis egestas. Aliquam id dolor. Class aptent taciti sociosqu ad litora.
+      </p>
+      <button class="glow-btn">Learn More</button>
+    </div>
+    <div class="service-image">
+      <img th:src="@{/images/doctor.jpg}" alt="Doctor Image" />
+    </div>
+  </div>
+</section>
+<!-- Tabs Section -->
+<div style="height: 100px; width: 100%; position: relative; top: 0; left: 0; margin-top: -80px;">
+  <div style="height: 100%; position: relative; top: 0;" class="d-flex justify-content-center scroll-div">
+    <div class="row gap-3" style="width: 80%; justify-content:center;">
+      <div class="tabs3 glass" data-index="0">
+        <div class="text">Book Appointment</div>
+        <img th:src="@{/images/shedule (1).png}" alt="Schedule Icon" />
+      </div>
+      <div class="tabs3 glass" data-index="1">
+        <div class="text">Appointment Schedule</div>
+        <img th:src="@{/images/group.png}" alt="Group Icon" />
+      </div>
+      <div class="tabs3 glass" data-index="2">
+        <div class="text">Reports</div>
+        <img th:src="@{/images/health-report.png}" alt="Health Report Icon" />
+      </div>
+    </div>
+  </div>
+</div>
 
-	    <!-- Foreground content -->
-		<div class="animate-on-load" style="display: flex; justify-content: space-evenly; align-items: center; height: 100%; position: relative; padding-right: 10px;">
-		    <!-- Text "Our Service" -->
-		    <div style="height: 50%; width: 30%; margin-right: 10px; text-align: center; margin-top: 10%;">
-		        <h1>Our Service</h1>
-		        <p>
-		            In sem justo, commodo ut, suscipit at, pharetra vitae, orci. Duis sapien nunc, commodo et, 
-		            interdum suscipit, sollicitudin et, dolor. Pellentesque habitant morbi tristique senectus et 
-		            netus et malesuada fames ac turpis egestas. Aliquam id dolor. Class aptent taciti sociosqu ad litora.
-		        </p>
-		        <button class="btn btn-primary">Our Service</button>
-		    </div>
-
-		    <!-- Doctor image -->
-		    <img class="img-fluid" th:src="@{/images/doctor.jpg}" style="width: 30%;">
-		</div>
-
-	</div>
 
 	
-		<div style=" height: 100px; width: 100%; position: absolute;">
-	    <div style="height: 100%; position: relative; top:-25%; " class="d-flex justify-content-center scroll-div hidden">
-	        <div class="row rounded tabs3" >
-				<div class="col-8 "> 
-					Book Appointement
-				</div>
-			
-				<div class="col-4 p-0" >
-					<img th:src="@{/images/shedule (1).png}" style="width: 50%">
-				</div>
-			
-			</div>
-	        <div class="row rounded tabs3" >
-				<div class="col-8 p-2 "> Appointment Sehedule</div>
-			    <div class="col-4 p-0" >
-					<img th:src="@{/images/group.png}" style="width: 50%;">
-					
-				</div>
-			</div>
-	        <div class="row rounded tabs3" >
-				<div class="col-8 p-2 "> Reports</div>
-				<div class="col-4 p-0" >
-					<img th:src="@{/images/health-report.png}" style="width: 50%;">
-					
-				</div>
-			</div>
-	    </div>
-		
-		</div>
-	
-	<div  class="card p-5 mt-5" style="background: transparent;border: none;">
-		<div>
-			
-		
-			<div id="animatedDiv" class="scroll-animation" style="text-align: center; margin-top: 10px;">
-			  <p>Welcome To Lotus Multispeciality Clinic</p>
-			  <h3>A Great Place To Receive Care</h3>
-			  <p class="mt-2">
-			    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam feugiat, turpis at pulvinar 
-			    vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Aliquam erat volutpat. 
-			    Nunc auctor. Mauris pretium quam et urna. Fusce nibh. Duis risus. Curabitur sagittis hendrerit ante. 
-			    Aliquam erat volutpat. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Duis 
-			    condimentum augue id magna semper rutrum. Nullam justo enim, consectetuer nec, ullamcorper ac,
-			  </p>
-			</div>
-				
-		</div>
-		<div class=" p-3"  id="animatedDiv" style="text-align: center;">
-						<a> Learn more <i class="fa-solid fa-right-long" style="color: #63E6BE;"></i> </a>
-		</div>
-	</div>
-		
-		<div class="card " style="border: none;">
-			
-			<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" style="height: 300px;">
-			  <div class="carousel-inner h-100">
-			    <div class="carousel-item active h-100 w-100">
-			      <img class="img-fluid d-block carousel-image h-100 w-100" th:src="@{/images/sliderimg1.jpg}"  alt="...">
-			    </div>
-			    <div class="carousel-item h-100 w-100">
-			      <img class="img-fluid d-block carousel-image h-100 w-100" th:src="@{/images/sliderimg2.jpg}"  alt="...">
-			    </div>
-			  
-			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
-			</div>
+	<div class="card p-5 mt-2" style="background: transparent; border: none;">
+  <div id="animatedDiv" class="scroll-animation" style="text-align: center; margin-top: 10px;">
+    <p>Welcome To Lotus Multispeciality Clinic</p>
+    <h3>A Great Place To Receive Care</h3>
+    <p class="mt-2">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam feugiat, turpis at pulvinar 
+      vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Aliquam erat volutpat. 
+      Nunc auctor. Mauris pretium quam et urna. Fusce nibh. Duis risus. Curabitur sagittis hendrerit ante. 
+      Aliquam erat volutpat. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Duis 
+      condimentum augue id magna semper rutrum. Nullam justo enim, consectetuer nec, ullamcorper ac,
+    </p>
+    <a href="#" class="learn-more">
+      Learn more <i class="fa-solid fa-right-long"></i>
+    </a>
+  </div>
+</div>
 
-			
-		</div>
 		
-		<div class="card ouserservice" style="border: none;">
-			<div class="p-5 pb-3 inner-content" style="text-align: center; " >
-				<a style="font-size: 2.35rem;font-family: Arial, Helvetica, sans-serif;color: #00d9d9;">Care you can belive in</a>
-				
+		<div class="card p-10" style="border: none; height: 400px;padding: 20px !important;">
+  <div id="carouselExampleFade" class="carousel slide carousel-fade h-100"  data-bs-ride="carousel">
+    <div class="carousel-inner h-100">
+      <div class="carousel-item active h-100" >
+        <img class="d-block w-100 h-100 object-fit-cover" style="border-radius: 10px" th:src="@{/images/sliderimg1.jpg}" alt="...">
+      </div>
+      <div class="carousel-item h-100 ">
+        <img class="d-block w-100 h-100 object-fit-cover " style="border-radius: 10px" th:src="@{/images/sliderimg2.jpg}" alt="...">
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+		
+		<div class="card ouserservice" style="border: none;background-color: #FAFEFF">
+			<div class="p-5 pb-3 inner-content" style="text-align: center; background-color: white" >
+				<a style="font-size: 2.35rem;font-family: Arial, Helvetica, sans-serif;color: #C0EC83;">Care you can belive in</a>
+
 				<h1>Our Services</h1>
 			</div>
 			
 		</div>
 		
-		<div class="card " style="border: transparent;">
-			<div class="row w-100 h-100">
-				<div class="col p-5">
-				    <div class="slide-effect" >
-				        <img th:src="@{/images/bloodtest.jpg}" class="img-fluid" style="object-fit: cover;">
-				    </div>
-				    <div class="slide-effect mt-2" >
-				    
-				       <img th:src="@{/images/checkup.jpg}" class="img-fluid" style="object-fit: cover;">
-				     </div>
-				    <div class="slide-effect mt-2"  >
-				    <img th:src="@{/images/checkup.jpg}" class="img-fluid" style="object-fit: cover;">
-				    </div>
-				    <div class="slide-effect more" style="height: 50px;width: 200px;">
-				         <a class="" style="text-decoration: none;color: black;"><button>More</button></a>
-				    </div>
-				</div>
+<div class="container-custom">
+  <!-- Top Row -->
+  <div class="top-row">
+    <div class="top-image">
+      <img th:src="@{/images/bloodtest.jpg}" alt="Blood Test" />
+    </div>
+    <div class="top-text">
+      <p>
+        Morbi leo mi, nonummy eget, tristique non, rhoncus non, leo. Nullam faucibus mi quis velit. Integer in sapien.
+        Fusce tellus odio, dapibus id, fermentum quis, suscipit id, erat. Fusce aliquam vestibulum ipsum. Aliquam erat
+        volutpat. Pellentesque sapien. Cras elementum.
+      </p>
+    </div>
+  </div>
 
-			    <div class="col-6 p-5 blink-effect">
-			     <p>					Morbi leo mi, nonummy eget, tristique non, rhoncus non, leo. Nullam faucibus mi quis 
-					velit. Integer in sapien. Fusce tellus odio, dapibus id, fermentum quis, suscipit id, erat. Fusce aliquam 
-					vestibulum ipsum. Aliquam erat volutpat. Pellentesque sapien. Cras elementum. Nulla pulvinar eleifend sem. 
-					Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque porta. Vivamus
-					 porttitor turpis ac leo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi gravida libero nec
-					  velit. Morbi scelerisque luctus velit. Etiam dui sem, fermentum vitae, sagittis id, malesuada in, quam. 
-					  Proin mattis lacinia justo. Vestibulum facilisis auctor urna. Aliquam in lorem sit amet leo accumsan 
-					  lacinia. Integer rutrum, orci vestibulum ullamcorper ultricies, lacus quam ultricies odio, vitae placerat 
-					  pede sem sit amet enim. Phasellus et lorem id felis nonummy placerat. Fusce dui leo, imperdiet in, aliquam 
-					  sit amet, feugiat eu, orci. Aenean vel massa quis mauris vehicula lacinia. Quisque tincidunt scelerisque 
-					  libero. Maecenas libero. Etiam dictum tincidunt diam. Donec ipsum massa, ullamcorper in, auctor et, 
-					  scelerisque sed, est. Suspendisse nisl. Sed convallis magna eu sem. Cras pede libero, dapibus nec, pretium 
-					  sit amet, tempor quis, urna.
+  <!-- Bottom Row -->
+  <div class="bottom-row">
+    <div class="bottom-image"><img th:src="@{/images/checkup.jpg}" alt="Checkup" /></div>
+    <div class="bottom-image"><img th:src="@{/images/checkup.jpg}" alt="Checkup" /></div>
+    <div class="bottom-image"><img th:src="@{/images/doctorgroup.jpg}" alt="Doctor Group" /></div>
+  </div>
+</div>
 
-					 Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus.
-					
-				 </p>
-			    </div>
-				<div class="col p-3 pt-5 mr-5">
-				    <div class="bounce-image" style="height: 200px;width: 100%;">
-				        <img th:src="@{/images/checkup.jpg}" class="img-fluid" style="object-fit: cover;">
-				    </div>
-				    <div class="bounce-image mt-2" style="height: 200px;width: 100%;">
-				        <img th:src="@{/images/doctorgroup.jpg}" class="img-fluid">
-				    </div>
-				</div>
-
-			  </div>
-			
-			
-		</div>
 		
-		<div  class="ouserspecialities">
-					<div class="p-5  special-inner-content" style="text-align: center; " >
-						<a style="font-size: 1.35rem;font-family: Arial, Helvetica, sans-serif;color: #00d9d9;">Always Caring</a>
+		<div  class="ouserspecialities" style="background-color: white">
+					<div class="p-5  special-inner-content" style="text-align: center;background-color: white " >
+						<a style="font-size: 1.35rem;font-family: Arial, Helvetica, sans-serif;color: #C0EC83;">Always Caring</a>
 						
 						<h1>Our Specialities</h1>
 					</div>
@@ -288,33 +225,94 @@ display: flex;justify-content: center;align-items: center;
 		</div>
 		
 		
-		<div class="card" style="border: transparent">
-			<div class="card-body ">
-				<div style="display: flex;justify-content: center;align-items: center;">
-				  <div style="height: 500px;width: 85%;display: flex;flex-wrap:wrap ;align-items: center;justify-content: center">
-					<div class="icon" >
-						<i class="fa-solid fa-heart-pulse fa-lg"></i>
-						<a>asdc</a>
-						
-					</div>
-					<div class="icon" ><i class="fa-solid fa-heart-pulse"></i></div>
-					<div class="icon" ><i class="fa-solid fa-heart-pulse"></i></div>
-					<div class="icon" ><i class="fa-solid fa-heart-pulse"></i></div>
-					<div class="icon" ><i class="fa-solid fa-heart-pulse"></i></div>
-					<div class="icon" ><i class="fa-solid fa-heart-pulse"></i></div>
-					<div class="icon" ><i class="fa-solid fa-heart-pulse"></i></div>
-					<div class="icon" ><i class="fa-solid fa-heart-pulse"></i></div>
-					<div class="icon" ><i class="fa-solid fa-heart-pulse"></i></div>
-					<div class="icon" ><i class="fa-solid fa-heart-pulse"></i></div>
-					<div class="icon" ><i class="fa-solid fa-heart-pulse"></i></div>
-					<div class="icon" ><i class="fa-solid fa-heart-pulse"></i></div>
-					
-				   </div>"
-				</div>
-			</div>
-		</div>
+		<div class="card" style="border: transparent;">
+    <div class="card-body m-0 p-0" style="background-color: white">
+        <div class="p-5" style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+
+            <div class="card service-card">
+                <div class="icon-box">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+                <div class="mt-3">
+                    <h4 class="servicetext">Cardiology</h4>
+                    <p>Comprehensive heart care with advanced diagnostic and treatment options for all cardiac conditions.</p>
+                </div>
+            </div>
+
+            <div class="card service-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-hexagon-nodes"></i>
+                </div>
+                <div class="mt-3">
+                    <h4>Neurology</h4>
+                    <p>Expert neurological care providing diagnosis and treatment for disorders of the nervous system.</p>
+                </div>
+            </div>
+
+            <div class="card service-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-heart-pulse fa-lg"></i>
+                </div>
+                <div class="mt-3">
+                    <h4>Orthopedics</h4>
+                    <p>Specialized care for musculoskeletal issues, from sports injuries to joint replacements gdhgjh.</p>
+                </div>
+            </div>
+
+            <div class="card service-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-heart-pulse fa-lg"></i>
+                </div>
+                <div class="mt-3">
+                    <h4>Pediatrics</h4>
+                    <p>Compassionate care for children of all ages, from routine check-ups to specialized treatments.</p>
+                </div>
+            </div>
+
+            <div class="card service-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-heart-pulse fa-lg"></i>
+                </div>
+                <div class="mt-3">
+                    <h4>Dermatology</h4>
+                    <p>Expert skin care services, treating conditions from acne to complex dermatological disorders.</p>
+                </div>
+            </div>
+
+            <div class="card service-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-heart-pulse fa-lg"></i>
+                </div>
+                <div class="mt-3">
+                    <h4>Psychiatry</h4>
+                    <p>Comprehensive mental health services with personalized treatment plans and ongoing support.</p>
+                </div>
+            </div>
+            <div class="card service-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-heart-pulse fa-lg"></i>
+                </div>
+                <div class="mt-3">
+                    <h4>Psychiatry</h4>
+                    <p>Comprehensive mental health services with personalized treatment plans and ongoing support.</p>
+                </div>
+            </div>
+            <div class="card service-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-heart-pulse fa-lg"></i>
+                </div>
+                <div class="mt-3">
+                    <h4>Psychiatry</h4>
+                    <p>Comprehensive mental health services with personalized treatment plans and ongoing support.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 		
-		<div class="card position-relative pt-2" style="border: transparent;height: 600px;width: 100%;">
+		<div class="card position-relative pt-2" style="border: transparent;height: 600px;width: 100%;background: transparent;">
 		    <img th:src="@{/images/appointment.jpg}" class="h-100 w-100 img-fluid ">
 
 		    <!-- Positioned div on the right side above the image -->
@@ -392,35 +390,42 @@ display: flex;justify-content: center;align-items: center;
 		<div class="card ourdoctor" style="display: flex;justify-content: center;align-items: center;border: transparent;">
 				<div class="mt-5" style="text-align: center;">
 					<a>TRUSTED CARE</a>
-					<h2>Our Doctors</h2>
+					<h2 style="color: #C0EC83">Our Doctors</h2>
 				</div>	
 					
 	    </div>
 		
-		<div class="card p-5" style="display: flex;justify-content: center;align-items: center;border: transparent;">
-			
-			<div class="d-flex justify-content-around " >
-				<div class="card me-3" style="width: 18rem;height: 400px">
-				  <img th:src="@{/images/maledoctor.jpg}" class="img-fluid card-img-top " style="height: 200px;" alt="..." >
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				    <a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div>
-				</div>
-				<div class="card " style="width: 18rem;height: 400px">
-				  <img th:src="@{/images/femaldoctor.jpg}" class="card-img-top img-fluid" style="height: 200px;" alt="..." >
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text ">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				    <a href="#" class="btn btn-primary ">Go somewhere</a>
-				  </div>
-				</div>
-			</div>
-			
-		</div>
+		<!-- HTML -->
+<div class="doctors-section mt-3" style="display: flex; justify-content: center; align-items: center; border: transparent; background: transparent;">
+    <div class="d-flex justify-content-around flex-wrap">
+
+        <!-- Male Doctor Card -->
+        <div class="card doctor-card me-3">
+            <img src="/images/maledoctor.jpg" class="card-img-top" alt="Male Doctor" >
+            <div class="card-body">
+                <h5 class="card-title">Dr. John Smith</h5>
+                <p class="card-text">Specialist in Cardiology with 10+ years of experience in patient care and treatment.</p>
+                <a href="#" class="btn btn-primary">Know More</a>
+            </div>
+        </div>
+
+        <!-- Female Doctor Card -->
+        <div class="card doctor-card">
+            <img src="/images/femaldoctor.jpg" class="card-img-top" alt="Female Doctor">
+            <div class="card-body">
+                <h5 class="card-title">Dr. Sarah Lee</h5>
+                <p class="card-text">Expert in Pediatrics, providing compassionate care for children and families.</p>
+                <a href="#" class="btn btn-primary">Know More</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
 		
-		<div class="card  mt-3 ourdoctor"  style="border: transparent;">
+		<div class="card  mt-5 ourdoctor"  style="border: transparent;">
 						<div class="" style="text-align: center;flex-wrap: wrap;">
 							<a >GET IN TOUCH</a>
 							<h1 class="p-0 m-0" style="color: #C0EC83 ;font-size: 3rem">Contact</h1>
@@ -428,125 +433,202 @@ display: flex;justify-content: center;align-items: center;
 							
 	    </div>
 		
-		<div class="card p-5" style="  border: transparent;">
-			
-			<div class="card-body contactmainbody">
-				<div class="contactbox">
-					<div class="emergency">
-						<i class="fa-solid fa-phone-volume fa-lg"></i>
-						<h6 class="mt-2">EMERGENCY</h6>
-						<h6>838747343</h6>
-						<h6>396372436</h6>
-						
-					</div>
-				</div>
-				<a class="nav-link " href="#" th:href="@{/contacts}"><div class="contactbox"  style="background-color: white !important; border: 1px solid #C0EC83; color: black;" >
-					<div class="location">
-						<i class="fa-solid fa-location-dot fa-lg"></i>
-						<h6 class="mt-2">LOCATION</h6>
-						<h6>Mahalunge Baner</h6>
-						<h6>Baner Pune</h6>
-					
-					</div>
-				</div></a>
-				<div class="contactbox">
-					<div class="email">
-						<i class="fa-regular fa-envelope fa-lg"></i>
-						<h6 class="mt-2">EMAIL</h6>
-						<h6>ABC@gmail.com</h6>
-						<h6>xyz@gmail.com</h6>
-					
-					</div>
-				</div>
-				<a th:href="@{/appointment}" style="text-decoration: none;"><div class="contactbox"  style="background-color: white !important; border: 1px solid #C0EC83;color: black;">
-					<div class="workinghour">
-						<i class="fa-regular fa-clock fa-lg"></i>
-						<h6 class="mt-2">WORKING HOURS</h6>
-						<h6>Mon-Sat 09:00:00</h6>
-						<h6>Sunday Emergency Call</h6>
-					
-					</div>
-				</div></a>
-			</div>
-		</div>
+		<div class="card p-5" style="border: transparent;">
+    <div class="card-body contactmainbody">
+        
+        <div class="contactbox">
+            <div class="emergency">
+                <i class="fa-solid fa-phone-volume"></i>
+                <h6 class="mt-2">EMERGENCY</h6>
+                <h6>838747343</h6>
+                <h6>396372436</h6>
+            </div>
+        </div>
+
+        <a class="nav-link" href="#" th:href="@{/contacts}" style="text-decoration:none;">
+            <div class="contactbox">
+                <div class="location">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h6 class="mt-2">LOCATION</h6>
+                    <h6>Mahalunge Baner</h6>
+                    <h6>Baner Pune</h6>
+                </div>
+            </div>
+        </a>
+
+        <div class="contactbox">
+            <div class="email">
+                <i class="fa-regular fa-envelope"></i>
+                <h6 class="mt-2">EMAIL</h6>
+                <h6>ABC@gmail.com</h6>
+                <h6>xyz@gmail.com</h6>
+            </div>
+        </div>
+
+        <a th:href="@{/appointment}" style="text-decoration: none;">
+            <div class="contactbox">
+                <div class="workinghour">
+                    <i class="fa-regular fa-clock"></i>
+                    <h6 class="mt-2">WORKING HOURS</h6>
+                    <h6>Mon-Sat 09:00:00</h6>
+                    <h6>Sunday Emergency Call</h6>
+                </div>
+            </div>
+        </a>
+
+    </div>
+</div>
 
 			
-		</div>
-		
-	</div>
-	 <footer class="" style="background-color: #000053;">
-		<div class="card p-3" style="background-color: #000053;color: white;">
-			<div class="row align-items-center p-5">
-			    <div class="col ">
-					<img th:src="@{/images/logo.jpg}" style="width: 50%;">
-			      <h4 class="mt-2">Lotu Multispeciality Clinic</h4>
-				  <div class="d-flex justify-content-aroun mt-3 " >
-					<i class="fa-brands fa-facebook fa-lg p-3"></i>
-					<i class="fa-brands fa-instagram fa-lg p-3"></i>
-					<i class="fa-brands fa-twitter fa-lg p-3"></i>
-					<i class="fa-brands fa-linkedin fa-lg p-3"></i>
-				  </div>
-			    </div>
-			    <div class="col">
-			       <div>
-					<h4>Hospital Address</h4>
-					<a>Lotus Multispecilality Clinic,</a>
-					<a>Mahalunge road,Pune</a>
-					<a>Maharashtra 411001</a>
-					<a>abc2gmail.com</a>
-				   </div>
-			    </div>
-			    <div class="col">
-					<div  class="emergency-contact">
-						<h4>Emergency Contact</h4>
-						<label>Enquiry</label>
-						<a>351546565</a>
-						<label>Emergency</label>
-						<a>3767665</a>
-						<label>Ambulance</label>
-						<a>5738567488</a>
-						
-					</div>
-			    </div>
-				<div class="col">
-					<div  class="emergency-contact">
-						<h4>Quick Links</h4>
-						<a>Our Doctor</a>
-						<a>Specialities</a>
-						<a>International Patients Services</a>
-						<a>Contact</a>
-						<a>Our Services</a>
-						
-					</div>
-				</div>
-			  </div>
-			  <hr>
-			  <div style="text-align: center;">
-				<a >© 2023-24 Ruby Hall Clinic. All Rights Reserved. Website designed and developed by SourceKode</a>
-			  </div>
-			 
-		</div>
-		
-	</footer> 
+	
+	 <footer style="background-color: #000053;">
+    <div class="card p-3" style="background-color: #000053; color: white; border: none;">
+        <div class="container">
+            <div class="row align-items-start justify-content-center text-start p-5" style="flex-wrap: nowrap;">
+                <div class="col-3">
+                    <img th:src="@{/images/logo.jpg}" style="width: 50%;">
+                    <h4 class="mt-2">Lotu Multispeciality Clinic</h4>
+                    <div class="d-flex mt-3">
+                        <i class="fa-brands fa-facebook fa-lg p-3"></i>
+                        <i class="fa-brands fa-instagram fa-lg p-3"></i>
+                        <i class="fa-brands fa-twitter fa-lg p-3"></i>
+                        <i class="fa-brands fa-linkedin fa-lg p-3"></i>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <h4>Hospital Address</h4>
+                    <p>Lotus Multispecilality Clinic,</p>
+                    <p>Mahalunge road, Pune</p>
+                    <p>Maharashtra 411001</p>
+                    <p>abc2gmail.com</p>
+                </div>
+                <div class="col-3">
+                    <h4>Emergency Contact</h4>
+                    <label>Enquiry</label>
+                    <p>351546565</p>
+                    <label>Emergency</label>
+                    <p>3767665</p>
+                    <label>Ambulance</label>
+                    <p>5738567488</p>
+                </div>
+                <div class="col-3">
+                    <h4>Quick Links</h4>
+                    <p>Our Doctor</p>
+                    <p>Specialities</p>
+                    <p>International Patients Services</p>
+                    <p>Contact</p>
+                    <p>Our Services</p>
+                </div>
+            </div>
+        </div>
+        <hr style="border-color: rgba(255,255,255,0.2);">
+        <div style="text-align: center;">
+            <p>© 2023-24 Ruby Hall Clinic. All Rights Reserved. Website designed and developed by SourceKode</p>
+        </div>
+    </div>
+</footer>
+ 
 
 	<script>
-	document.addEventListener("DOMContentLoaded", function () {
-	    const div = document.querySelector(".scroll-div");
-	    const observer = new IntersectionObserver(
-	        (entries) => {
-	            entries.forEach((entry) => {
-	                if (entry.isIntersecting) {
-	                    div.classList.add("visible");
-	                } else {
-	                    div.classList.remove("visible");
-	                }
-	            });
-	        },
-	        { threshold: 0.3 }
-	    );
+	document.addEventListener("DOMContentLoaded", () => {
+	    const text = document.querySelector('.service-text');
+	    const image = document.querySelector('.service-image');
 
-	    observer.observe(div);
+	    const observer = new IntersectionObserver(entries => {
+	      entries.forEach(entry => {
+	        if (entry.isIntersecting) {
+	          text.classList.add('visible');
+	          image.classList.add('visible');
+	        } else {
+	          text.classList.remove('visible');
+	          image.classList.remove('visible');
+	        }
+	      });
+	    }, { threshold: 0.3 });
+
+	    observer.observe(document.querySelector('#serviceSection'));
+	  });
+	document.addEventListener("DOMContentLoaded", () => {
+		  const scrollDiv = document.querySelector(".scroll-div");
+		  const tabs = document.querySelectorAll(".tabs3.glass");
+
+		  function checkScroll() {
+		    const rect = scrollDiv.getBoundingClientRect();
+		    const windowHeight = window.innerHeight;
+
+		    if (rect.top < windowHeight - 100) {
+		      scrollDiv.classList.add("show");
+		      tabs.forEach(tab => tab.classList.add("visible"));
+		    } else {
+		      scrollDiv.classList.remove("show");
+		      tabs.forEach(tab => tab.classList.remove("visible"));
+		    }
+		  }
+
+		  window.addEventListener("scroll", checkScroll);
+		  checkScroll();
+
+		  // 3D tilt effect for each tab
+		  tabs.forEach(tab => {
+		    tab.addEventListener("mousemove", e => {
+		      const rect = tab.getBoundingClientRect();
+		      const x = e.clientX - rect.left - rect.width / 2;
+		      const y = e.clientY - rect.top - rect.height / 2;
+
+		      const rotateX = (-y / (rect.height / 2)) * 7;
+		      const rotateY = (x / (rect.width / 2)) * 7;
+
+		      tab.style.transform = `scale(1.05) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+		    });
+
+		    tab.addEventListener("mouseleave", () => {
+		      tab.style.transform = "scale(1)";
+		    });
+		  });
+		});
+	
+	
+/* contact section animation  */
+	document.addEventListener("DOMContentLoaded", () => {
+	    const cards = document.querySelectorAll(".contactbox");
+
+	    const observer = new IntersectionObserver((entries) => {
+	        entries.forEach((entry, index) => {
+	            if (entry.isIntersecting) {
+	                setTimeout(() => {
+	                    entry.target.classList.add("show");
+	                }, index * 200); // staggered animation
+	            } else {
+	                // Remove show class when it leaves viewport
+	                entry.target.classList.remove("show");
+	            }
+	        });
+	    }, { threshold: 0.3 });
+
+	    cards.forEach(card => observer.observe(card));
 	});
+	
+	
+	document.addEventListener("DOMContentLoaded", () => {
+	    const cards = document.querySelectorAll(".service-card");
+
+	    const observer = new IntersectionObserver((entries) => {
+	        entries.forEach((entry) => {
+	            if (entry.isIntersecting) {
+	                entry.target.classList.add("show");
+	            } else {
+	                entry.target.classList.remove("show"); // reset for re-trigger
+	            }
+	        });
+	    }, { threshold: 0.2 });
+
+	    cards.forEach((card, index) => {
+	        card.style.transitionDelay = `${index * 0.1}s`; // stagger effect
+	        observer.observe(card);
+	    });
+	});
+
+
 	</script>
 	<script>
 	    document.addEventListener("DOMContentLoaded", function () {
@@ -559,24 +641,24 @@ display: flex;justify-content: center;align-items: center;
 	</script>
 	<script>
 		
-		document.addEventListener("DOMContentLoaded", function () {
+	document.addEventListener("DOMContentLoaded", function () {
 		  const animatedDiv = document.getElementById("animatedDiv");
 
 		  function handleScroll() {
 		    const rect = animatedDiv.getBoundingClientRect();
 		    const windowHeight = window.innerHeight;
 
-		    // Check if the element is in the viewport
-		    if (rect.top <= windowHeight && rect.bottom >= 0) {
-		      animatedDiv.classList.add("show"); // Add the class to trigger the animation
+		    if (rect.top <= windowHeight - 100) {
+		      animatedDiv.classList.add("show");
 		    } else {
-		      animatedDiv.classList.remove("show"); // Remove the class to reset the animation
+		      animatedDiv.classList.remove("show");
 		    }
 		  }
 
-		  // Attach scroll event listener
 		  window.addEventListener("scroll", handleScroll);
+		  handleScroll();
 		});
+
 
 	</script>
 	<script>
@@ -647,52 +729,37 @@ display: flex;justify-content: center;align-items: center;
 
 		</script>
 		<script>
-			// Create an intersection observer
-			const observer1 = new IntersectionObserver((entries, observer1) => {
-			    entries.forEach(entry => {
-			        if (entry.isIntersecting) {
-			            // Add 'bouncing' class to trigger the animation when in view
-			            entry.target.classList.add('bouncing');
-			        } else {
-			            // Optionally, remove the class if you want to reset animation when out of view
-			            entry.target.classList.remove('bouncing');
-			        }
-			    });
-			}, { threshold: 0.5 }); // Trigger when 50% of the element is in view
+		function revealOnScroll() {
+		    const topImage = document.querySelector('.top-image');
+		    const topText = document.querySelector('.top-text');
+		    const bottomImages = document.querySelectorAll('.bottom-image');
 
-			// Observe each .bounce-image div
-			document.querySelectorAll('.bounce-image').forEach(image => {
-			    observer1.observe(image);
-			});
+		    const windowHeight = window.innerHeight;
 
-		</script>
-		<script>
-			document.addEventListener("DOMContentLoaded", function () {
-			    const slideElements = document.querySelectorAll(".slide-effect");
+		    if (topImage.getBoundingClientRect().top < windowHeight - 100) {
+		      topImage.classList.add('visible');
+		    } else {
+		      topImage.classList.remove('visible');
+		    }
 
-			    function checkScroll() {
-			        let delay = 0; // Start delay
+		    if (topText.getBoundingClientRect().top < windowHeight - 100) {
+		      topText.classList.add('visible');
+		    } else {
+		      topText.classList.remove('visible');
+		    }
 
-			        slideElements.forEach((element, index) => {
-			            const elementTop = element.getBoundingClientRect().top;
-			            const windowHeight = window.innerHeight;
+		    bottomImages.forEach(img => {
+		      if (img.getBoundingClientRect().top < windowHeight - 100) {
+		        img.classList.add('visible');
+		      } else {
+		        img.classList.remove('visible');
+		      }
+		    });
+		  }
 
-			            if (elementTop < windowHeight - 50) {
-			                setTimeout(() => {
-			                    element.classList.add("slide-in");
-			                }, delay); // Apply delay for sequential effect
-			                delay += 200; // Increase delay for next element (300ms per element)
-			            } else {
-			                element.classList.remove("slide-in"); // Remove when out of view
-			            }
-			        });
-			    }
-
-			    window.addEventListener("scroll", checkScroll);
-			    checkScroll(); // Run on page load
-			});
-
-		</script>
+		  window.addEventListener('scroll', revealOnScroll);
+		  window.addEventListener('load', revealOnScroll);
+</script>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 			    const blinkDiv = document.querySelector(".blink-effect");
@@ -716,21 +783,36 @@ display: flex;justify-content: center;align-items: center;
 
 		</script>
 		<script>
-			document.addEventListener("DOMContentLoaded", function () {
-			  const elements = document.querySelectorAll(".ourdoctor");
+		// JS
+		document.addEventListener("DOMContentLoaded", function () {
+    const section = document.querySelector(".doctors-section"); // ✅ Changed selector
+    const cards = document.querySelectorAll(".doctor-card");
 
-			  const observer = new IntersectionObserver((entries) => {
-			    entries.forEach((entry) => {
-			      if (entry.isIntersecting) {
-			        entry.target.classList.add("visible"); // Show animation
-			      } else {
-			        entry.target.classList.remove("visible"); // Reset animation when out of view
-			      }
-			    });
-			  }, { threshold: 0.2 }); // Trigger when 20% of the div is visible
+    // Alternate direction classes
+    cards.forEach((card, index) => {
+        card.classList.add(index % 2 === 0 ? "from-left" : "from-right");
+    });
 
-			  elements.forEach((el) => observer.observe(el));
-			});
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                cards.forEach((card, index) => {
+                    card.classList.remove("visible");
+                    void card.offsetWidth; // force reflow
+                    setTimeout(() => {
+                        card.classList.add("visible");
+                    }, index * 300);
+                });
+            } else {
+                cards.forEach(card => card.classList.remove("visible"));
+            }
+        });
+    }, { threshold: 0.3 });
+
+    observer.observe(section);
+});
+
+
 
 
 		</script>
