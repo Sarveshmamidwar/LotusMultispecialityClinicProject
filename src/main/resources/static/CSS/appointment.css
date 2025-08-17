@@ -372,7 +372,7 @@
 
 /* Front */
 .appointment-front {
-  background: linear-gradient(145deg, #C0EC83, #a6d870);
+  background: linear-gradient(145deg, #C0EC83,#C0EC83);
   color: #222;
 }
 
@@ -417,5 +417,108 @@
 }
 
 
+/*  first crad*/
+
+.appointment-card-alt {
+  display: flex;
+  width: 90%;
+  max-width: 90%;
+  height: 400px;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  margin:5%;
+}
+
+/* Hover lift effect */
+.appointment-card-alt:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+}
+
+/* Left text section */
+.card-left {
+  flex: 1;
+  background: linear-gradient(135deg, #C0EC83, #A6D870);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  position: relative;
+  clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%); /* slightly less width to show image fully */
+  transition: background 0.5s ease;
+}
+
+.card-left h1 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.card-left p {
+  font-size: 1rem;
+  margin-bottom: 25px;
+  opacity: 0.85;
+}
+
+.btn-appointment-alt {
+  padding: 12px 30px;
+  border-radius: 50px;
+  border: none;
+  background: #fff;
+  color: #2575fc;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.btn-appointment-alt:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+  background: #f0f0f0;
+}
+
+/* Right image section */
+.card-right {
+  flex: 1;
+  position: relative;
+}
+
+.card-right img {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  border-radius: 0 25px 25px 0; /* matches card radius */
+}
+
+.appointment-card-alt:hover .card-right img {
+  transform: scale(1.1) rotate(2deg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .appointment-card-alt {
+    flex-direction: column;
+    height: auto;
+  }
+  .card-left, .card-right {
+    flex: unset;
+    clip-path: unset;
+  }
+  .card-left {
+    padding: 30px;
+    text-align: center;
+    align-items: center;
+  }
+}
 
     

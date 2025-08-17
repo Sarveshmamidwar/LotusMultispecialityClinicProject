@@ -7,7 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-
+<link rel="stylesheet" th:href="@{/CSS/patientdashboard.css}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <style type="text/css">
@@ -22,6 +22,52 @@
 	padding: 0%;
 }
 
+/* Info Navbar */
+.info-navbar {
+  background-color: #e7f0d7;
+  box-shadow: 0 4px 12px rgba(192, 236, 131, 0.2);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+.info-navbar .navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #4f7321;
+}
+.logo {
+  width: 50px;
+  border-radius: 12px;
+}
+.info-list {
+  color: #557a17;
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 0;
+}
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.info-item i {
+  font-size: 1.2rem;
+  color: #9bc53d;
+}
+.info-item small {
+  display: block;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+}
+.info-item span {
+  color: #4f7321;
+  font-weight: 600;
+}
+
+/* Main Navbar */
+
+
+
 </style>
 
 </head>
@@ -29,179 +75,243 @@
 
 
 <div class="card d-flex flex-column" style="height: 100vh;">
-        <div class="navbar navbar-expand-lg">
-            <div class="container-fluid w-100">
-                <a class="navbar-brand" style="text-decoration: none;color: black;font-size: 1.8rem">
-                    <img th:src="@{/images/logo.jpg}" class="logo" style="width: 10%;mix-blend-mode: multiply !important;">
-                    Lotus Multispeciality Clinic
-                </a>
-            </div>
+        <!-- Top Info Navbar -->
+<nav class="info-navbar">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+      <img th:src="@{/images/logo.jpg}" alt="Logo" class="logo me-2">
+      Lotus Multispeciality Clinic
+    </a>
+    <ul class="info-list mb-0">
+      <li class="info-item">
+        <i class="fa-solid fa-phone-volume"></i>
+        <div>
+          <small>EMERGENCY</small>
+          <span>+91 2345678901</span>
         </div>
+      </li>
+      <li class="info-item">
+        <i class="fa-regular fa-clock"></i>
+        <div>
+          <small>WORKING HOURS</small>
+          <span>Mon-Sat: 9AM - 9PM</span>
+        </div>
+      </li>
+      <li class="info-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <small>LOCATION</small>
+          <span>123 Lotus Street, City</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-        <div class="p-3 d-flex flex-column flex-grow-1" style="background-color: #C0EC83;">
-            <div class="card w-100">
-                <div class="row p-2 w-100" >
-                    <div class="col-10">
-                        <h1>Hello, <span th:text="${PatientName}" style="font-size: 2rem"></span></h1>
-                    </div>
-                    <div class="col-2 d-flex justify-content-around align-items-center">
-                        <div>
-                            <a th:href="@{/patient/patDashboard}">Dashboard</a>
-                        </div>
-                        <div>
-                            <a th:href="@{/logout}"><i class="fa-solid fa-power-off fa-xl" style="color: #f90101;"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card flex-grow-1 mt-3" style="background-color: transparent;border: none;">
-                
-                 <div class="row h-100 w-100">
-         <div class="col me-2 h-100">
-         <div class="card h-100 w-100">
-            <div class="row  ps-2 m-2 ">
-              <h4>Reports : </h4>
-            </div>
-            
-            <div class="h-100" style="display: flex; justify-content:center ;align-items: center;">
-						<div class="" style="display: flex; justify-content: space-around;">
-									<div class="card d-flex align-items-center text-center m-2"
-										style="width: 10rem;">
-										<a th:href=@{/patient/getreports} style="text-decoration: none;"><div class="card-body d-flex flex-column align-items-center" style="color: black;">
-											<img alt="" th:src="@{/images/Reports.png}" width="50%">
-											<h5 class="card-title mt-2">Reports</h5>
-										</div></a>
-									</div>
+<!-- Patient Navbar -->
+<!-- Patient Navbar -->
+<nav class="navbar navbar-expand-lg main-navbar">
+  <div class="container-fluid justify-content-between align-items-center">
 
-									<div class="card d-flex align-items-center text-center m-2"
-										style="width: 10rem;">
-										<div class="card-body d-flex flex-column align-items-center">
-											<img alt="" th:src="@{/images/health-report.png}" width="50%">
-											<h5 class="card-title mt-2">History</h5>
-										</div>
-									</div>
-							        <div class="card d-flex align-items-center text-center m-2"
-										style="width: 10rem;"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-										<div class="card-body d-flex flex-column align-items-center">
-											<img alt="" th:src="@{/images/online-appointment.png}" width="50%">
-											<h5 class="card-title mt-2">Book Appointment</h5>
-										</div>
-									</div>
-						
-						</div>
-                          </div>
-							</div>
-					</div>
-         <div class=" card col h-100">
-           
-               <table class="table">
-										<thead>
-											<tr>
-												<th scope="col">Sr No.</th>
-												<th scope="col">Date</th>
-												<th scope="col">Time</th>
-												<th scope="col">Doctor</th>
-											</tr>
-										</thead>
-									<tbody>
-										<tr th:each="c, iterStat : ${appointmentist}"
-											th:style="${iterStat.index >= 7} ? 'display: table-row;' : ''">
-											<th th:text="${c.id}">1</th>
-											<td th:text="${c.AppointmentDate}">Mark</td>
-											<td th:text="${c.AppointmentTime}">Otto</td>
-											<td th:text="${c.doctor}">@mdo</td>
-										</tr>
-									</tbody>
-								</table>
-            
-           
-         </div>
-     </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#patientNavbar" aria-controls="patientNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="patientNavbar">
+      <ul class="navbar-nav gap-4 fw-semibold fs-5">
+        <li class="nav-item animate-slide-in" style="animation-delay:0s;">
+          <a class="nav-link navtabs" th:href="@{/patient/patDashboard}">Dashboard</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
+          <a class="nav-link navtabs" th:href="@{/logout}">
+            <i class="fa-solid fa-power-off"></i> Logout
+          </a>
+        </li>
+      </ul>
+
+      <!-- Patient Name in Navbar -->
+      <span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+        Hello, <strong th:text="${PatientName}"></strong>
+      </span>
+    </div>
+  </div>
+</nav>
+
+
+
+        <div class="p-3 d-flex flex-column flex-grow-1 dashboard-bg m-5" style="border-radius: 15px">
+
+  <!-- Main Dashboard Row -->
+  <div class="card flex-grow-1  border-0 bg-transparent">
+    <div class="row h-100 w-100 g-3">
+
+      <!-- Left Column: Quick Actions -->
+      <div class="col-lg-5 d-flex flex-column gap-3">
+    <div class="card glass-card p-3">
+        <h4 class="mb-3">Quick Actions</h4>
+
+        <!-- Action Grid -->
+        <div class="action-grid">
+            <!-- Reports -->
+            <a th:href="@{/patient/getreports}" class="action-card">
+                <img th:src="@{/images/Reports.png}" alt="Reports">
+                <h5>Reports</h5>
+            </a>
+
+            <!-- History -->
+            <div class="action-card">
+                <img th:src="@{/images/health-report.png}" alt="History">
+                <h5>History</h5>
             </div>
+
+            <!-- Book Appointment -->
+            <div class="action-card" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <img th:src="@{/images/online-appointment.png}" alt="Book Appointment">
+                <h5>Book Appointment</h5>
+            </div>
+
+            <!-- New Feature -->
+            
         </div>
     </div>
+</div>
 
 
+      <!-- Right Column: Appointments Table -->
+      <div class="col-lg-7">
+    <div class="card glass-card p-3 fade-in-table">
+        <h4 class="mb-3">Upcoming Appointments</h4>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        
-         <form th:action="@{/patient/BookAppointment}" id="appointmentForm" method="post" class="d-flex flex-column" style="overflow-y: auto;">
-				             <!-- Full Name -->
-				             <div class=" d-flex justify-content-around p-3 pb-0">
-								<div class="w-100 me-2">
-				                 <label for="fullname" class="form-label">Full Name</label>
-				                 <input type="text" id="fullname" name="name" class="form-control" placeholder="Enter your full name" required>
-								</div>
-								<div class="w-100">
-									<label for="gender" class="form-label">Gender</label>
-													                 <select id="gender" name="gender" class="form-select" required>
-													                     <option value="">Select Gender</option>
-													                     <option value="Male">Male</option>
-													                     <option value="Female">Female</option>
-													                 </select>
-									
-								</div>
-							  </div>
+        <!-- Scrollable Table Wrapper -->
+        <div class="table-responsive custom-scroll">
+            <table class="table table-hover align-middle text-center custom-table">
+                <thead class="sticky-top">
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Doctor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c, iterStat : ${appointmentist}">
+                        <td th:text="${c.id}">1</td>
+                        <td th:text="${c.AppointmentDate}">Mark</td>
+                        <td th:text="${c.AppointmentTime}">Otto</td>
+                        <td th:text="${c.doctor}">@mdo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-							  <div class="  d-flex justify-content-around p-3 pb-0">
-								<div class="w-100 me-2">
-							  		<label for="date" class="form-label">Appointment Date</label>
-							  		<input type="date" id="date" name="AppointmentDate" class="form-control" required>
-								</div>	
-								<div class="w-100">
-						             <label for="time" class="form-label">Appointment Time</label>
-						             <input type="time" id="time" name="AppointmentTime"  class="form-control" required>
-								 </div>
-							  </div>
+    </div>
+</div>
 
-							<div class=" d-flex justify-content-around p-3 pb-0">
-								<div class="w-100 me-2">
-									<label for="phone" class="form-label">Phone</label>
-									<input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
-								</div>
-								<div class="w-100">
-									<label for="doctor" class="form-label">Select Doctor</label>
-									<select id="doctor" name="doctor" class="form-select" required>
-										<option value="">Select a Doctor</option>
-										<option value="Dr.ganesh">Dr. Ganesh</option>
-										<option value="Dr.shradha">Dr. Shradha</option>
-									</select>
-								</div>
-							</div>
-							  
-							  			             			             
 
-				             <!-- Email -->
-				             <div class="ps-3 pe-3">
-				                 <label for="email" class="form-label">Email</label>
-				                 <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
-				             </div>
-
-				             <div class="p-3">
-				                 <label for="message" class="form-label">Message</label>
-				                 <textarea id="message" class="form-control" name="message" rows="3" placeholder="Enter any message"></textarea>
-				             </div>
-
-				             <!-- Submit Button -->
-				             <div class="text-center">
-				                 <button type="submit" class="btn btn-primary rounded-pill" style="width: 80%;">Submit</button>
-				             </div>
-				         </form>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
     </div>
   </div>
 </div>
+
+    </div>
+
+
+
+<div class="modal fade custom-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content modal-3d">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold text-primary" id="exampleModalLabel">
+          <i class="bi bi-calendar-check me-2"></i> Book Appointment
+        </h5>
+        <button type="button" class="btn-close shadow-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <form th:action="@{/patient/BookAppointment}" id="appointmentForm" method="post" class="d-flex flex-column gap-3">
+
+          <!-- Row 1 -->
+          <div class="d-flex gap-3">
+            <div class="flex-fill">
+              <label class="form-label fw-semibold">Full Name</label>
+              <input type="text" name="name" class="form-control form-control-3d" placeholder="Enter your full name" required>
+            </div>
+            <div class="flex-fill">
+              <label class="form-label fw-semibold">Gender</label>
+              <select name="gender" class="form-select form-control-3d" required>
+                <option value="">Select Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="d-flex gap-3">
+            <div class="flex-fill">
+              <label class="form-label fw-semibold">Appointment Date</label>
+              <input type="date" name="AppointmentDate" class="form-control form-control-3d" required>
+            </div>
+            <div class="flex-fill">
+              <label class="form-label fw-semibold">Appointment Time</label>
+              <input type="time" name="AppointmentTime" class="form-control form-control-3d" required>
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="d-flex gap-3">
+            <div class="flex-fill">
+              <label class="form-label fw-semibold">Phone</label>
+              <input type="tel" name="phone" class="form-control form-control-3d" placeholder="Enter your phone number" required>
+            </div>
+            <div class="flex-fill">
+              <label class="form-label fw-semibold">Select Doctor</label>
+              <select name="doctor" class="form-select form-control-3d" required>
+                <option value="">Select a Doctor</option>
+                <option>Dr. Ganesh</option>
+                <option>Dr. Shradha</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Row 4 -->
+          <div>
+            <label class="form-label fw-semibold">Email</label>
+            <input type="email" name="email" class="form-control form-control-3d" placeholder="Enter your email" required>
+          </div>
+
+          <!-- Row 5 -->
+          <div>
+            <label class="form-label fw-semibold">Message</label>
+            <textarea name="message" class="form-control form-control-3d" rows="3" placeholder="Enter any message"></textarea>
+          </div>
+
+          <!-- Button -->
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-3d w-75">
+              <i class="bi bi-send-fill me-1"></i> Submit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- <div class="modal-footer border-0 justify-content-between">
+        <button type="button" class="btn btn-outline-secondary btn-3d" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success btn-3d">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", () => {
+    const rows = document.querySelectorAll("#appointment-body tr");
+    rows.forEach((row, index) => {
+        row.classList.add("stagger-row");
+        row.style.animationDelay = `${index * 0.15}s`; // Delay each row by 0.15s
+    });
+});
+
+</script>
 </body>
 </html>

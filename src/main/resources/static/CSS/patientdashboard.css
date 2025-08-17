@@ -1,0 +1,283 @@
+/* Background */
+.dashboard-bg {
+  background: linear-gradient(135deg, #c0ec83 0%, #e6f6d9 100%);
+  
+}
+
+/* Glassmorphism Card */
+/* Action Grid Layout */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+  gap: 1rem;
+  justify-items: center; /* Center cards in each cell */
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease;
+}
+.glass-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Action Cards */
+.action-card {
+  background: white;
+  width: 9rem;
+  height: 9rem;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.action-card img {
+  width: 50%;
+  margin-bottom: 0.5rem;
+  transition: transform 0.3s ease;
+}
+.action-card:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+.action-card:hover img {
+  transform: rotate(8deg) scale(1.1);
+}
+.action-card h5 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+
+/* Table Styling */
+.custom-table thead {
+  background: #7cbc34;
+  color: white;
+}
+.custom-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+.custom-table tbody tr:hover {
+  background-color: #f2f9eb;
+}
+
+/* Fade-in animation for table */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.fade-in-table {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Scrollable Table */
+.custom-scroll {
+  max-height: 300px; /* You can adjust height */
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #a3c76d transparent; /* Firefox */
+}
+
+/* Sticky table header */
+.custom-table thead {
+  background: #7cbc34;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+/* Custom Scrollbar for Chrome, Edge, Safari */
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #a3c76d;
+  border-radius: 4px;
+}
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #89b354;
+}
+/* Table Row Animation */
+@keyframes rowFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-table tbody tr {
+  opacity: 0; /* Hidden before animation */
+  animation: rowFadeUp 0.8s ease forwards;
+}
+
+/* Stagger animation for each row */
+.custom-table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.custom-table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+.custom-table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+.custom-table tbody tr:nth-child(4) { animation-delay: 0.4s; }
+.custom-table tbody tr:nth-child(5) { animation-delay: 0.5s; }
+.custom-table tbody tr:nth-child(6) { animation-delay: 0.6s; }
+/* You can keep adding nth-child for more rows */
+
+.main-navbar {
+  padding: 1rem 1.5rem;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.navbar-toggler {
+  border-color: #9bc53d;
+}
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='%239bc53d' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+.nav-link.navtabs {
+  color: #557a17;
+  position: relative;
+  padding-bottom: 6px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+.nav-link.navtabs::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  background-color: #7cbc34;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+.nav-link.navtabs:hover {
+  color: #7cbc34;
+}
+.nav-link.navtabs:hover::after {
+  width: 60%;
+}
+
+/* Logout Button */
+.logout-btn i {
+  color: #f90101;
+  transition: transform 0.3s ease;
+}
+.logout-btn i:hover {
+  transform: rotate(15deg);
+}
+
+/* Patient Card */
+.patient-card {
+  background: #ffffff;
+  border-left: 6px solid #7cbc34;
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+.patient-card h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #4f7321;
+}
+.patient-card a.btn-outline-success {
+  border-color: #7cbc34;
+  color: #7cbc34;
+}
+.patient-card a.btn-outline-success:hover {
+  background-color: #7cbc34;
+  color: white;
+}
+
+/* Animation */
+@keyframes slideInLeft {
+  0% { opacity: 0; transform: translateX(-20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.animate-slide-in {
+  animation: slideInLeft 0.5s ease forwards;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .navbar-nav {
+    justify-content: center !important;
+  }
+}
+.navbar-patient-name {
+  font-size: 1rem;
+  color: #4f7321;
+  font-weight: 600;
+  background-color: #e7f0d7;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(192, 236, 131, 0.3);
+}
+.navbar-patient-name strong {
+  color: #7cbc34;
+}
+
+/* Modal 3D Style */
+.modal-3d {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transform-style: preserve-3d;
+  animation: modalSlideUp 0.5s ease;
+}
+
+/* 3D Form Inputs */
+.form-control-3d, .form-select.form-control-3d {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05), 0 3px 6px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+.form-control-3d:focus, .form-select.form-control-3d:focus {
+  border-color: #4cafef;
+  box-shadow: 0 4px 12px rgba(76, 175, 239, 0.3);
+  transform: translateY(-2px);
+}
+
+/* 3D Buttons */
+.btn-3d {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+.btn-3d:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Modal Animation */
+@keyframes modalSlideUp {
+  from {
+    transform: translateY(30px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+

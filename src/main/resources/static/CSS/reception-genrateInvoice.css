@@ -1,0 +1,239 @@
+      
+
+    .dropdown {
+        position: absolute;
+        display: none;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        z-index: 100;
+    }
+
+    .dropdown button {
+        display: block;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .dropdown button:hover {
+        background-color: #ddd;
+    }
+    .imgstamp{
+        height: 100px;
+        width: 100px;
+        display: flex;
+    }
+    .prescriptiontable{
+       max-height: 300px; overflow-y: auto;min-height: 300px;
+    }
+    input {
+	text-transform: capitalize;
+}
+
+.drnamesect{
+font-size: 1.3rem;
+}
+.drdegree{
+font-size: 0.9rem;
+}
+.pdfContent{
+max-height: 300px;
+}
+
+#suggestions {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none; /* Hide by default */
+}
+.suggestion-item {
+    cursor: pointer;
+}
+.suggestion-item:hover {
+    background: #f0f0f0;
+}
+
+/* Error Notification */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: -400px; /* hidden initially */
+  width: 320px;
+  background: #dc3545; /* red */
+  color: #fff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: right 0.5s ease-in-out;
+  z-index: 9999;
+}
+
+.notification.show {
+  right: 20px; /* slide in */
+}
+
+.notification h4 {
+  margin: 0 0 5px;
+  font-size: 16px;
+}
+
+.notification p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.notification .close-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  float: right;
+  cursor: pointer;
+}
+
+/* Smooth animations for cards */
+.col-4, .col-8 {
+  animation: fadeInUp 0.8s ease;
+}
+.col-8 {
+  animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Inputs styling */
+input[type="text"] {
+  border-radius: 25px;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  transition: all 0.3s ease;
+}
+input[type="text"]:focus {
+  outline: none;
+  border-color: #4e73df;
+  box-shadow: 0 0 6px rgba(78,115,223,0.6);
+}
+
+/* Add Prescriptions heading animation */
+h2 {
+  font-weight: bold;
+  color: #4e73df;
+  animation: bounceIn 1s ease;
+}
+@keyframes bounceIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* Buttons */
+button.btn {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+button.btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* PDF Button Special */
+#generatePdfBtn {
+  background: linear-gradient(135deg, #28a745, #7dd87d);
+  color: white;
+  font-weight: bold;
+  border: none;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(40,167,69,0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(40,167,69,0); }
+  100% { box-shadow: 0 0 0 0 rgba(40,167,69,0); }
+}
+
+/* Table Enhancements */
+table tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+table tbody tr:hover {
+  background: #e9f5ff;
+  transition: background 0.3s ease;
+}
+
+/* Logo + Pharmacy name animation */
+.prelogo {
+  animation: fadeIn 1.2s ease;
+}
+.drsection a {
+  font-weight: bold;
+  color: #1cc88a;
+  animation: slideRight 1s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideRight {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.main-card {
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.2), /* outside shadow */
+    inset 0 4px 8px rgba(0, 0, 0, 0.1), /* inside shadow */
+    inset 0 -4px 8px rgba(255, 255, 255, 0.7); /* subtle light inner glow */
+  transition: all 0.3s ease-in-out;
+  padding: 5px;
+}
+
+.main-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 12px 25px rgba(0, 0, 0, 0.25), 
+    inset 0 4px 8px rgba(0, 0, 0, 0.12), 
+    inset 0 -4px 8px rgba(255, 255, 255, 0.8);
+}
+
+.logout-link {
+  color: #557a17;
+  position: relative;
+  padding-bottom: 6px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.logout-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  background-color: #7cbc34;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.logout-link:hover {
+  color: #7cbc34;
+}
+
+.logout-link:hover::after {
+  width: 60%;
+}
+.logout-link i {
+  color: inherit;   /* Make icon use the same color as the link */
+  margin-right: 6px; /* Optional: space between icon and text */
+}

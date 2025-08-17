@@ -110,12 +110,18 @@
 </header>
 
 <main>
-<div class="appointment-card m-5">
+<div class="appointment-card-alt">
+  <div class="card-left">
+    <h1>Book Appointment</h1>
+    <p>Easy scheduling with your preferred doctor</p>
+    <button class="btn-appointment-alt">Book Now</button>
+  </div>
+  <div class="card-right">
     <img th:src="@{/images/appointmentimg.jpg}" alt="Book Appointment">
-    <div class="appointment-text">
-        <h1>Book an Appointment</h1>
-    </div>
+  </div>
 </div>
+
+
 
 
 
@@ -135,7 +141,7 @@
           <div><span>Sunday</span><span>09:00 AM - 10:00 PM</span></div>
         </div>
         <div class="text-center mt-4">
-          <button id="flipButton" class="btn btn-primary btn-lg">Book Appointment</button>
+          <button id="flipButton" class="btn btn-appointment-alt btn-lg" >Book Appointment</button>
         </div>
       </div>
 

@@ -88,20 +88,51 @@ function clearTableData() {
     updateTotalAmount(); // Reset total amount
 }
 
+function showNotification(message) {
+    let notify = document.getElementById("errorNotify");
+    document.getElementById("errorMessage").innerText = message;
+    notify.classList.add("show");
+
+    // Auto hide after 4 sec
+    setTimeout(() => {
+        notify.classList.remove("show");
+    }, 4000);
+}
+
+function closeNotification() {
+    document.getElementById("errorNotify").classList.remove("show");
+}
+
+
 function generatePDF() {
+    const patientName = document.getElementById("billname").value.trim();
+    const patientAge = document.getElementById("patage").value.trim();
+    const patientAddress = document.getElementById("pataddress").value.trim();
+    const tableRows = document.querySelectorAll("#InvoiceprescriptionTableBody tr");
+
+	let errors = [];
+
+	    if (!patientName) errors.push("Patient Name is required.");
+	    if (!patientAge) errors.push("Age is required.");
+	    if (!patientAddress) errors.push("Address is required.");
+	    if (tableRows.length === 0) errors.push("At least one prescription is required.");
+
+	    if (errors.length > 0) {
+	        showNotification(errors.join("\n")); // ✅ show red popup
+	        return; // ❌ stop execution
+	    }
+
+    // ✅ Continue PDF generation only if validation passes
     const element = document.getElementById('InvoicepdfContent');
     const drSection = document.querySelector('.drsection'); 
     const precard = document.querySelector('.precard');
     const logo = document.querySelector('.prelogo');
     const deleteIcons = document.querySelectorAll('.delete-icon'); 
-    const tableContainer = document.querySelector('.prescriptiontable'); // Get table container
-    
-	document.getElementById("formsubmit").click();
-    // Expand table to show all rows
+    const tableContainer = document.querySelector('.prescriptiontable');
+
     tableContainer.style.maxHeight = 'none';
     tableContainer.style.overflowY = 'visible';
 
-    // Get all input fields
     const inputs = element.querySelectorAll('input, textarea');
     inputs.forEach(input => {
         const span = document.createElement('span');
@@ -110,20 +141,14 @@ function generatePDF() {
         span.style.marginLeft = '10px';
         span.style.textTransform = 'capitalize';
         input.parentNode.insertBefore(span, input);
-        input.style.marginLeft = '15px';
         input.style.display = 'none';
     });
 
-    // Hide all delete icons
-    deleteIcons.forEach(icon => {
-        icon.style.display = 'none';
-    });
-
+    deleteIcons.forEach(icon => icon.style.display = 'none');
     drSection.style.fontSize = '0.5rem';
     precard.style.border = 'none';
     element.style.width = '100%';
     element.style.maxWidth = '210mm';
-    element.style.marginTop = '10px';
     logo.style.width = '40%';
 
     html2pdf().from(element).set({
@@ -131,39 +156,15 @@ function generatePDF() {
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, scrollY: 0 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    }).outputPdf('blob').then((pdfBlob) => {
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-        const newWindow = window.open(pdfUrl);
-        if (newWindow) {
-            newWindow.onload = function () {
-                newWindow.print();
-            };
-        } else {
-            alert("Please allow pop-ups to print the document.");
-        }
-
-        // Restore inputs and remove spans after PDF is generated
-        inputs.forEach(input => {
-            input.style.display = '';
-            input.previousSibling.remove();
-        });
-
-        // Show delete icons again
-        deleteIcons.forEach(icon => {
-            icon.style.display = '';
-        });
-
-        // Reset table container height
-        tableContainer.style.maxHeight = '300px';
-        tableContainer.style.overflowY = 'auto';
-
-        // Reset styles
-        element.style.width = '';
-        element.style.maxWidth = '';
-        element.style.minHeight = '';
-        element.style.padding = '';
+    }).save('invoice.pdf')
+    .then(() => {
+        setTimeout(() => {
+            clearTableData();
+            window.location.reload();
+        }, 500);
     });
 }
+
 
 $(document).ready(function () {
     $("#drugName1").on("input", function () {

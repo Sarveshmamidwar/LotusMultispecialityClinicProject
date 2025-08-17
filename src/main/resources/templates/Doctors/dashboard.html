@@ -34,323 +34,144 @@
 <script src=
 "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js">
 </script>
+<script src="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
  <style>
-        *{
-          padding: 0%;
-          margin: 0%;
-        }
-        .viewall{
-            font-size: 0.9rem;       
-        }
-        .revenue{
-          font-size: 1.4rem;
-        }
-        .patientcount{
-           border-right: 1px solid black; 
-        }
-         #appointmentAlert {
-            position: fixed;
-            bottom: 20px;
-            left: 50px;
-            background: red;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            display: none;
-            font-size: 16px;
-            z-index: 1000;
-        }
-        .counttitle{
-          font-size: 1.7rem;
-          padding: 0%;
-          margin: 0%;
-        }
-        .countsubtit{
-           font-size: 0.8rem;
-           text-decoration: none;
-            padding: 0%;
-          margin: 0%;
-        }
-        .count{
-        text-align: center;
-        font-size: 2.4rem;
-        }
+        
     </style>
 </head>
 <body>
 
-<div class="card  w-100 " style="height: 100vh;" >
-
-<div class="navbar navbar-expand-lg  ">
-        
-            <div class="container-fluid">
-              <a class="navbar-brand" style="text-decoration: none;color: black;font-size: 1.8rem" >
-                <img th:src="@{/images/logo.jpg}" class="logo" style="width: 10%;mix-blend-mode: multiply !important; ">
-                Lotus Multispeciality Clinic
-              </a>
-            </div>
-        
-        <div class="container-fluid d-flex">
-          
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ">
-						<li class="nav-item m-3">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-solid fa-phone-volume fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">EMERGENCY</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
-
-						</li>
-						
-						<li class="nav-item m-3">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-regular fa-clock fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">WORKING HOURS</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
-
-						</li>
-						
-						<li class="nav-item m-3">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-solid fa-location-dot fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">EMERGENCY</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
-
-						</li>
-
-				
-              
-            </ul>
-          </div>
-        </div>
-    </div>
-	<div class="navbar navbar-expand-lg p-0" style="background-color: #C0EC83;">
-	    <div class="container-fluid" >
-	       
-	        
-	        <div class="collapse navbar-collapse justify-content-around " id="navbarNavAltMarkup">
-	            <div class="navbar-nav m-2" >
-	                <ul class="navbar-nav" >
-              <li class="nav-item" >
-                <a class="nav-link navtabs me-3" aria-current="page" href="#"  th:href="@{/doctors/dashboard}">Dashboard</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navtabs me-3" th:href="@{/doctors/Prescription}">Prescription</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/medicinesLists}">Medicines</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/GetAddEmployee}">Staff</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/doctors/patient}">Patient</a>
-              </li>
-            </ul>
-	            </div>
-	        </div>
-	        
-	        <div class="p-2 me-5">
-	        <!-- <button type="button" class="btn btn-primary me-3">Primary</button> -->
-	        <a th:href="@{/logout}"><i class="fa-solid fa-power-off fa-xl " style="color: #f90101;"></i></a>
-	        
-	        </div>
-	    </div>
-	</div>
-
-<div class="card h-100" >
 
 
-
-
-<div class="card mt-3 p-1  w-100" style="border: none;">
-
-<div class="aptab">
-<div class="appointType p-2">
-<div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
-  <div class="col-sm-4 count">
-   <h1 th:text="${totalCount}"></h1>
-  </div>
-  <div class="col-sm-8">
-  <a>Totals  Appointment</a>
-  <a th:href="@{/doctors/totalAppointment}" > <i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
-  </div>
-</div>
-</div>
-<div class="appointType p-2">
-<div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
-  <div class="col-sm-4 count">
-  <h1 th:text="${cancleAppointmentsCount}"></h1></div>
-  <div class="col-sm-8">
-  <a>Cancelled Appointment</a>
-  <a th:href="@{/doctors/cancleAppointment}" ><i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
-  </div>
-</div>
-</div>
-<div class="appointType p-2">
-<div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
-  <div class="col-sm-4 count">
-  <h1 th:text="${todayAppointmentsCount}"></h1></div>
-  <div class="col-sm-8">
-  <a>Todays Appointment</a>
-  <a th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()" ><i class="fa-solid fa-arrow-right fa-xl ps-3"></i></a>
-  </div>
-</div>
-</div>
-<div class="appointType p-2">
-<div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
-  <div class="col-sm-4 count">
-  <h1 th:text="${tomorrowAppointmentsCount}"></h1></div>
-  <div class="col-sm-8">
-  <a >Tommorow's Appointment</a>
- <a th:href="@{/doctors/tommorowAppointment}"> <i class="fa-solid fa-arrow-right fa-lg ps-3"></i></a>
-  </div>
-</div>
-</div>
-<div class="appointType p-2">
-<div class="row w-100 m-0 " style="display: flex;justify-content: center;align-items: center; ">
-  <div class="col-sm-4 count">
-     <h1 th:text="${rutineApointmentCount}"></h1>
-  </div>
-  <div class="col-sm-8">
-  <a>Rutine CheckUp Appointment</a>
-  <i class="fa-solid fa-arrow-right fa-xl ps-3"></i>
-  </div>
-</div>
-</div>
-
-</div>
- 
-</div>
-
-<div class="card h-100 mt-3" style="border: none;">
-
-<div class="row h-100 w-100">
-
-<div class="col "> 
- <div class="card  h-100 ">
- 
- <div class="mt-5" id="donut-chart"></div>
- </div>
- 
-</div>
-
-
-<div class="col h-100">
- <div class="card p-3 h-100 d-flex justify-content-center align-items-center">
-   
-   <div class="row w-100">
-   
-     <div class="col d-flex justify-content-center align-items-center">
-          <div class="card" style="width: 12rem;">
-  <div class="card-body">
-    <div class="row">
-        <div class="col-3 d-flex justify-content-center align-items-center">
-           <div>           
-              <h1 class="count" th:text="${DoneAppointmentCount}">2</h1>
-           </div>
-        </div>
-        <div class="col-9">
-          <p class="p-0 m-0 counttitle">Today's</p>
-          <p class="countsubtit">Patient Count</p>
-        </div>
-    </div>
-    
-  </div>
-</div>
-     
-     
-     </div>
-     <div class="col d-flex justify-content-center align-items-center">
-         <div class="card" style="width: 12rem;">
-  <div class="card-body">
-    <div class="row">
-        <div class="col-3 d-flex justify-content-center align-items-center">
-           <div>
-              <h1 class="count">3</h1>
-           </div>
-        </div>
-        <div class="col-9">
-          <p class="p-0 m-0 counttitle">Today's</p>
-          <p class="countsubtit">Total Revenue</p>
-        </div>
-    </div>
-    
-  </div>
-</div>
-     
-     </div>
-   
-   </div> 
-   
-   
-   <div class="row w-100 mt-5">
-   
-     <div class="col d-flex justify-content-center align-items-center">
-          <div class="card" style="width: 12rem;">
-  <div class="card-body">
-    <div class="row">
-        <div class="col-3 d-flex justify-content-center align-items-center">
+<nav class="info-navbar">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <a class="navbar-brand d-flex align-items-center" href="#" th:href="@{/}">
+        <img th:src="@{/images/logo.jpg}" alt="Logo" class="logo me-2">
+        Lotus Multispeciality Clinic
+      </a>
+      <ul class="info-list mb-0">
+        <li class="info-item">
+          <i class="fa-solid fa-phone-volume"></i>
           <div>
-           <h1 class="count">5</h1>
-           </div>
-        </div>
-        <div class="col-9">
-          <p class="p-0 m-0 counttitle">Today's</p>
-          <p class="countsubtit">Medical Revenue</p>
-        </div>
-    </div>
-  </div>
-</div>
-     
-     
-     </div>
-     <div class="col d-flex justify-content-center align-items-center">
-         <div class="card" style="width: 12rem;">
-  <div class="card-body">
-    <div class="row">
-        <div class="col-3 d-flex justify-content-center align-items-center">
-          <div>
-            <h1 class="count" th:text="${OnlinePaymentCount}">8</h1>
+            <small>EMERGENCY</small>
+            <span>+91 2345678901</span>
           </div>
-        </div>
-        <div class="col-9">
-          <p class="p-0 m-0 counttitle">Online</p>
-          <p class="countsubtit">Payment Count</p>
-        </div>
+        </li>
+        <li class="info-item">
+          <i class="fa-regular fa-clock"></i>
+          <div>
+            <small>WORKING HOURS</small>
+            <span>Mon-Sat: 9AM - 9PM</span>
+          </div>
+        </li>
+        <li class="info-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <div>
+            <small>LOCATION</small>
+            <span>123 Lotus Street, City</span>
+          </div>
+        </li>
+      </ul>
     </div>
-    
+  </nav>
+
+  <!-- Main Navbar -->
+  <nav class="navbar navbar-expand-lg main-navbar">
+    <div class="container-fluid justify-content-between align-items-center">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#doctorNavbar" aria-controls="doctorNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-center" id="doctorNavbar">
+        <ul class="navbar-nav gap-3 fw-semibold fs-5">
+          <li class="nav-item animate-slide-in" style="animation-delay:0s;">
+            <a class="nav-link navtabs" th:href="@{/doctors/dashboard}">Dashboard</a>
+          </li>
+          <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
+            <a class="nav-link navtabs" th:href="@{/doctors/Prescription}">Prescription</a>
+          </li>
+          <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
+            <a class="nav-link navtabs" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
+          </li>
+          <li class="nav-item animate-slide-in" style="animation-delay:0.3s;">
+            <a class="nav-link navtabs" th:href="@{/doctors/medicinesLists}">Medicines</a>
+          </li>
+          <li class="nav-item animate-slide-in" style="animation-delay:0.4s;">
+            <a class="nav-link navtabs" th:href="@{/doctors/GetAddEmployee}">Staff</a>
+          </li>
+          <li class="nav-item animate-slide-in" style="animation-delay:0.5s;">
+            <a class="nav-link navtabs" th:href="@{/doctors/patient}">Patient</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="d-none d-lg-block logout-btn">
+  <a class="logout-link" th:href="@{/logout}" title="Logout">
+    <i class="fa-solid fa-power-off"></i> Logout
+  </a>
+</div>
+    </div>
+  </nav>
+ 
+
+<div class="container mt-4">
+
+  <!-- Appointment Stats Grid -->
+  <div class="stats-grid mb-5">
+    <div class="card-glass text-center">
+      <h1 class="count" th:text="${totalCount}">12</h1>
+      <p>Totals Appointments</p>
+      <a th:href="@{/doctors/totalAppointment}" class="text-white"><i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="card-glass text-center">
+      <h1 class="count" th:text="${cancleAppointmentsCount}">3</h1>
+      <p>Cancelled Appointments</p>
+      <a th:href="@{/doctors/cancleAppointment}" class="text-white"><i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="card-glass text-center">
+      <h1 class="count" th:text="${todayAppointmentsCount}">5</h1>
+      <p>Today's Appointments</p>
+      <a th:href="@{/doctors/todyasAppointment}" class="text-white" onclick="speakAlert()"><i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="card-glass text-center">
+      <h1 class="count" th:text="${tomorrowAppointmentsCount}">7</h1>
+      <p>Tomorrow's Appointments</p>
+      <a th:href="@{/doctors/tommorowAppointment}" class="text-white"><i class="fa-solid fa-arrow-right"></i></a>
+    </div>
   </div>
-</div>
-     
-     </div> 
-   </div>  
- </div>
-</div>
-</div>
+
+  <!-- Donut Chart & Small Stats -->
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div id="donut-chart"></div>
+    </div>
+    <div class="col-md-6">
+      <div class="stats-grid">
+        <div class="card-glass text-center">
+          <h1 class="count" th:text="${DoneAppointmentCount}">2</h1>
+          <p>Today's Patient Count</p>
+        </div>
+        <div class="card-glass text-center">
+          <h1 class="count">3</h1>
+          <p>Today's Total Revenue</p>
+        </div>
+        <div class="card-glass text-center">
+          <h1 class="count">5</h1>
+          <p>Today's Medical Revenue</p>
+        </div>
+        <div class="card-glass text-center">
+          <h1 class="count" th:text="${OnlinePaymentCount}">8</h1>
+          <p>Online Payment Count</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button id="enableSpeechButton" onclick="speakAlert()" style="display:none;">🔊 Enable Speech</button>
+  <div id="appointmentAlert"></div>
 </div>
 
 
-<button id="enableSpeechButton" onclick="speakAlert()" style="display:none;">🔊 Enable Speech</button>
-<div id="appointmentAlert"></div>
-</div>
-
-</div>
 
 
 		<script  th:src="@{/js/DoctorsDashboard.js}"></script>

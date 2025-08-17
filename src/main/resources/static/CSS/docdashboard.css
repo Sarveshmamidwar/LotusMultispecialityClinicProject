@@ -21,3 +21,282 @@ a{
 	text-decoration: none !important;
 	color: black;
 }
+
+*{
+          padding: 0%;
+          margin: 0%;
+        }
+        .viewall{
+            font-size: 0.9rem;       
+        }
+        .revenue{
+          font-size: 1.4rem;
+        }
+        .patientcount{
+           border-right: 1px solid black; 
+        }
+         #appointmentAlert {
+            position: fixed;
+            bottom: 20px;
+            left: 50px;
+            background: red;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            font-size: 16px;
+            z-index: 1000;
+        }
+        .counttitle{
+          font-size: 1.7rem;
+          padding: 0%;
+          margin: 0%;
+        }
+        .countsubtit{
+           font-size: 0.8rem;
+           text-decoration: none;
+            padding: 0%;
+          margin: 0%;
+        }
+        .count{
+        text-align: center;
+        font-size: 2.4rem;
+        }
+        
+         /* Top Info Navbar */
+    .info-navbar {
+      background-color: #e7f0d7;
+      box-shadow: 0 4px 12px rgba(192, 236, 131, 0.2);
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+    .info-navbar .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #4f7321;
+    }
+    .logo {
+      width: 50px;
+      border-radius: 12px;
+    }
+    .info-list {
+      color: #557a17;
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 0;
+    }
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .info-item i {
+      font-size: 1.2rem;
+      color: #9bc53d;
+    }
+    .info-item small {
+      display: block;
+      font-weight: 600;
+      letter-spacing: 1.1px;
+    }
+    .info-item span {
+      color: #4f7321;
+      font-weight: 600;
+    }
+
+    /* Main Navbar */
+    .main-navbar {
+     
+      padding: 1rem 1.5rem;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    .navbar-toggler {
+      border-color: #9bc53d;
+    }
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='%239bc53d' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+    .nav-link.navtabs {
+      color: #557a17;
+      position: relative;
+      padding-bottom: 6px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .nav-link.navtabs::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      background-color: #7cbc34;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    .nav-link.navtabs:hover {
+      color: #7cbc34;
+    }
+    .nav-link.navtabs:hover::after {
+      width: 60%;
+    }
+
+    /* Logout button */
+    .logout-btn i {
+      color: #f90101;
+      transition: transform 0.3s ease;
+    }
+    .logout-btn i:hover {
+      transform: rotate(15deg);
+    }
+
+    /* Animations */
+    @keyframes slideInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    .animate-slide-in {
+      animation: slideInLeft 0.5s ease forwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 991px) {
+      .navbar-nav {
+        justify-content: center !important;
+      }
+    }
+    
+    /* dash */
+    /* Glass Cards with Gradient */
+.card-glass {
+    background: #C0EC83;
+    color: #4f7321;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+    transition: transform 0.5s, box-shadow 0.5s, background 0.5s;
+    cursor: pointer;
+}
+.card-glass:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+    background: white;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* Animated Counters */
+.count {
+    font-size: 2.2rem;
+    font-weight: 700;
+    animation: countAnim 1.5s ease forwards;
+}
+@keyframes countAnim {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Donut Chart Container */
+#donut-chart {
+    max-width: 100%;
+    height: 350px;
+    margin: auto;
+    border-radius: 20px;
+    padding: 20px;
+    background: #C0EC83;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+    transition: transform 0.5s, box-shadow 0.5s, background 0.5s;
+}
+#donut-chart:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+    background: white;
+}
+
+/* Alert Box */
+#appointmentAlert {
+    position: fixed;
+    top: 10%;
+    right: 2%;
+    background: linear-gradient(135deg,#ff6b6b,#ff3d3d);
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 15px;
+    font-weight: 600;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+    display: none;
+    animation: alertSlide 0.5s ease forwards;
+}
+@keyframes alertSlide {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Card Inner Hover Icon */
+.card-glass a i {
+    transition: transform 0.3s, color 0.3s;
+}
+.card-glass:hover a i {
+    transform: translateX(6px);
+    color: #ffe600;
+}
+
+/* Subtle Pulse Animation for Important Cards */
+.pulse {
+    animation: pulseAnim 2.5s infinite;
+}
+@keyframes pulseAnim {
+    0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); }
+    70% { box-shadow: 0 0 20px 15px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+
+.logout-link {
+  color: #557a17;
+  position: relative;
+  padding-bottom: 6px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.logout-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  background-color: #7cbc34;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.logout-link:hover {
+  color: #7cbc34;
+}
+
+.logout-link:hover::after {
+  width: 60%;
+}
+.logout-link i {
+  color: inherit;   /* Make icon use the same color as the link */
+  margin-right: 6px; /* Optional: space between icon and text */
+}

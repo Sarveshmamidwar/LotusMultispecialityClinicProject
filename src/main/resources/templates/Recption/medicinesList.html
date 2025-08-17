@@ -11,6 +11,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 <link rel="stylesheet" th:href="@{/CSS/docdashboard.css}">
+<link rel="stylesheet" th:href="@{/CSS/doctorsmedicine.css}">
+<link rel="stylesheet" th:href="@{/CSS/receptiondashboard.css}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <script src=
@@ -51,203 +53,197 @@
 
 
 <!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Add Medicine</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<form th:action="@{/doctors/addmedicines}" method="post">
-							<div class="mb-3">
-								<label for="exampleInputEmail1" class="form-label">Medicine Name</label> 
-								<input type="text" name="tabletName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-								
-							</div>
-							
-							<div class="mb-3">
-								<label for="exampleInputEmail1" class="form-label">Medicine Company</label> 
-								<input type="text" name="medicineCompanyName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-								
-							</div>
-							<div class="mb-3">
-								<label for="exampleInputPassword1" class="form-label">Select Type :</label>
-								<div class="row  ">
-								   <div class="col">
-								      <label>Capsule</label>
-								      <input type="radio" value="Capsule" name="medecineType">
-								   
-								   </div>
-							        <div class="col">
-							           <label>Syrup</label>
-								        <input type="radio" value="Syrup" name="medecineType" >
-							        </div>
-								   
-								</div>
-								
-							</div>
-							
-					
-					<div class="modal-footer" >
-						<button type="submit" class="btn btn-primary">Save
-							changes</button>
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">Close</button>
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content card-split-modal">
+      
+      <div class="modal-header header-gradient">
+        <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-pills me-2"></i>Add Medicine</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body d-flex flex-wrap gap-3">
+        <div class="form-card">
+          <form th:action="@{/recption/addmedicines}" method="post">
+            
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" name="tabletName" id="medicineName" placeholder="Medicine Name" required>
+              <label for="medicineName">Medicine Name</label>
+            </div>
+            
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" name="medicineCompanyName" id="medicineCompany" placeholder="Company Name" required>
+              <label for="medicineCompany">Medicine Company</label>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Select Type:</label>
+              <div class="btn-group w-100" role="group">
+                <input type="radio" class="btn-check" name="medecineType" id="capsule" value="Capsule" autocomplete="off">
+                <label class="btn btn-type" for="capsule">Capsule</label>
 
-					</div>
-					</form>
-					</div>
-				</div>
-			</div>
-		</div>
+                <input type="radio" class="btn-check" name="medecineType" id="syrup" value="Syrup" autocomplete="off">
+                <label class="btn btn-type" for="syrup">Syrup</label>
+              </div>
+            </div>
+            
+            <div class="d-flex justify-content-end gap-2 mt-3">
+              <button type="button" class="btn btn-secondary btn-close-card" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary btn-submit-card">Save Medicine</button>
+            </div>
+            
+          </form>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-content text-center">
+            <i class="fas fa-capsules fa-3x mb-3 icon-animate"></i>
+            <h6>Keep your medicine list updated</h6>
+            <p>Adding new medicines here will help doctors manage prescriptions easily and efficiently.</p>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
 		
 		
-		<div class="modal fade" id="editmedicinesmodal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Edit Medicine</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<form th:action="@{/doctors/{id}/editmedicines}" method="post">
-						    <input type="text" name="id" class="medid">
-							<div class="mb-3">
-								<label for="exampleInputEmail1" class="form-label ">Medicine Name</label> 
-								<input type="text" name="tabletName" class="form-control medname" id="exampleInputEmail1" aria-describedby="emailHelp">
-								
-							</div>
-							
-							<div class="mb-3">
-								<label for="exampleInputEmail1" class="form-label">Medicine Company</label> 
-								<input type="text" name="medicineCompanyName" class="form-control medcompany" id="exampleInputEmail1" aria-describedby="emailHelp">
-								
-							</div>
-							<div class="mb-3">
-								<label for="exampleInputPassword1" class="form-label">Select Type :</label>
-								<div class="row  ">
-								   <div class="col">
-								      <label>Capsule</label>
-								      <input type="radio" value="Capsule" name="medecineType">
-								   
-								   </div>
-							        <div class="col">
-							           <label>Syrup</label>
-								        <input type="radio" value="Syrup" name="medecineType" >
-							        </div>
-								   
-								</div>
-								
-							</div>
-							
-					
-					<div class="modal-footer" >
-						<button type="submit" class="btn btn-primary">Save
-							changes</button>
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">Close</button>
+		<div class="modal fade" id="editmedicinesmodal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content card-split-modal">
+      
+      <!-- Gradient Header -->
+      <div class="modal-header header-gradient">
+        <h5 class="modal-title" id="editModalLabel"><i class="fas fa-edit me-2"></i>Edit Medicine</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body d-flex flex-wrap gap-3">
+        
+        <!-- Form Card -->
+        <div class="form-card">
+          <form th:action="@{/recption/{id}/editmedicines}" method="post">
+            <input type="hidden" name="id" class="medid">
+            
+            <!-- Medicine Name -->
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control medname" name="tabletName" id="editMedicineName" placeholder="Medicine Name" required>
+              <label for="editMedicineName">Medicine Name</label>
+            </div>
+            
+            <!-- Company Name -->
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control medcompany" name="medicineCompanyName" id="editMedicineCompany" placeholder="Company Name" required>
+              <label for="editMedicineCompany">Medicine Company</label>
+            </div>
+            
+            <!-- Type Selection -->
+            <div class="mb-3">
+              <label class="form-label">Select Type:</label>
+              <div class="btn-group w-100" role="group">
+                <input type="radio" class="btn-check" name="medecineType" id="editCapsule" value="Capsule" autocomplete="off">
+                <label class="btn btn-type" for="editCapsule">Capsule</label>
 
-					</div>
-					</form>
-					</div>
-				</div>
-			</div>
-		</div>
+                <input type="radio" class="btn-check" name="medecineType" id="editSyrup" value="Syrup" autocomplete="off">
+                <label class="btn btn-type" for="editSyrup">Syrup</label>
+              </div>
+            </div>
+            
+            <!-- Buttons -->
+            <div class="d-flex justify-content-end gap-2 mt-3">
+              <button type="button" class="btn btn-secondary btn-close-card" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary btn-submit-card">Save Changes</button>
+            </div>
+          </form>
+        </div>
+        
+        <!-- Info Card -->
+        <div class="info-card">
+          <div class="info-content text-center">
+            <i class="fas fa-pills fa-3x mb-3 icon-animate"></i>
+            <h6>Update Medicine Details</h6>
+            <p>Ensure that all medicine information is accurate to help doctors manage prescriptions effectively.</p>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+
 		
 		
 		<div class="card" style="height: 100vh">
 		
-		<div class="navbar navbar-expand-lg  ">
-        
-            <div class="container-fluid">
-              <a class="navbar-brand" style="text-decoration: none;color: black;font-size: 1.8rem" >
-                <img th:src="@{/images/logo.jpg}" class="logo" style="width: 10%;mix-blend-mode: multiply !important; ">
-                Lotus Multispeciality Clinic
-              </a>
-            </div>
-        
-        <div class="container-fluid d-flex">
-          
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ">
-						<li class="nav-item m-3">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-solid fa-phone-volume fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">EMERGENCY</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
-
-						</li>
-						
-						<li class="nav-item m-3">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-regular fa-clock fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">WORKING HOURS</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
-
-						</li>
-						
-						<li class="nav-item m-3">
-							<div class="d-flex align-items-center gap-2">
-								<i class="fa-solid fa-location-dot fa-xl"></i>
-								<div style="">
-									<a class="nav-link  ml-2 navtabs p-0" aria-current="page">EMERGENCY</a>
-								    <a class="navtabs">+91 2345678901</a>
-								</div>
-							</div>
-
-						</li>
-
-				
-              
-            </ul>
-          </div>
+		<!-- Info Navbar -->
+<nav class="info-navbar">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a class="navbar-brand d-flex align-items-center" href="#" th:href="@{/}">
+      <img th:src="@{/images/logo.jpg}" alt="Logo" class="logo me-2">
+      Lotus Multispeciality Clinic
+    </a>
+    <ul class="info-list mb-0">
+      <li class="info-item">
+        <i class="fa-solid fa-phone-volume"></i>
+        <div>
+          <small>EMERGENCY</small>
+          <span>+91 2345678901</span>
         </div>
+      </li>
+      <li class="info-item">
+        <i class="fa-regular fa-clock"></i>
+        <div>
+          <small>WORKING HOURS</small>
+          <span>Mon-Sat: 9AM - 9PM</span>
+        </div>
+      </li>
+      <li class="info-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <small>LOCATION</small>
+          <span>123 Lotus Street, City</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Main Navbar -->
+<nav class="navbar navbar-expand-lg main-navbar">
+  <div class="container-fluid justify-content-between align-items-center">
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#receptionNavbar" aria-controls="receptionNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="receptionNavbar">
+      <ul class="navbar-nav gap-3 fw-semibold fs-5">
+        <li class="nav-item animate-slide-in" style="animation-delay:0s;">
+          <a class="nav-link navtabs" th:href="@{/recption/recptionDashboard}">Dashboard</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
+          <a class="nav-link navtabs" th:href="@{/recption/listAppointment}">Book Appointments</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
+          <a class="nav-link navtabs" th:href="@{/recption/medicinesLists}">Medicines</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.3s;">
+          <a class="nav-link navtabs" th:href="@{/recption/patientlist}">Patients</a>
+        </li>
+      </ul>
     </div>
-	<div class="navbar navbar-expand-lg p-0" style="background-color: #C0EC83;">
-	    <div class="container-fluid" >
-	       
-	        
-	        <div class="collapse navbar-collapse justify-content-around " id="navbarNavAltMarkup">
-	            <div class="navbar-nav m-2" >
-	                <ul class="navbar-nav" >
-              <li class="nav-item" >
-                <a class="nav-link navtabs me-3" aria-current="page" href="#"  th:href="@{/recption/recptionDashboard}">Dashboard</a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/recption/listAppointment}" >Book Appointments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/recption/medicinesLists}">Medicines</a>
-              </li>
-               <li class="nav-item">
-                <a class="nav-link navtabs me-3" href="#" th:href="@{/recption/patientlist}">Patients</a>
-              </li>
-            </ul>
-	            </div>
-	        </div>
-	        
-	        <div class="p-2 me-5">
-	        <!-- <button type="button" class="btn btn-primary me-3">Primary</button> -->
-	        <a th:href="@{/logout}"><i class="fa-solid fa-power-off fa-xl " style="color: #f90101;"></i></a>
-	        
-	        </div>
-	    </div>
-	</div>
+
+    <div class="d-none d-lg-block logout-btn">
+  <a class="logout-link" th:href="@{/logout}" title="Logout">
+    <i class="fa-solid fa-power-off"></i> Logout
+  </a>
+</div>
+  </div>
+</nav>
+
 		
 		
 		   <div class="me-3 mt-3 " style="display: flex;justify-content: flex-end;">
