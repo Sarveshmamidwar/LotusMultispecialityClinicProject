@@ -1,0 +1,98 @@
+/* Input Focus Animation */
+.input-animate {
+  transition: all 0.3s ease;
+}
+.input-animate:focus {
+  border-color: #4facfe !important;
+  box-shadow: 0 0 8px rgba(79, 172, 254, 0.6);
+}
+
+/* Card Hover Effect */
+.hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* PDF Button */
+.btn-pdf {
+  
+  color: white;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+.btn-pdf:hover {
+  background: linear-gradient(135deg, #96c93d, #00b09b);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 176, 155, 0.4);
+}
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+.animate-fade-in { animation: fadeIn 0.6s ease-in-out; }
+
+@keyframes slideIn {
+  from {opacity: 0; transform: translateX(-30px);}
+  to {opacity: 1; transform: translateX(0);}
+}
+.animate-slide-in { animation: slideIn 0.6s ease-in-out; }
+
+@keyframes zoomIn {
+  from {opacity: 0; transform: scale(0.95);}
+  to {opacity: 1; transform: scale(1);}
+}
+.animate-zoom-in { animation: zoomIn 0.6s ease-in-out; }
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: auto; /* adjust as needed */
+  margin-top: 10px;
+}
+
+.step {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s;
+}
+
+.step.active {
+  background: #007bff; /* Active color */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+}
+
+.line {
+	 width: 20px;
+  flex: 1;
+  height: 3px;
+  background: #ccc;
+  margin: 0 5px;
+  transition: 0.3s;
+}
+
+.line.active {
+  background: #007bff;
+}
+
+td .stepper {
+  gap: 1px;
+  width:auto;
+}
+
+td .step {
+  width: 10px;   /* smaller dot */
+  height: 10px;
+}
+
+td .line {
+	width:1px;
+  height: 2px;   /* thinner line */
+}

@@ -132,45 +132,63 @@
     <i class="fa-solid fa-power-off"></i> Logout
   </a>
 </div>
+
+<span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+        Hello, <strong th:text="${username}"></strong>
+      </span>
   </div>
 </nav>
 
 
-
-
-<div class="card-body" style="display: flex;justify-content: flex-end;">
- <button type="button" class="btn btn-secondary " data-bs-toggle="modal" data-bs-target="#exampleModal">Add Patient</button>
-</div>
-
-
-<div class="card h-100">
-<table class="table ">
-  <thead class="table-light">
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Mob No. </th>
-      <th scope="col">Gender</th>
-      <th scope="col">address</th>
-      <th scope="col">birthdate</th>
-    </tr>
-  </thead>
-  <tbody>
-     <tr th:each="c : ${allpatient}">
-      <th scope="row" th:text="${c.id}">1</th>
-      <td th:text="${c.name}">Mark</td>
-      <td th:text="${c.email}">Mark</td>
-      <td th:text="${c.number}">Otto</td>
-      <td th:text="${c.gender}">@mdo</td>
-      <td th:text="${c.address}">@mdo</td>
-      <td th:text="${c.birthdate}">@mdo</td>
-    </tr> 
+<div class="d-flex align-items-center justify-content-center mt-3 position-relative">
     
-  </tbody>
-</table>
+    <!-- Search field centered -->
+    <div class="input-group capsule-search shadow" style="max-width: 450px; width: 100%;">
+        <input type="text" id="searchPatient" 
+               class="form-control capsule-input" 
+               placeholder="Search patients..." 
+               th:oninput="searchPatient()"> <!-- 🔥 Live search -->
+        <span class="input-group-text capsule-icon">
+            <i class="fa-solid fa-pills me-2"></i>
+        </span>
+    </div>
+
+    <!-- Add Patient Button (absolute right) -->
+    <div class="position-absolute end-0 me-5">
+        <button type="button" class="btn btn-secondary ms-3" 
+                data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add Patient
+        </button>
+    </div>
 </div>
 
+
+<!-- Table -->
+<div class="card h-100 mt-3">
+    <table class="table">
+        <thead class="table-light">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mob No.</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Birthdate</th>
+            </tr>
+        </thead>
+        <tbody id="patientTableBody">
+            <tr th:each="c : ${allpatient}">
+                <td th:text="${c.id}">1</td>
+                <td th:text="${c.name}">Mark</td>
+                <td th:text="${c.email}">mark@mail.com</td>
+                <td th:text="${c.number}">9999999999</td>
+                <td th:text="${c.gender}">Male</td>
+                <td th:text="${c.address}">Delhi</td>
+                <td th:text="${c.birthdate}">2000-01-01</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 
@@ -271,9 +289,9 @@
 	  document.getElementById("patientid").value = patientid;
 	  
   }
- 
-</script>
 
+</script>
+<script th:src="@{/js/Reception-Search.js}"></script>
 
 
 </body>

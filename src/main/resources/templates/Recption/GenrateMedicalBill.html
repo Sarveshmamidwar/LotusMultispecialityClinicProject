@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
-<link rel="stylesheet" th:href="@{/CSS/docdashboard.css}">
+
 <link rel="stylesheet" th:href="@{/CSS/receptiondashboard.css}">
 <link rel="stylesheet" th:href="@{/CSS/reception-genrateInvoice.css}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -90,6 +90,10 @@
   </a>
 </div>
 
+<span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+        Hello, <strong th:text="${username}"></strong>
+      </span>
+
   </div>
 </nav>
 
@@ -105,11 +109,11 @@
 					          
 					         <div class=" row mt-1 p-2 d-flex" style=" display:flex; justify-content: center;align-items: center;">
 					            <div class="col ">
-					                <label>Sr No. :</label>
+					                <label class="fw-bold text-success">Sr No. :</label>
 					                <input class="w-100" type="text" id="srNo">
 					            </div>
 								<div class="col">
-									  <label>Prescription :</label>
+									  <h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug Type</h6>
 		                              <input type="text" id="prescription"  oninput="validateText()">
 		                              <span id="error-message" style="color: red;"></span>
 								</div>
@@ -117,21 +121,21 @@
 							</div>
 							<div class="row p-2 ">
 							    <div class="col">
-							   <label>Drug Name : </label>
+							   <h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug Name</h6>
 							   <input class="w-100" type="text" id="drugName1">
 							   </div>
-							   <div id="suggestions"></div>
+							   <div id="suggestions" class="suggestion-box"></div>
 							</div>
 
 							<div class="row p-2 ">
 								<div class="col w-100">
-									<label>QTY : </label>
+									<h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug QTY</h6>
 									 <input class="w-100" type="text" id="qty" oninput="validateNumber('qty', 'error-qty')">
 									 <span id="error-qty" style="color: red; display: none;"></span>
 								</div>
 
 								<div class="col ">
-									<label>Price : </label>
+									<h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug Price</h6>
 									 <input class="w-100" type="text"
 										id="price" oninput="validateNumber('price', 'error-price')">
 										<span id="error-price" style="color: red; display: none;"></span>
@@ -203,7 +207,7 @@
 								<div class="row mt-2">
 									<div class="col-7 d-flex ">
 										<label class="">Patient Name : </label> 
-										<input class="ms-3" type="text" name="PatientName" placeholder="Enter Patient Name"
+										<input class="ms-3" th:value="${name}" type="text" name="PatientName" placeholder="Enter Patient Name"
 											style="border: none; width: 70%" id="billname">
 									</div>
 									<div class="col-2 d-flex align-items-center">

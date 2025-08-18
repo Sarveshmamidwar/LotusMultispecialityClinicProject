@@ -115,6 +115,10 @@
     <i class="fa-solid fa-power-off"></i> Logout
   </a>
 </div>
+
+<span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+        Hello, <strong th:text="${username}"></strong>
+      </span>
   </div>
 </nav>
 
@@ -196,7 +200,7 @@
 							</td>
 
 							<td style="width: 10%;">
-							<a th:href="@{/recption/getInvoice}"><img
+							<a th:href="@{'/recption/getInvoice/'+${c.name}}"><img
 									alt="" th:src="@{/images/invoice.png}" title="Invoice"
 									 width="20%"></a>
 									
@@ -319,29 +323,23 @@
 </div>
 
 <!--modal  -->
-<div class="modal fade" id="addreports" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Reports</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="addreports" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content border-0 shadow rounded-4 p-4 text-center">
+      <div class="modal-header border-0 justify-content-center pb-0">
+        <i class="fa-solid fa-file-upload fa-3x text-primary mb-2"></i>
       </div>
       <div class="modal-body">
-         <form th:action="@{/recption/addReports}" method="post" enctype="multipart/form-data">
-    <div >
-        <label>Add Reports :</label>
-        <input type="file" name="report">
-    </div>
-    <div class="mt-5 text-center">
-    
-    <button type="submit" class="btn btn-primary rounded-pill" style="width: 80%;">Upload</button>
-    </div>
-</form>
+        <form th:action="@{/recption/addReports}" method="post" enctype="multipart/form-data">
+          <label class="form-label fw-bold d-block mb-3">Upload Your Report</label>
+          <input type="file" name="report" class="form-control mb-4 rounded-pill">
+          <button type="submit" class="btn btn-primary w-75 rounded-pill fw-semibold">Upload</button>
+        </form>
       </div>
-      
     </div>
   </div>
 </div>
+
 
 
 

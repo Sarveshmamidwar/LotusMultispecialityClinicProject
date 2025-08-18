@@ -151,18 +151,36 @@ function generatePDF() {
     element.style.maxWidth = '210mm';
     logo.style.width = '40%';
 
-    html2pdf().from(element).set({
-        margin: 0,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, scrollY: 0 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    }).save('invoice.pdf')
-    .then(() => {
-        setTimeout(() => {
-            clearTableData();
-            window.location.reload();
-        }, 500);
-    });
+	html2pdf().from(element).set({
+	    margin: 0,
+	    image: { type: 'jpeg', quality: 0.98 },
+	    html2canvas: { scale: 2, scrollY: 0 },
+	    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+	}).save('invoice.pdf')
+	.then(() => {
+	    // ✅ Loop through prescription table rows
+	    const rows = document.querySelectorAll("#InvoiceprescriptionTableBody tr");
+	    rows.forEach(row => {
+	        const drugName = row.cells[2].innerText.trim();  // Drug name column
+	        const qty = parseInt(row.cells[3].innerText.trim()); // Qty column
+
+	        if (drugName && qty) {
+	            fetch(`/recption/update-quantity?drugName=${encodeURIComponent(drugName)}&qty=${qty}`, {
+	                method: "PUT"
+	            })
+	            .then(res => res.text())
+	            .then(msg => console.log("✅ Stock updated:", msg))
+	            .catch(err => console.error("❌ Error updating stock:", err));
+	        }
+	    });
+
+	    // After updating stock, clear & reload
+	    setTimeout(() => {
+	        clearTableData();
+	        window.location.reload();
+	    }, 800);
+	});
+
 }
 
 
@@ -181,29 +199,40 @@ $(document).ready(function () {
                     suggestionsDiv.empty(); // Clear previous suggestions
 
                     if (response.length > 0) {
-                        let list = $("<ul class='list-group'></ul>");
+                        let list = $("<div></div>");
                         response.forEach(function (tablet) {
-                            let itemContent = `<strong>${tablet.tabletName}</strong>`; // Corrected syntax
-                            let item = $("<li class='list-group-item suggestion-item'></li>")
+                            let itemContent = `
+                                <div class="icon">💊</div>
+                                <div>
+                                    <strong>${tablet.tabletName}</strong>
+                                    <small>ID: ${tablet.id || 'N/A'} | Price: ${tablet.price || '0'}</small>
+                                </div>
+                            `;
+                            let item = $("<div class='suggestion-item'></div>")
                                 .html(itemContent)
                                 .on("click", function () {
-                                    $("#drugName1").val(tablet.tabletName); // Set input field value
-                                    suggestionsDiv.empty().hide(); // Hide suggestions after selection
+                                    // Fill drug name
+                                    $("#drugName1").val(tablet.tabletName);
+                                    // Fill price
+                                    $("#price").val(tablet.price || 0);
+                                    // Hide suggestions
+                                    suggestionsDiv.empty().hide();
                                 });
                             list.append(item);
                         });
 
-                        suggestionsDiv.append(list).show(); // Show suggestions when data is present
+                        suggestionsDiv.html(list).show();
                     } else {
-                        suggestionsDiv.hide(); // Hide if no results
+                        suggestionsDiv.hide();
                     }
                 }
             });
         } else {
-            suggestionsDiv.empty().hide(); // Hide when input is empty
+            suggestionsDiv.empty().hide();
         }
     });
 });
+
 
 
 function validateText() {

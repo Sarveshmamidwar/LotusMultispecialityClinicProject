@@ -85,7 +85,7 @@
             <a class="nav-link navtabs" th:href="@{/doctors/dashboard}">Dashboard</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/Prescription}">Prescription</a>
+            <a class="nav-link navtabs" th:href="@{/doctors/Prescription/00/00}">Prescription</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
             <a class="nav-link navtabs" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
@@ -107,6 +107,10 @@
     <i class="fa-solid fa-power-off"></i> Logout
   </a>
 </div>
+
+<span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+        Hello, <strong th:text="${username}"></strong>
+      </span>
     </div>
   </nav>
 
@@ -114,7 +118,24 @@
 
 <main>
 
-<div class="card  p-3" >
+<div class="d-flex align-items-center justify-content-center mt-3 position-relative">
+    
+    <!-- Search field centered -->
+    <div class="input-group capsule-search shadow" style="max-width: 450px; width: 100%;border-radius: 50%">
+        <input type="text" id="searchAppointmentDoc" 
+               class="form-control capsule-input" 
+               placeholder="Search patients..." 
+               th:oninput="searchAppointmentDoc()"> <!-- 🔥 Live search -->
+        <span class="input-group-text capsule-icon">
+            <i class="fa-solid fa-pills me-2"></i>
+        </span>
+    </div>
+
+    <!-- Add Patient Button (absolute right) -->
+   
+</div>
+
+<div class="card main-card  p-3 m-5 mt-3" >
 
 <table class="table  table-hover text-center">
   <thead class="table-light ">
@@ -130,7 +151,7 @@
       <th scope="col">Action</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="apointmentTableBodyDoc">
     <tr th:each="c : ${todayAppointments}">
       <th th:text="${c.id}">1</th>
       <td th:text="${c.name}">Mark</td>
@@ -153,6 +174,8 @@
         <button class="mt-1 p-2 btn btn-danger cancelbtn" th:onclick="updateStatus('Cancel', [[${c.id}]], event)">Cancel</button>
         <button class="mt-1 p-2 btn btn-success donebtn" th:onclick="updateStatus('Done', [[${c.id}]], event)">Done</button>
     </div>
+    
+    
     
     
     </td>
@@ -181,8 +204,8 @@
 						</td>
 
 
-						<td style="width: 10%">
-<a th:href="@{/doctors/Prescription}"><img class="" alt="" th:src="@{/images/prescription.png}" style="width: 30%"></a>
+						<td style="width: 10%"><button style="background: none;border: none;"  th:onclick="appoIDPrecreption([[${c.name}]],[[${c.gender}]])">
+<a th:href="@{'/doctors/Prescription/'+ ${c.name}+ '/'+ ${c.gender}}"><img class="" alt="" th:src="@{/images/prescription.png}" style="width: 30%"></a></button>
 </td>
 
 
@@ -203,22 +226,26 @@
 	    let container = event.target.closest('.appointment-status-container');
 	    let dropdown = container.nextElementSibling; // Get the dropdown div that comes after the container
 	    
-	    // Toggle the visibility of the dropdown
+	    // Close any other open dropdowns
+	    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+	        if (menu !== dropdown) menu.style.display = "none";
+	    });
+
+	    // Toggle visibility of clicked dropdown
 	    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 	    dropdown.setAttribute('data-appointment-id', appointmentId);
 	}
 
-  function updateStatus(status, appointmentId, event) {
+	function updateStatus(status, appointmentId, event) {
 	    const dropdown = event.target.closest('.dropdown-menu');
+	    const button = dropdown.previousElementSibling.querySelector("button"); // the main button
 	    const selectedAppointmentId = dropdown.getAttribute('data-appointment-id');
 	    
-	    // Ensure the appointment ID matches to avoid discrepancies
 	    if (parseInt(selectedAppointmentId) !== appointmentId) {
 	        console.error('Appointment ID mismatch!');
 	        return;
 	    }
 
-	    // Perform the AJAX request to update the status
 	    fetch('/doctors/update-status', {
 	        method: 'POST',
 	        headers: {
@@ -231,12 +258,34 @@
 	    })
 	    .then(response => response.json())
 	    .then(data => {
-	        console.log('Status updated:', data);
-	
-	        
+	        if (data.success) {  
+	            console.log('Status updated successfully:', data);
+                location.reload();
+	            // ✅ Update button instantly
+	            button.textContent = status;
+	            button.classList.remove('btn-success', 'btn-danger', 'btn-warning', 'btn-secondary');
+
+	            if (status === 'Done') {
+	                button.classList.add('btn-success');
+	            } else if (status === 'Cancel') {
+	                button.classList.add('btn-danger');
+	            } else if (status === 'Pending') {
+	                button.classList.add('btn-warning');
+	            } else {
+	                button.classList.add('btn-secondary');
+	            }
+
+	            // ✅ Close dropdown
+	            dropdown.style.display = "none";
+
+	        } else {
+	            console.error('Failed to update status:', data.message);
+	            alert("Failed to update status: " + data.message);
+	        }
 	    })
 	    .catch(error => console.error('Error updating status:', error));
 	}
+
 </script>
 
 <script type="text/javascript">
@@ -258,11 +307,13 @@ function updatePaymentStatusdoctor(status, id) {
 
 </script>
 
+<script th:src="@{/js/doctor-appointment.js}"></script>
+
 <script type="text/javascript">
 
 
 </script>
-	
+	<script th:src="@{/js/Reception-Search.js}"></script>
 	
 	</body>
 

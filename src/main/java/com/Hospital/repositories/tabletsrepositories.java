@@ -10,6 +10,9 @@ import com.Hospital.entity.appointmentform;
 import com.Hospital.entity.tablets;
 
 public interface tabletsrepositories extends JpaRepository<tablets, Integer> {
+	
+	tablets findByTabletName(String drugName);
+
 
 	@Query(value = "SELECT * FROM tablets WHERE LOWER(tablet_name) LIKE LOWER(CONCAT('%', :tabname, '%'))", nativeQuery = true)
 	List<tablets> findtabletsbyname( @Param("tabname") String tabname);
@@ -17,4 +20,5 @@ public interface tabletsrepositories extends JpaRepository<tablets, Integer> {
 	
 	@Query(value = "SELECT * FROM tablets WHERE id=:id", nativeQuery = true)
 	List<tablets> findtabletsbyid( @Param("id") int id);
+	
 }

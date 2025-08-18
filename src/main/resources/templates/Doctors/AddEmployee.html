@@ -142,7 +142,7 @@
             <a class="nav-link navtabs" th:href="@{/doctors/dashboard}">Dashboard</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/Prescription}">Prescription</a>
+            <a class="nav-link navtabs" th:href="@{/doctors/Prescription/00/00}">Prescription</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
             <a class="nav-link navtabs" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
@@ -164,18 +164,41 @@
     <i class="fa-solid fa-power-off"></i> Logout
   </a>
 </div>
+
+<span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+        Hello, <strong th:text="${username}"></strong>
+      </span>
     </div>
   </nav>
 
 </header>
 
 <main>
-
-<div class="card">
-
-<div class="card-body" style="display: flex;justify-content: flex-end;">
+<!-- <div class="card-body" style="display: flex;justify-content: flex-end;">
  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Staff</button>
+</div> -->
+
+<div class="d-flex align-items-center justify-content-center mt-3 position-relative">
+    
+    <!-- Search field centered -->
+    <div class="input-group capsule-search shadow" style="max-width: 450px; width: 100%;border-radius: 50%">
+        <input type="text" id="searchEmployeeDoc" 
+               class="form-control capsule-input" 
+               placeholder="Search patients..." 
+               th:oninput="searchEmployeeDoc()"> <!-- 🔥 Live search -->
+        <span class="input-group-text capsule-icon">
+            <i class="fa-solid fa-pills me-2"></i>
+        </span>
+    </div>
+
+    <!-- Add Patient Button (absolute right) -->
+    <div class="position-absolute end-0 me-5">
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Staff</button>
+    </div>
 </div>
+<div class="card m-5 mt-1 main-card">
+
+
 
 
 <div class="card-body">
@@ -190,7 +213,7 @@
       <th scope="col">Emp Type</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="employeeTableBodyDoc">
     <tr th:each="c : ${employee}">
       <th scope="row" th:text="${c.id}">1</th>
       <td th:text="${c.Name}">Mark</td>
@@ -351,7 +374,7 @@
   });
 </script>
 
-
+<script th:src="@{/js/Reception-Search.js}"></script>
 
 </main>
 

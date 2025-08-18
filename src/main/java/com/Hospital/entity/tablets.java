@@ -1,5 +1,7 @@
 package com.Hospital.entity;
 
+import org.springframework.web.bind.annotation.PutMapping;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +17,8 @@ public class tablets {
 	private String tabletName;
 	private String medecineType;
 	private String medicineCompanyName;
+	private int price;
+	private int quantity;
 
 	public int getId() {
 		return id;
@@ -47,29 +51,48 @@ public class tablets {
 	public void setMedicineCompanyName(String medicineCompanyName) {
 		this.medicineCompanyName = medicineCompanyName;
 	}
+	
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
 	public tablets() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 
-	public tablets(int id, String tabletName, String medecineType, String medicineCompanyName) {
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public tablets(int id, String tabletName, String medecineType, String medicineCompanyName, int price,
+			int quantity) {
 		super();
 		this.id = id;
 		this.tabletName = tabletName;
 		this.medecineType = medecineType;
 		this.medicineCompanyName = medicineCompanyName;
+		this.price = price;
+		this.quantity = quantity;
 	}
 
 	@Override
 	public String toString() {
 		return "tablets [id=" + id + ", tabletName=" + tabletName + ", medecineType=" + medecineType
-				+ ", medicineCompanyName=" + medicineCompanyName + "]";
+				+ ", medicineCompanyName=" + medicineCompanyName + ", price=" + price + ", quantity=" + quantity + "]";
 	}
 
 	
-	
-	
-	
 
+	
 }

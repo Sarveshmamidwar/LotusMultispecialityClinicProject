@@ -87,7 +87,7 @@
             <a class="nav-link navtabs" th:href="@{/doctors/dashboard}">Dashboard</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/Prescription}">Prescription</a>
+            <a class="nav-link navtabs" th:href="@{/doctors/Prescription/00/00}">Prescription</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
             <a class="nav-link navtabs" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
@@ -109,6 +109,10 @@
     <i class="fa-solid fa-power-off"></i> Logout
   </a>
 </div>
+
+<span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+        Hello, <strong th:text="${username}"></strong>
+      </span>
     </div>
   </nav>
 
@@ -236,12 +240,33 @@
   </div>
 </div>
 		
-		
-		<div class="card">
-		   <div class="me-3 mt-3 " style="display: flex;justify-content: flex-end;">
+		<!-- <div class="me-3 mt-3 " style="display: flex;justify-content: flex-end;">
 		   
 		       <button class="p-2 btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Medicines</button>
-		   </div>
+		   </div> -->
+		   
+		   <div class="d-flex align-items-center justify-content-center mt-3 position-relative">
+    
+    <!-- Search field centered -->
+    <div class="input-group capsule-search shadow" style="max-width: 450px; width: 100%;border-radius: 50%">
+        <input type="text" id="doctorsearchDrug" 
+               class="form-control capsule-input" 
+               placeholder="Search medicine..." 
+               th:oninput="searchDrugDoc()"> <!-- 🔥 Live search -->
+        <span class="input-group-text capsule-icon">
+            <i class="fa-solid fa-pills me-2"></i>
+        </span>
+    </div>
+
+    <!-- Add Patient Button (absolute right) -->
+    <div class="position-absolute end-0 me-5">
+ <button class="p-2 btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Medicines</button>
+    </div>
+</div>
+		   
+		   
+		<div class="card m-5 mt-3 main-card">
+		   
 		   <div class="card-body">
 		       <table class="table  table-hover text-center">
   <thead class="table-light ">
@@ -253,7 +278,7 @@
       <th scope="col">Action</th>
     </tr>
   </thead>
-   <tbody>
+   <tbody id="medicinesTableBodyDoc">
     <tr th:each="c : ${medicineslist}">
       <th  th:text="${c.id}">1</th>
       <td th:text="${c.tabletName}">Mark</td>
@@ -336,6 +361,8 @@
     });
 
 </script>
+
+<script th:src="@{/js/Reception-Search.js}"></script>
 </main>
 
 

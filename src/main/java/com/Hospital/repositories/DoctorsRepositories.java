@@ -20,4 +20,8 @@ public interface DoctorsRepositories extends JpaRepository<Doctors, Integer>{
 	
 	@Query(value = "SELECT * FROM doctors WHERE doctor_id = :id", nativeQuery = true)
 	List<Doctors> findemployeebydoctors(@Param("id") int doctorId);
+	
+	@Query(value = "SELECT * FROM doctors WHERE doctor_id = :id AND LOWER(name) LIKE LOWER(CONCAT('%', :name, '%'))", nativeQuery = true)
+	List<Doctors> findemployeebyname(@Param("id") int doctorId, @Param("name") String name);
+
 }

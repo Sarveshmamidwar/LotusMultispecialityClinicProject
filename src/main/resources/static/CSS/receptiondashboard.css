@@ -145,3 +145,121 @@
   color: inherit;   /* Make icon use the same color as the link */
   margin-right: 6px; /* Optional: space between icon and text */
 }
+.navbar-patient-name {
+  font-size: 1rem;
+  color: #4f7321;
+  font-weight: 600;
+  background-color: #e7f0d7;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(192, 236, 131, 0.3);
+}
+.navbar-patient-name strong {
+  color: #7cbc34;
+}
+
+.profile-modal {
+  backdrop-filter: blur(12px) saturate(180%);
+  background: rgba(255, 255, 255, 0.85);
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+.modal.show .profile-modal {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Animate header gradient glow */
+.header-animate {
+  animation: gradient-glow 5s infinite alternate;
+}
+@keyframes gradient-glow {
+  0% { box-shadow: 0 0 10px rgba(79, 84, 200, 0.6); }
+  100% { box-shadow: 0 0 20px rgba(143, 148, 251, 0.8); }
+}
+
+/* Profile image glow */
+.profile-pic {
+  animation: glow-pic 3s infinite alternate;
+}
+@keyframes glow-pic {
+  from { box-shadow: 0 0 8px #4e54c8; }
+  to   { box-shadow: 0 0 20px #8f94fb; }
+}
+
+/* Fade in effect */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 0.3s;
+}
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Smooth text fade */
+.animate-text {
+  animation: fadeText 1.2s ease-in-out;
+}
+@keyframes fadeText {
+  from { opacity: 0; transform: translateX(-15px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Button hover animation */
+.btn-hover {
+  transition: all 0.3s ease;
+}
+.btn-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Capsule Shape */
+.capsule-search {
+  border-radius: 50px;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  background: #fff;
+}
+
+/* Input style */
+.capsule-input {
+  border: none;
+  padding: 14px 20px;
+  font-size: 15px;
+  transition: all 0.3s ease-in-out;
+  border-radius: 50px 0 0 50px;
+}
+
+/* Focus animation */
+.capsule-input:focus {
+  box-shadow: none;
+  outline: none;
+  transform: scale(1.02);
+}
+
+/* Capsule Icon */
+.capsule-icon {
+  background: #ff4d6d; /* pill-like red/pink */
+  border: none;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+  font-size: 18px;
+  border-radius: 0 50px 50px 0;
+  padding: 0 18px;
+}
+
+/* Hover animation for icon */
+.capsule-icon:hover {
+  background: #e63950;
+  cursor: pointer;
+  transform: rotate(15deg) scale(1.1);
+}
+
+/* Glow effect on hover */
+.capsule-search:hover {
+  box-shadow: 0 6px 18px rgba(255, 77, 109, 0.4);
+}

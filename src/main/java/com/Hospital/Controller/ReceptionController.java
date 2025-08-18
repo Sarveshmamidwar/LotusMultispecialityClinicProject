@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,17 +64,21 @@ public class ReceptionController {
 	private MedicalBillrepository medicalBillrepository;
 	
 	@GetMapping("/recptionDashboard")
-	public String recptionDashboard(Model model) {
+	public String recptionDashboard(Model model,Principal principal) {
 		
 int findtotalcount = appointmentrepository.findtotalcount();
     	
     	int todayAppointmentsCount = appointmentrepository.findTodayAppointmentsCount();
-    	int cancleAppointmentsCount = appointmentrepository.findTodaysCancleAppointmentsCount();
+    	int cancleAppointmentsCount = appointmentrepository.findCancleAppointmentsCount();
     	int tomorrowAppointmentsCount = appointmentrepository.findTomorrowAppointmentsCount();
     	int rutineApointmentCount = appointmentrepository.findRutineAppointmentsCount();
     	int DoneAppointmentCount = appointmentrepository.findDoneAppointmentsCount();
     	int OnlinePaymentCount = appointmentrepository.findOnlinePaymentCount();
+    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
     	
+    	System.out.println(cancleAppointmentsCount);
+    	model.addAttribute("userdetails",userdetails);
+    	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("totalCount",findtotalcount);
     	model.addAttribute("todayAppointmentsCount",todayAppointmentsCount);
     	model.addAttribute("cancleAppointmentsCount",cancleAppointmentsCount);
@@ -84,12 +89,56 @@ int findtotalcount = appointmentrepository.findtotalcount();
 		
 		return "Recption/recptionDashboard";
 	}
+	
+	 @GetMapping("/totalAppointment")
+	    public String totalAppointment(Model model,Principal principal ) {
+	    	
+	    	List<appointmentform> all = appointmentrepository.findAll();
+	    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+	    	
+	    	int count = all.size();
+	    	
+	    	model.addAttribute("username",userdetails.getName());
+	    	model.addAttribute("all",all);
+	        return "Doctors/totalappointment"; // Ensure the view name matches your Thymeleaf template location
+	    }
+	    
+	    @GetMapping("/todyasAppointment")
+	    public String todaysAppointment(Model model,Principal principal ) {
+	    	
+	    	List<appointmentform> todayAppointments = appointmentrepository.findTodayAppointments();
+	    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+	    	model.addAttribute("username",userdetails.getName());
+	    	model.addAttribute("todayAppointments",todayAppointments);
+	        return "Doctors/todyasAppointment"; // Ensure the view name matches your Thymeleaf template location
+	    }
+	    
+	    @GetMapping("/cancleAppointment")
+	    public String cancleAppointment(Model model ,Principal principal) {
+	    	
+	    	List<appointmentform> cancleAppointments = appointmentrepository.findCancleAppointments();
+	    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+	    	model.addAttribute("username",userdetails.getName());
+	    	model.addAttribute("cancleAppointments",cancleAppointments);
+	        return "Doctors/cancleAppointment"; // Ensure the view name matches your Thymeleaf template location
+	    }
+	    
+	    @GetMapping("/tommorowAppointment")
+	    public String tommorowAppointment(Model model,Principal principal ) {
+	    	
+	    	List<appointmentform> tommorowAppointments = appointmentrepository.findTomorrowAppointments();
+	    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+	    	model.addAttribute("username",userdetails.getName());
+	    	model.addAttribute("tommorowAppointments",tommorowAppointments);
+	        return "Doctors/tommorowAppointment"; // Ensure the view name matches your Thymeleaf template location
+	    }
 
 	@GetMapping("/listAppointment")
-	public String BookAppointment(Model model) {
+	public String BookAppointment(Model model,Principal principal) {
 		
         List<appointmentform> todayAppointments = appointmentrepository.findTodayAppointments();
-		
+        Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+    	model.addAttribute("username",userdetails.getName());
 		model.addAttribute("todayAppointments",todayAppointments);
 		
 		return "Recption/BookApointment";
@@ -120,10 +169,11 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	
 	
 	@GetMapping("/medicinesLists")
-    public String medicinesList(Model model) {
+    public String medicinesList(Model model,Principal principal) {
     	 
     	List<tablets> medicineslist = medicinesrepositories.findAll();
-    	
+    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+    	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("medicineslist",medicineslist);
     	return "Recption/medicinesList";
     }
@@ -164,9 +214,11 @@ int findtotalcount = appointmentrepository.findtotalcount();
         return ResponseEntity.ok().build();
     }
     
-    @GetMapping("/getInvoice")
-    public String GetBill() {
-    	
+    @GetMapping("/getInvoice/{name}")
+    public String GetBill(@PathVariable("name") String name,Model model,Principal principal) {
+    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+    	model.addAttribute("username",userdetails.getName());
+    	model.addAttribute("name",name);
     	return "Recption/GenrateMedicalBill";
     }
     
@@ -190,7 +242,7 @@ int findtotalcount = appointmentrepository.findtotalcount();
 
     
     @PostMapping("/addReports")
-    public String addReports(@RequestParam("report") MultipartFile file,@RequestParam("id") int id ) {
+    public String addReports(@RequestParam("report") MultipartFile file,@PathVariable("id") int id ) {
     	
     	try {
             Reports report = new Reports();
@@ -207,10 +259,11 @@ int findtotalcount = appointmentrepository.findtotalcount();
     }
     
     @GetMapping("/patientlist")
-    public String patientlist(Model model) {
+    public String patientlist(Model model,Principal principal) {
     	
        List<Patient> allpatient = patientrepository.findAll();
-    	
+       Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+   	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("allpatient",allpatient);
     	return "Recption/patientlist";
     }
@@ -256,4 +309,43 @@ int findtotalcount = appointmentrepository.findtotalcount();
     	
     	return "redirect:/recption/getInvoice";
     }
+    
+    @PutMapping("/update-quantity")
+    public ResponseEntity<?> updateQuantity(
+            @RequestParam String drugName, 
+            @RequestParam int qty) {
+
+        tablets tablet = medicinesrepositories.findByTabletName(drugName);
+
+        if (tablet == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                 .body("Tablet not found");
+        }
+
+        // Reduce stock
+        int newQty = tablet.getQuantity() - qty;
+        if (newQty < 0) newQty = 0; // prevent negative stock
+        tablet.setQuantity(newQty);
+
+        medicinesrepositories.save(tablet);
+System.out.println("heehehhehehheheehh");
+        return ResponseEntity.ok("Stock updated successfully for " + drugName);
+    }
+    
+    @GetMapping("/searchPatient")
+    @ResponseBody
+    public ResponseEntity<?> searchepatients(@RequestParam String name){
+    	
+    	List<Patient> patient = patientrepository.findByNameContainingIgnoreCase(name);
+    	 if (patient == null) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                  .body("Patient not found");
+         }
+    	 
+    	
+    	return ResponseEntity.ok(patient);
+    	
+    }
+
+
 }

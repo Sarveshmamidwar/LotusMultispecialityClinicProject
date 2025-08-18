@@ -37,6 +37,7 @@
 "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js">
 </script>
  <style>
+ 
         
     </style>
 </head>
@@ -241,50 +242,85 @@
     <i class="fa-solid fa-power-off"></i> Logout
   </a>
 </div>
+
+<span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+        Hello, <strong th:text="${username}"></strong>
+      </span>
   </div>
 </nav>
 
-		
-		
-		   <div class="me-3 mt-3 " style="display: flex;justify-content: flex-end;">
-		   
-		       <button class="p-2 btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Medicines</button>
-		   </div>
-		   <div class="card-body h-100">
-		       <table class="table  table-hover text-center">
-  <thead class="table-light ">
-    <tr class="table-light">
-      <th scope="col">Sr No.</th>
-      <th scope="col"> Company Name</th>
-      <th scope="col">Medicine Name</th>
-      <th scope="col">Medicine Type</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-   <tbody>
-    <tr th:each="c : ${medicineslist}">
-      <th  th:text="${c.id}">1</th>
-      <td th:text="${c.tabletName}">Mark</td>
-      <td th:text="${c.medicineCompanyName}">Otto</td>
-      <td th:text="${c.medecineType}">@mdo</td>
-      <td >
-         <div style="width: 100px; display: flex;justify-content:space-around;align-items: center;">
-                <img alt="Edit" th:src="@{/images/edit.png}" width="15%" 
-                      th:onclick="editMedicineModal([[${c.id}]], [[${c.tabletName}]], [[${c.medicineCompanyName}]], [[${c.medecineType}]])"
-                      data-bs-toggle="modal" 
-                      data-bs-target="#editmedicinesmodal">
-           
-                <img alt="" th:src="@{/images/delete.png}"  th:onclick="deleteMedicine([[${c.id}]])" width="18%">
-   
-         </div>
-      </td>
+	<!-- 	<div class="d-flex align-items-center justify-content-between mt-3">
+    Centered Search Input
+    <div class="flex-grow-1 d-flex justify-content-center">
+        <div class="d-flex justify-content-center ">
+  <div class="input-group capsule-search shadow" style="max-width: 450px;width: 100%">
+    <input type="text" id="searchDrug" class="form-control capsule-input" placeholder="Search medicines...">
+    <span class="input-group-text capsule-icon">
+      <i class="fa-solid fa-pills me-2"></i> Capsule/Pill icon
+    </span>
+  </div>
+</div>
+    </div>
 
-    </tr>
+    Add Medicines Button
+    <div>
+        <button class="btn btn-secondary me-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add Medicines
+        </button>
+    </div>
+</div> -->
+<div class="d-flex align-items-center justify-content-center mt-3 position-relative">
     
-  </tbody>
-</table>
-		   
-		   </div>
+    <!-- Search field centered -->
+    <div class="input-group capsule-search shadow" style="max-width: 450px; width: 100%;">
+        <input type="text" id="searchDrug" 
+               class="form-control capsule-input" 
+               placeholder="Search patients..." 
+               th:oninput="searchDrug()"> <!-- 🔥 Live search -->
+        <span class="input-group-text capsule-icon">
+            <i class="fa-solid fa-pills me-2"></i>
+        </span>
+    </div>
+
+    <!-- Add Patient Button (absolute right) -->
+    <div class="position-absolute end-0 me-5">
+       <button class="btn btn-secondary me-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add Medicines
+        </button>
+    </div>
+</div>
+
+		   <div class="card-body main-card  m-5 mt-3 p-3">
+    <table class="table table-hover text-center">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">Sr No.</th>
+                <th scope="col">Drug Name</th>
+                <th scope="col">Drug Company</th>
+                <th scope="col">Drug Type</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody id="medicinesTableBody">
+            <!-- Default rows will be loaded by Thymeleaf -->
+            <tr th:each="c : ${medicineslist}">
+                <th th:text="${c.id}">1</th>
+                <td th:text="${c.tabletName}">Paracetamol</td>
+                <td th:text="${c.medicineCompanyName}">XYZ Pharma</td>
+                <td th:text="${c.medecineType}">Tablet</td>
+                <td>
+                    <div style="width: 100px; display: flex; justify-content: space-around; align-items: center;">
+                        <img alt="Edit" th:src="@{/images/edit.png}" width="15%"
+                             th:onclick="editMedicineModal([[${c.id}]], [[${c.tabletName}]], [[${c.medicineCompanyName}]], [[${c.medecineType}]])"
+                             data-bs-toggle="modal"
+                             data-bs-target="#editmedicinesmodal">
+                        <img alt="Delete" th:src="@{/images/delete.png}" th:onclick="deleteMedicine([[${c.id}]])" width="18%">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 		  
 		</div>
 		
@@ -328,9 +364,11 @@
     	    .catch(error => console.error('Error:', error));
     	  
     	}
+    
+   
 </script>
 
-
+<script th:src="@{/js/Reception-Search.js}"></script>
 
 
 </body>

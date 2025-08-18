@@ -53,4 +53,8 @@ public interface appointmentrepository  extends JpaRepository<appointmentform, I
 	
 	@Query(value = "SELECT * FROM appointmentform WHERE patientid = :id ", nativeQuery = true)
 	List<appointmentform> findAppointmentsbypatientid(@Param("id") int id);
+	
+	@Query(value = "SELECT * FROM appointmentform WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')) AND appointment_date = CURRENT_DATE", nativeQuery = true)
+	List<appointmentform> findAppointmentsByNaame(@Param("name") String name);
+
 }

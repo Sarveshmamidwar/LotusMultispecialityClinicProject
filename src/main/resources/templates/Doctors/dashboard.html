@@ -88,7 +88,7 @@
             <a class="nav-link navtabs" th:href="@{/doctors/dashboard}">Dashboard</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/Prescription}">Prescription</a>
+            <a class="nav-link navtabs" th:href="@{/doctors/Prescription/00/00}">Prescription</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
             <a class="nav-link navtabs" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
@@ -110,6 +110,10 @@
     <i class="fa-solid fa-power-off"></i> Logout
   </a>
 </div>
+
+<span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+        Hello, <strong th:text="${username}"></strong>
+      </span>
     </div>
   </nav>
  
@@ -152,11 +156,11 @@
           <p>Today's Patient Count</p>
         </div>
         <div class="card-glass text-center">
-          <h1 class="count">3</h1>
+          <h1 class="count" >3</h1>
           <p>Today's Total Revenue</p>
         </div>
         <div class="card-glass text-center">
-          <h1 class="count">5</h1>
+          <h1 class="count" th:text="${totalrevenue}">5</h1>
           <p>Today's Medical Revenue</p>
         </div>
         <div class="card-glass text-center">
@@ -168,7 +172,7 @@
   </div>
 
   <button id="enableSpeechButton" onclick="speakAlert()" style="display:none;">🔊 Enable Speech</button>
-  <div id="appointmentAlert"></div>
+  <div id="appointmentAlert" style="height: 10%;width: 30%"></div>
 </div>
 
 
