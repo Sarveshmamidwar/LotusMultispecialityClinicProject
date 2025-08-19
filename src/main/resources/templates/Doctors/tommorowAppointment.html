@@ -102,6 +102,23 @@
 
 <main>
 
+<div class="d-flex align-items-center justify-content-center mt-3 position-relative">
+    
+    <!-- Search field centered -->
+    <div class="input-group capsule-search shadow" style="max-width: 450px; width: 100%;border-radius: 50%">
+        <input type="text" id="searchTommAppointmentDoc" 
+               class="form-control capsule-input" 
+               placeholder="Search patients..." 
+               oninput="searchTommAppointmentDoc('/doctors/searchTommAppointment','searchTommAppointmentDoc','TommapointmentTableBodyDoc')"> <!-- 🔥 Live search -->
+        <span class="input-group-text capsule-icon">
+            <i class="fa-solid fa-pills me-2"></i>
+        </span>
+    </div>
+
+    <!-- Add Patient Button (absolute right) -->
+   
+</div>
+
 <div class="card  p-3 m-5 main-card" >
 
 <table class="table table-hover">
@@ -115,7 +132,7 @@
       <th scope="col">Gender</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="TommapointmentTableBodyDoc">
     <tr th:each="c : ${tommorowAppointments}">
       <th th:text="${c.id}">1</th>
       <td th:text="${c.name}">Mark</td>
@@ -137,7 +154,7 @@
 
   
 
-	
+	<script th:src="@{/js/Reception-Search.js}"></script>
 	
 	</body>
 

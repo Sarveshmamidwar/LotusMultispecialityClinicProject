@@ -2,9 +2,11 @@ package com.Hospital.Controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -76,7 +78,7 @@ int findtotalcount = appointmentrepository.findtotalcount();
     	int OnlinePaymentCount = appointmentrepository.findOnlinePaymentCount();
     	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
     	
-    	System.out.println(cancleAppointmentsCount);
+    	
     	model.addAttribute("userdetails",userdetails);
     	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("totalCount",findtotalcount);
@@ -100,7 +102,7 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	    	
 	    	model.addAttribute("username",userdetails.getName());
 	    	model.addAttribute("all",all);
-	        return "Doctors/totalappointment"; // Ensure the view name matches your Thymeleaf template location
+	        return "Recption/totalappointment"; // Ensure the view name matches your Thymeleaf template location
 	    }
 	    
 	    @GetMapping("/todyasAppointment")
@@ -110,7 +112,7 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
 	    	model.addAttribute("username",userdetails.getName());
 	    	model.addAttribute("todayAppointments",todayAppointments);
-	        return "Doctors/todyasAppointment"; // Ensure the view name matches your Thymeleaf template location
+	        return "Recption/todyasAppointment"; // Ensure the view name matches your Thymeleaf template location
 	    }
 	    
 	    @GetMapping("/cancleAppointment")
@@ -120,7 +122,7 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
 	    	model.addAttribute("username",userdetails.getName());
 	    	model.addAttribute("cancleAppointments",cancleAppointments);
-	        return "Doctors/cancleAppointment"; // Ensure the view name matches your Thymeleaf template location
+	        return "Recption/cancleAppointment"; // Ensure the view name matches your Thymeleaf template location
 	    }
 	    
 	    @GetMapping("/tommorowAppointment")
@@ -130,7 +132,7 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
 	    	model.addAttribute("username",userdetails.getName());
 	    	model.addAttribute("tommorowAppointments",tommorowAppointments);
-	        return "Doctors/tommorowAppointment"; // Ensure the view name matches your Thymeleaf template location
+	        return "Recption/tommorowAppointment"; // Ensure the view name matches your Thymeleaf template location
 	    }
 
 	@GetMapping("/listAppointment")
@@ -346,6 +348,75 @@ System.out.println("heehehhehehheheehh");
     	return ResponseEntity.ok(patient);
     	
     }
+    
+    @GetMapping("/searchTommAppointment")
+    @ResponseBody
+    public ResponseEntity<?> searcheTommAppointment(@RequestParam String name){
+    	
+    	List<appointmentform> TommappointmentsByNaame = appointmentrepository.findTommAppointmentsByNaame(name);
+    	 if (TommappointmentsByNaame == null) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                  .body("Patient not found");
+         }
+    	return ResponseEntity.ok(TommappointmentsByNaame);
+    	
+    }
+    @GetMapping("/searchCancleAppointment")
+    @ResponseBody
+    public ResponseEntity<?> searcheCancleAppointment(@RequestParam String name){
+    	
+    	List<appointmentform> CancleappointmentsByNaame = appointmentrepository.findCancleAppointmentsByNaame(name);
+    	 if (CancleappointmentsByNaame == null) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                  .body("Patient not found");
+         }
+    	return ResponseEntity.ok(CancleappointmentsByNaame);
+    	
+    }
+    @GetMapping("/searchAllAppointment")
+    @ResponseBody
+    public ResponseEntity<?> searcheAllAppointment(@RequestParam String name){
+    	
+    	List<appointmentform> AllappointmentsByNaame = appointmentrepository.findAllAppointmentsByNaame(name);
+    	 if (AllappointmentsByNaame == null) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                  .body("Patient not found");
+         }
+    	return ResponseEntity.ok(AllappointmentsByNaame);
+    	
+    }
+    @GetMapping("/searchAppointment")
+    @ResponseBody
+    public ResponseEntity<?> searcheAppointment(@RequestParam String name){
+    	
+    	List<appointmentform> appointmentsByNaame = appointmentrepository.findAppointmentsByNaame(name);
+    	 if (appointmentsByNaame == null) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                  .body("Patient not found");
+         }
+    	 
+    	
+    	return ResponseEntity.ok(appointmentsByNaame);
+    	
+    }
 
+    @GetMapping("/getreports/{id}")
+	public String GetReports(Model model, Principal principal, @PathVariable("id") int id) {
+	    Patient patient = patientrepository.findByemail(principal.getName());
+	    
+	    Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+    	model.addAttribute("username",userdetails.getName());
+	    
+	    List<Reports> reports = reportsrepository.findreportsbypatientid(id);
+	    
+	    // Convert byte[] to Base64
+	    List<String> reportBase64List = reports.stream()
+	        .map(report -> Base64.getEncoder().encodeToString(report.getReport())) // Convert byte[] to Base64 String
+	        .collect(Collectors.toList());
+
+	    model.addAttribute("reports", reportBase64List);
+	   
+	    return "Recption/Reports"; // Ensure this matches your template filename
+	}
 
 }

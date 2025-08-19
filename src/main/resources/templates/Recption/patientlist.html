@@ -164,7 +164,7 @@
 
 
 <!-- Table -->
-<div class="card h-100 mt-3">
+<div class="card h-100 mt-3 m-5 main-card p-3">
     <table class="table">
         <thead class="table-light">
             <tr>
@@ -175,6 +175,7 @@
                 <th>Gender</th>
                 <th>Address</th>
                 <th>Birthdate</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody id="patientTableBody">
@@ -186,6 +187,9 @@
                 <td th:text="${c.gender}">Male</td>
                 <td th:text="${c.address}">Delhi</td>
                 <td th:text="${c.birthdate}">2000-01-01</td>
+                <td style="width: 10%"><button style="background: none;border: none;"  >
+<a th:href="@{'/recption/getreports/'+ ${c.id}}"><img class="" alt="" th:src="@{/images/prescription.png}" style="width: 30%"></a></button>
+</td>
             </tr>
         </tbody>
     </table>
@@ -234,7 +238,7 @@
 
       <!-- Modal Body -->
       <div class="modal-body">
-        <form th:action="@{/doctors/AddPatient}" method="post">
+        <form th:action="@{/recption/AddPatient}" method="post">
 
           <div class="form-floating mb-3">
             <input type="text" class="form-control" name="Name" id="patientName" placeholder="Full Name" required>

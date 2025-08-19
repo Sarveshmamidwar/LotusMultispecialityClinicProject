@@ -57,35 +57,30 @@
 
   <!-- Main Navbar -->
   <nav class="navbar navbar-expand-lg main-navbar">
-    <div class="container-fluid justify-content-between align-items-center">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#doctorNavbar" aria-controls="doctorNavbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <div class="container-fluid justify-content-between align-items-center">
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#receptionNavbar" aria-controls="receptionNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <div class="collapse navbar-collapse justify-content-center" id="doctorNavbar">
-        <ul class="navbar-nav gap-3 fw-semibold fs-5">
-          <li class="nav-item animate-slide-in" style="animation-delay:0s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/dashboard}">Dashboard</a>
-          </li>
-          <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/Prescription/00/00}">Prescription</a>
-          </li>
-          <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
-          </li>
-          <li class="nav-item animate-slide-in" style="animation-delay:0.3s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/medicinesLists}">Medicines</a>
-          </li>
-          <li class="nav-item animate-slide-in" style="animation-delay:0.4s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/GetAddEmployee}">Staff</a>
-          </li>
-          <li class="nav-item animate-slide-in" style="animation-delay:0.5s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/patient}">Patient</a>
-          </li>
-        </ul>
-      </div>
+    <div class="collapse navbar-collapse justify-content-center" id="receptionNavbar">
+      <ul class="navbar-nav gap-3 fw-semibold fs-5">
+        <li class="nav-item animate-slide-in" style="animation-delay:0s;">
+          <a class="nav-link navtabs" th:href="@{/recption/recptionDashboard}">Dashboard</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
+          <a class="nav-link navtabs" th:href="@{/recption/listAppointment}">Book Appointments</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
+          <a class="nav-link navtabs" th:href="@{/recption/medicinesLists}">Medicines</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.3s;">
+          <a class="nav-link navtabs" th:href="@{/recption/patientlist}">Patients</a>
+        </li>
+      </ul>
+    </div>
 
-      <div class="d-none d-lg-block logout-btn">
+    <div class="d-none d-lg-block logout-btn">
   <a class="logout-link" th:href="@{/logout}" title="Logout">
     <i class="fa-solid fa-power-off"></i> Logout
   </a>
@@ -94,8 +89,8 @@
 <span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
         Hello, <strong th:text="${username}"></strong>
       </span>
-    </div>
-  </nav>
+  </div>
+</nav>
 
 
 
@@ -108,7 +103,7 @@
         <input type="text" id="searchCancleAppointmentDoc" 
                class="form-control capsule-input" 
                placeholder="Search patients..." 
-               th:oninput="searchCancleAppointmentDoc('/doctors/searchCancleAppointment','searchCancleAppointmentDoc','CancleapointmentTableBodyDoc')"> <!-- 🔥 Live search -->
+               th:oninput="searchCancleAppointmentDoc('/recption/searchCancleAppointment','searchCancleAppointmentDoc','CancleapointmentTableBodyDoc')"> <!-- 🔥 Live search -->
         <span class="input-group-text capsule-icon">
             <i class="fa-solid fa-pills me-2"></i>
         </span>

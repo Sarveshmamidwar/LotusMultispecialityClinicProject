@@ -54,6 +54,7 @@ public class PatientController {
 		Patient patient = patientrepository.findByemail(principal.getName());
 		
 		appointmentform.setPatientid(patient.getId());
+		appointmentform.setAppointmentStatus("Pending");
 		appointmentrepository.save(appointmentform);
 		return "redirect:/patient/patDashboard";
 	}

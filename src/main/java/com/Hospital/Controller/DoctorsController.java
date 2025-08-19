@@ -3,9 +3,11 @@ package com.Hospital.Controller;
 import java.lang.module.ResolutionException;
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Hospital.entity.Doctors;
 import com.Hospital.entity.Patient;
+import com.Hospital.entity.Reports;
 import com.Hospital.entity.appointmentform;
 import com.Hospital.entity.staff;
 import com.Hospital.entity.tablets;
@@ -33,6 +36,7 @@ import com.Hospital.repositories.HositalStaffrepository;
 import com.Hospital.repositories.MedicalBillrepository;
 import com.Hospital.repositories.appointmentrepository;
 import com.Hospital.repositories.patientrepository;
+import com.Hospital.repositories.reportsrepository;
 import com.Hospital.repositories.tabletsrepositories;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
@@ -60,6 +64,9 @@ public class DoctorsController {
 	
 	@Autowired
 	private HositalStaffrepository hospitalStaffrepository;
+	
+	@Autowired
+	private reportsrepository reportsrepository;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model,Principal principal) {
@@ -75,6 +82,7 @@ public class DoctorsController {
     	int DoneAppointmentCount = appointmentrepository.findDoneAppointmentsCount();
     	int OnlinePaymentCount = appointmentrepository.findOnlinePaymentCount();
     	int totaRevenue = medicalBillrepository.findTotaRevenue();
+    	
     	
     	
     	model.addAttribute("totalrevenue",totaRevenue);
@@ -351,5 +359,63 @@ public class DoctorsController {
     	return ResponseEntity.ok(appointmentsByNaame);
     	
     }
+    
+    @GetMapping("/searchAllAppointment")
+    @ResponseBody
+    public ResponseEntity<?> searcheAllAppointment(@RequestParam String name){
+    	
+    	List<appointmentform> AllappointmentsByNaame = appointmentrepository.findAllAppointmentsByNaame(name);
+    	 if (AllappointmentsByNaame == null) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                  .body("Patient not found");
+         }
+    	return ResponseEntity.ok(AllappointmentsByNaame);
+    	
+    }
+    
+    @GetMapping("/searchCancleAppointment")
+    @ResponseBody
+    public ResponseEntity<?> searcheCancleAppointment(@RequestParam String name){
+    	
+    	List<appointmentform> CancleappointmentsByNaame = appointmentrepository.findCancleAppointmentsByNaame(name);
+    	 if (CancleappointmentsByNaame == null) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                  .body("Patient not found");
+         }
+    	return ResponseEntity.ok(CancleappointmentsByNaame);
+    	
+    }
+    
+    @GetMapping("/searchTommAppointment")
+    @ResponseBody
+    public ResponseEntity<?> searcheTommAppointment(@RequestParam String name){
+    	
+    	List<appointmentform> TommappointmentsByNaame = appointmentrepository.findTommAppointmentsByNaame(name);
+    	 if (TommappointmentsByNaame == null) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                  .body("Patient not found");
+         }
+    	return ResponseEntity.ok(TommappointmentsByNaame);
+    	
+    }
+    
+    @GetMapping("/getreports/{id}")
+	public String GetReports(Model model, Principal principal, @PathVariable("id") int id) {
+	    Patient patient = patientrepository.findByemail(principal.getName());
+	    
+	    Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+    	model.addAttribute("username",userdetails.getName());
+	    
+	    List<Reports> reports = reportsrepository.findreportsbypatientid(id);
+	    
+	    // Convert byte[] to Base64
+	    List<String> reportBase64List = reports.stream()
+	        .map(report -> Base64.getEncoder().encodeToString(report.getReport())) // Convert byte[] to Base64 String
+	        .collect(Collectors.toList());
+
+	    model.addAttribute("reports", reportBase64List);
+	   
+	    return "Doctors/Reports"; // Ensure this matches your template filename
+	}
 
 }

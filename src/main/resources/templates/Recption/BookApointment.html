@@ -13,6 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 <link rel="stylesheet" th:href="@{/CSS/receptiondashboard.css}">
+<link rel="stylesheet" th:href="@{/CSS/docdashboard.css}">
 <link rel="stylesheet" th:href="@{/CSS/receptionbookapoinment.css}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -122,16 +123,36 @@
   </div>
 </nav>
 
+<div class="d-flex align-items-center justify-content-center mt-3 position-relative">
+    
+    <!-- Search field centered -->
+    <div class="input-group capsule-search shadow" style="max-width: 450px; width: 100%;">
+        <input type="text" id="searchAppointmentDoc" 
+               class="form-control capsule-input" 
+               placeholder="Search patients..." 
+               th:oninput="searchAppointmentDoc('/recption/searchAppointment','searchAppointmentDoc','apointmentTableBodyDoc')"> <!-- 🔥 Live search -->
+        <span class="input-group-text capsule-icon">
+            <i class="fa-solid fa-pills me-2"></i>
+        </span>
+    </div>
+
+    <!-- Add Patient Button (absolute right) -->
+   <div class="position-absolute end-0 me-5">
+ <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#AppointmentForm">Book Appointment</button>
+    </div>
+</div>
 
 
-<div class="card h-100">
+<div class="card h-100 mt-3 m-5 main-card">
      
-     <div class="card-body" style="display: flex;justify-content: flex-end;">
+    <!--  <div class="card-body" style="display: flex;justify-content: flex-end;">
         
          <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#AppointmentForm">Book Appointment</button>
-     </div>
+     </div> -->
      
-     <div class="card-body h-100">
+     
+     
+     <div class="card-body h-100 ">
      
          <table class="table table-responsive  table-hover text-center w-100">
   <thead class="table-light ">
@@ -403,7 +424,7 @@ function updatePaymentStatus(status, id) {
 }
 
 </script>
-
+<script th:src="@{/js/Reception-Search.js}"></script>
 </body>
 
 </html>

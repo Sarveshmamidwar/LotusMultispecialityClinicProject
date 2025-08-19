@@ -203,6 +203,7 @@
       <th scope="col">Gender</th>
       <th scope="col">address</th>
       <th scope="col">birthdate</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody id="patientTableBodyDoc" >
@@ -214,6 +215,9 @@
       <td th:text="${c.gender}">@mdo</td>
       <td th:text="${c.address}">@mdo</td>
       <td th:text="${c.birthdate}">@mdo</td>
+      <td style="width: 10%"><button style="background: none;border: none;"  >
+<a th:href="@{'/doctors/getreports/'+ ${c.id}}"><img class="" alt="" th:src="@{/images/prescription.png}" style="width: 30%"></a></button>
+</td>
     </tr> 
     
   </tbody>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" th:href="@{/CSS/docdashboard.css}">
+<link rel="stylesheet" th:href="@{/CSS/patientdashboard.css}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script src=
+"https://d3js.org/d3.v4.min.js"></script>
+<script src=
+"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+<link rel="stylesheet"
+      href=
+"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css" />
+<link rel=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+      type="text/css" />
+ 
+<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+</script>
+<script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+</script>
+ 
+<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js">
+</script>
+ <style>
+ 
+     /* Glass outer card */
+.glass-card {
+  background: #C0EC83;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* Scroll container */
+.scroll-container {
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #91c74f;
+  border-radius: 4px;
+}
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: #7bab3e;
+}
+
+/* Report card 3D style */
+.report-card {
+  background: linear-gradient(145deg, #ffffff, #f4f4f4);
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+.report-card:hover {
+  transform: rotateX(5deg) rotateY(-5deg) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* PDF viewer section */
+.pdf-frame {
+  position: relative;
+  height: 230px;
+  overflow: hidden;
+}
+.pdf-viewer {
+  width: 100%;
+  height: 100%;
+  border: none;
+  transition: transform 0.5s ease;
+}
+.report-card:hover .pdf-viewer {
+  transform: scale(1.07);
+}
+
+/* Overlay on hover */
+.overlay {
+  position: absolute;
+  top: 0; left: 0; 
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* space between icons */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+}
+.pdf-frame:hover .overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Common icon style */
+.action-icon {
+  font-size: 1.8rem;
+  color: white;
+  padding: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Square shaped (instead of circle) */
+.square-icon {
+  border-radius: 12px; /* rounded square */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 35px;
+  min-height: 35px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4),
+              inset 0 2px 4px rgba(255,255,255,0.2);
+  background: linear-gradient(145deg, #ffffff33, #00000033);
+}
+
+/* Hover 3D pop effect */
+.square-icon:hover {
+  transform: scale(1.15) translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.5),
+              inset 0 3px 6px rgba(255,255,255,0.25);
+}
+
+/* Themed colors */
+.view-icon {
+  background: linear-gradient(145deg, #34d058, #22863a); /* green */
+}
+.download-icon {
+  background: linear-gradient(145deg, #2188ff, #005cc5); /* blue */
+}
+
+
+
+/* Info section */
+.report-info {
+  padding: 12px;
+  text-align: center;
+}
+.report-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Entrance animation */
+.fade-in-card {
+  opacity: 0;
+  transform: translateY(25px) scale(0.95);
+  animation: fadeInUp 0.7s ease forwards;
+}
+.fade-in-card:nth-child(1) { animation-delay: 0.1s; }
+.fade-in-card:nth-child(2) { animation-delay: 0.2s; }
+.fade-in-card:nth-child(3) { animation-delay: 0.3s; }
+.fade-in-card:nth-child(4) { animation-delay: 0.4s; }
+.fade-in-card:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+    
+    </style>
+</head>
+<body>
+
+
+
+
+
+<div class="d-flex flex-column vh-100">
+
+    <!-- Navbar -->
+    <nav class="info-navbar">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+      <img th:src="@{/images/logo.jpg}" alt="Logo" class="logo me-2">
+      Lotus Multispeciality Clinic
+    </a>
+    <ul class="info-list mb-0">
+      <li class="info-item">
+        <i class="fa-solid fa-phone-volume"></i>
+        <div>
+          <small>EMERGENCY</small>
+          <span>+91 89307758281</span>
+        </div>
+      </li>
+      <li class="info-item">
+        <i class="fa-regular fa-clock"></i>
+        <div>
+          <small>WORKING HOURS</small>
+          <span>Mon-Sat: 9AM - 9PM</span>
+        </div>
+      </li>
+      <li class="info-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <small>LOCATION</small>
+          <span>123 Lotus Street, City</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Patient Navbar -->
+<!-- Patient Navbar -->
+<nav class="navbar navbar-expand-lg main-navbar">
+  <div class="container-fluid justify-content-between align-items-center">
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#receptionNavbar" aria-controls="receptionNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="receptionNavbar">
+      <ul class="navbar-nav gap-3 fw-semibold fs-5">
+        <li class="nav-item animate-slide-in" style="animation-delay:0s;">
+          <a class="nav-link navtabs" th:href="@{/recption/recptionDashboard}">Dashboard</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
+          <a class="nav-link navtabs" th:href="@{/recption/listAppointment}">Book Appointments</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
+          <a class="nav-link navtabs" th:href="@{/recption/medicinesLists}">Medicines</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.3s;">
+          <a class="nav-link navtabs" th:href="@{/recption/patientlist}">Patients</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-none d-lg-block logout-btn">
+  <a class="logout-link" th:href="@{/logout}" title="Logout">
+    <i class="fa-solid fa-power-off"></i> Logout
+  </a>
+</div>
+
+<span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+        Hello, <strong th:text="${username}"></strong>
+      </span>
+  </div>
+</nav>
+
+    <!-- Main Content -->
+    <div class="card flex-grow-1 m-5" style=" border: none;border-radius: 15px">
+    <div class="card m-4 p-4 flex-grow-1 mt-2 glass-card">
+        <h4 class="mb-4 text-dark fw-bold">
+            <i class="bi bi-file-earmark-pdf-fill me-2"></i>Your Reports
+        </h4>
+
+        <div class="scroll-container">
+            <div class="row g-4 p-1">
+                <div th:each="report, iterStat : ${reports}" class="col-md-3 col-sm-6">
+                    <div class="report-card fade-in-card" data-tilt>
+                        <div class="pdf-frame">
+                            <embed th:src="'data:application/pdf;base64,' + ${report}" 
+                                   type="application/pdf" 
+                                   class="pdf-viewer">
+
+                           <div class="overlay">
+    <!-- View PDF -->
+    <a th:href="'data:application/pdf;base64,' + ${report}" target="_blank">
+        <i class="bi bi-eye-fill action-icon square-icon view-icon" title="View Report"></i>
+    </a>
+
+    <!-- Download PDF -->
+    <a th:href="'data:application/pdf;base64,' + ${report}" download="Report.pdf">
+        <i class="bi bi-download action-icon square-icon download-icon" title="Download Report"></i>
+    </a>
+</div>
+
+
+                        </div>
+                        <div class="report-info">
+                            <span class="report-title">
+                                Report #<span th:text="${iterStat.index + 1}"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+</div>
+
+<script>
+function openPdfForPrint() {
+    let pdfData = `[[${report}]]`; // Thymeleaf inserts the Base64 string
+
+    // Convert Base64 to raw binary
+    let byteCharacters = atob(pdfData);
+    let byteNumbers = new Array(byteCharacters.length);
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    let byteArray = new Uint8Array(byteNumbers);
+    let pdfBlob = new Blob([byteArray], { type: 'application/pdf' });
+    let pdfUrl = URL.createObjectURL(pdfBlob); // Create a temporary URL
+
+    let printWindow = window.open(pdfUrl, '_blank'); // Open in new tab
+    printWindow.onload = function () {
+        printWindow.print(); // Trigger print preview
+    };
+}
+</script>
+
+</body>
+
+</html>

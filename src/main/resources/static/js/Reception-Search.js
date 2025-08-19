@@ -160,16 +160,16 @@ function searchPatient() {
 			        });
 			}
 			
-			function searchAppointmentDoc() {
-			    const name = document.getElementById("searchAppointmentDoc").value.trim();
-			    const tbody = document.getElementById("apointmentTableBodyDoc");
+			function searchAppointmentDoc(apiUrl, inputId, tableBodyId) {
+				const name = document.getElementById(inputId).value.trim();
+				const tbody = document.getElementById(tableBodyId);
 
 			    if (name.length === 0) {
 			        location.reload(); // reload full table if empty search
 			        return;
 			    }
-
-			    fetch(`/doctors/searchAppointment?name=${encodeURIComponent(name)}`)
+///doctors/searchAppointment?name=${encodeURIComponent(name)}
+			    fetch(`${apiUrl}?name=${encodeURIComponent(name)}`)
 			        .then(res => res.json())
 			        .then(appointments => {
 			            tbody.innerHTML = ""; // clear table
@@ -234,4 +234,125 @@ function searchPatient() {
 			            `;
 			        });
 			}
+			
+			function searchAllAppointmentDoc(apiUrl, inputId, tableBodyId) {
+			    const name = document.getElementById(inputId).value.trim();
+			    const tbody = document.getElementById(tableBodyId);
 
+			    if (name.length === 0) {
+			        location.reload(); // reload full table if empty search
+			        return;
+			    }
+
+			    fetch(`${apiUrl}?name=${encodeURIComponent(name)}`)
+			        .then(res => res.json())
+			        .then(appointments => {
+			            tbody.innerHTML = ""; // clear table
+
+			            if (appointments.length > 0) {
+			                appointments.forEach(app => {
+			                    tbody.innerHTML += `
+			                        <tr>
+			                            <td>${app.id}</td>
+			                            <td>${app.name}</td>
+			                            <td>${app.appointmentDate}</td>
+			                            <td>${app.appointmentTime}</td>
+			                            <td>${app.doctor}</td>
+			                            <td>${app.gender}</td>
+			                        </tr>
+			                    `;
+			                });
+			            } else {
+			                tbody.innerHTML = `
+			                    <tr><td colspan="6" class="text-danger text-center">No appointments found</td></tr>
+			                `;
+			            }
+			        })
+			        .catch(() => {
+			            tbody.innerHTML = `
+			                <tr><td colspan="6" class="text-danger text-center">Error fetching appointments</td></tr>
+			            `;
+			        });
+			}
+
+
+						function searchCancleAppointmentDoc(apiUrl, inputId, tableBodyId) {
+						    const name = document.getElementById(inputId).value.trim();
+						    const tbody = document.getElementById(tableBodyId);
+
+						    if (name.length === 0) {
+						        location.reload(); // reload full table if empty search
+						        return;
+						    }
+
+						    fetch(`${apiUrl}?name=${encodeURIComponent(name)}`)
+						        .then(res => res.json())
+						        .then(appointments => {
+						            tbody.innerHTML = ""; // clear table
+
+						            if (appointments.length > 0) {
+						                appointments.forEach(app => {
+						                    tbody.innerHTML += `
+						                        <tr>
+						                            <td>${app.id}</td>
+						                            <td>${app.name}</td>
+						                            <td>${app.appointmentDate}</td>
+						                            <td>${app.appointmentTime}</td>
+						                            <td>${app.doctor}</td>
+						                            <td>${app.gender}</td>
+						                        </tr>
+						                    `;
+						                });
+						            } else {
+						                tbody.innerHTML = `
+						                    <tr><td colspan="6" class="text-danger text-center">No appointments found</td></tr>
+						                `;
+						            }
+						        })
+						        .catch(() => {
+						            tbody.innerHTML = `
+						                <tr><td colspan="6" class="text-danger text-center">Error fetching appointments</td></tr>
+						            `;
+						        });
+						}
+
+												
+												function searchTommAppointmentDoc(apiUrl, inputId, tableBodyId) {
+												    const name = document.getElementById(inputId).value.trim();
+												    const tbody = document.getElementById(tableBodyId);
+
+												    if (name.length === 0) {
+												        location.reload(); // reload full table if empty search
+												        return;
+												    }
+
+												    fetch(`${apiUrl}?name=${encodeURIComponent(name)}`)
+												        .then(res => res.json())
+												        .then(appointments => {
+												            tbody.innerHTML = ""; // clear table
+
+												            if (appointments.length > 0) {
+												                appointments.forEach(app => {
+												                    tbody.innerHTML += `
+												                        <tr>
+												                            <td>${app.id}</td>
+												                            <td>${app.name}</td>
+												                            <td>${app.appointmentDate}</td>
+												                            <td>${app.appointmentTime}</td>
+												                            <td>${app.doctor}</td>
+												                            <td>${app.gender}</td>
+												                        </tr>
+												                    `;
+												                });
+												            } else {
+												                tbody.innerHTML = `
+												                    <tr><td colspan="6" class="text-danger text-center">No appointments found</td></tr>
+												                `;
+												            }
+												        })
+												        .catch(() => {
+												            tbody.innerHTML = `
+												                <tr><td colspan="6" class="text-danger text-center">Error fetching appointments</td></tr>
+												            `;
+												        });
+												}

@@ -56,5 +56,14 @@ public interface appointmentrepository  extends JpaRepository<appointmentform, I
 	
 	@Query(value = "SELECT * FROM appointmentform WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')) AND appointment_date = CURRENT_DATE", nativeQuery = true)
 	List<appointmentform> findAppointmentsByNaame(@Param("name") String name);
+	
+	@Query(value = "SELECT * FROM appointmentform WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')) ", nativeQuery = true)
+	List<appointmentform> findAllAppointmentsByNaame(@Param("name") String name);
+	
+	@Query(value = "SELECT * FROM appointmentform WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')) AND appointment_status = 'Cancle' ", nativeQuery = true)
+	List<appointmentform> findCancleAppointmentsByNaame(@Param("name") String name);
+	
+	@Query(value = "SELECT * FROM appointmentform WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')) AND appointment_date = CURRENT_DATE + INTERVAL 1 DAY", nativeQuery = true)
+	List<appointmentform> findTommAppointmentsByNaame(@Param("name") String name);
 
 }
