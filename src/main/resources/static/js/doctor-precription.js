@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
            <td>${rowData.prescription}</td>
            <td>${rowData.drugName}</td>
            <td>${stepperHtml}</td>
-           <td>${rowData.duration}</td>
+           <td>${rowData.duration} Days</td>
            <td>${rowData.qty}</td>
            <td>
              <i class="fa-solid fa-trash delete-icon" style="color: #fa0000; cursor: pointer;"></i>
