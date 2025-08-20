@@ -117,7 +117,7 @@
   </a>
 </div>
 
-<span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+<span class="navbar-patient-name ms-4 animate-slide-in" data-bs-toggle="modal" data-bs-target="#profiledetails" style="animation-delay:0.2s;">
         Hello, <strong th:text="${username}"></strong>
       </span>
   </div>
@@ -225,9 +225,9 @@
 									alt="" th:src="@{/images/invoice.png}" title="Invoice"
 									 width="20%"></a>
 									
-									<img data-bs-toggle="modal" data-bs-target="#addreports"
+									<!-- <img data-bs-toggle="modal" th:onclick="addreportmodel([[${c.id}]])" data-bs-target="#addreports"
 									alt="" th:src="@{/images/Reports.png}" title="add reports"
-									 width="20%">
+									 width="20%"> -->
 							</td>
 							
                             
@@ -347,11 +347,13 @@
 <div class="modal fade" id="addreports" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content border-0 shadow rounded-4 p-4 text-center">
+    
+    <input type="text" name="report" class="form-control mb-4 rounded-pill" id="patientid" >
       <div class="modal-header border-0 justify-content-center pb-0">
         <i class="fa-solid fa-file-upload fa-3x text-primary mb-2"></i>
       </div>
       <div class="modal-body">
-        <form th:action="@{/recption/addReports}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/recption/addReports/0}" method="post" enctype="multipart/form-data">
           <label class="form-label fw-bold d-block mb-3">Upload Your Report</label>
           <input type="file" name="report" class="form-control mb-4 rounded-pill">
           <button type="submit" class="btn btn-primary w-75 rounded-pill fw-semibold">Upload</button>
@@ -361,11 +363,46 @@
   </div>
 </div>
 
-
+<!-- Profile Details Modal -->
+<div class="modal fade" id="profiledetails" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg" style="border-radius: 15px;">
+      <div class="modal-body p-0">
+        <div class="row g-0">
+          <!-- Left Side -->
+          <div class="col-md-4 bg-primary text-white text-center p-4" style="border-radius: 15px;">
+            <img src="https://via.placeholder.com/120" class="rounded-circle mb-3">
+            <h5 th:text="${userdetails.name}">John Doe</h5>
+            <p class="mb-0" th:text="${userdetails.email}"><i class="fas fa-envelope"></i> john@example.com</p>
+          </div>
+          <!-- Right Side -->
+          <div class="col-md-8 p-4">
+            <h6><i class="fas fa-phone text-primary"></i> Phone</h6>
+            <p th:text="${userdetails.mobileNumber}">+91 9876543210</p>
+            <h6><i class="fas fa-venus-mars text-danger"></i> Gender</h6>
+            <p th:text="${userdetails.gender}">Male</p>
+            <h6><i class="fas fa-map-marker-alt text-success"></i> Address</h6>
+            <p th:text="${userdetails.address}">123 Main St, City</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
  <script>
+ function addreportmodel(patientid){
+	 document.getElementById("patientid").value = patientid;
+ }
+ document.getElementById("reportForm").addEventListener("submit", function(event) {
+	    let patientId = document.getElementById("patientid").value;
+	    if (patientId) {
+	      this.action = "/recption/addReports/" + patientId;  // overwrite action dynamically
+	    }
+	  });
+ 
   function toggleDropdown(appointmentId, event) {
 	    let container = event.target.closest('.appointment-status-container');
 	    let dropdown = container.nextElementSibling; // Get the dropdown div that comes after the container

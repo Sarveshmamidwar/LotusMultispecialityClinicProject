@@ -43,6 +43,7 @@ public class PatientController {
 		
 		List<appointmentform> appointmentsbypatientid = appointmentrepository.findAppointmentsbypatientid(patient.getId());
 		
+		model.addAttribute("userdetails",patient);
 		model.addAttribute("appointmentist",appointmentsbypatientid);
 		 model.addAttribute("PatientName",patient.getName());
 		
@@ -70,6 +71,7 @@ public class PatientController {
 	        .map(report -> Base64.getEncoder().encodeToString(report.getReport())) // Convert byte[] to Base64 String
 	        .collect(Collectors.toList());
 
+	    model.addAttribute("userdetails",patient);
 	    model.addAttribute("reports", reportBase64List);
 	    model.addAttribute("PatientName",patient.getName());
 	    return "Patient/Reports"; // Ensure this matches your template filename

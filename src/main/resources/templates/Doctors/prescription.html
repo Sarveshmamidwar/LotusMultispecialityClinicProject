@@ -113,6 +113,111 @@ max-height: 300px;
   transition: left 0.5s ease-in-out;
   z-index: 9999;
 }
+
+/* Card styling */
+.precard {
+  background: #fff;
+  border-radius: 12px;
+  border: 2px solid #f1f1f1;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.08);
+}
+
+/* Header section */
+.header-section {
+  background: linear-gradient(90deg, #f0f8ff, #e6f7ff);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+/* Logo */
+.logo {
+  max-height: 80px;
+  object-fit: contain;
+}
+
+/* Hospital name */
+.Hosname h1 {
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #0077b6;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.Hosname a {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Doctor section */
+.drsection {
+  font-size: 0.9rem;
+}
+.drnamesect {
+  font-weight: 700;
+  color: #333;
+}
+.drdegree {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+/* Patient info section */
+#pdfContent label {
+  font-weight: 600;
+  color: #333;
+  margin-right: 5px;
+}
+#pdfContent input {
+  border-bottom: 1px solid #999 !important;
+  border-radius: 0;
+  padding: 2px 5px;
+  background: transparent;
+}
+#pdfContent .form-control {
+  border: none !important;
+  border-bottom: 1px solid #999 !important;
+  border-radius: 0;
+  background: transparent;
+  padding-left: 5px;
+}
+
+/* Prescription table */
+.prescriptiontable table {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.prescriptiontable thead {
+  background: #0077b6;
+  color: white;
+  text-align: center;
+}
+.prescriptiontable th, 
+.prescriptiontable td {
+  vertical-align: middle;
+  text-align: center;
+  font-size: 0.95rem;
+}
+.prescriptiontable tbody tr:nth-child(odd) {
+  background: #f9f9f9;
+}
+
+/* Signature section */
+.signtab {
+  margin-top: 30px;
+}
+.signtab .imgstamp img {
+  max-height: 80px;
+  margin: 0 8px;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.signtab label {
+  font-weight: 600;
+  color: #444;
+}
+
     </style>
 </head>
 <body>
@@ -186,7 +291,7 @@ max-height: 300px;
   </a>
 </div>
 
-<span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+<span class="navbar-patient-name ms-4 animate-slide-in" data-bs-toggle="modal" data-bs-target="#profiledetails" style="animation-delay:0.2s;">
         Hello, <strong th:text="${username}"></strong>
       </span>
     </div>
@@ -295,20 +400,20 @@ max-height: 300px;
 								</div>
 								<div class="col-4 ">
 								   <div class="Hosname">
-								        <h1 class="mb-0 p-0 m-0" style="font-size: 5rem;">LOTUS</h1>
-								        <a class="m-0 ps-2 pt-0" style="font-size: 1.5rem;">Multispeciality Clinic</a>
+								        <h1 class="mb-0 p-0 m-0" style="font-size: 4rem;">LOTUS</h1>
+								        <a class="m-0 ps-2 pt-0" style="font-size: 1.3rem;">Multispeciality Clinic</a>
 								   </div>
 								  
 								</div>
 								<div class="col-6 drsection ">
 								   <div class="drsection ms-4">
-								     <h5 class="drnamesect mb-0 row">Dr.Shraddha Dubewar (Kokadwar)</h5>
-								      <a class="drdegree row">MBBS,DNB(Pediatrics),Reg No. : MCI-10/36893</a>
+								     <h5 class="drnamesect mb-0 row" style="font-size: 1.2rem;">Dr.Shraddha Dubewar (Kokadwar)</h5>
+								      <a class="drdegree row" style="font-size: 0.8rem;">MBBS,DNB(Pediatrics),Reg No. : MCI-10/36893</a>
 								   </div>
 								   <div class="drsection mt-2 ms-4 ">
-								    <h5 class="drnamesect mb-0 row">Dr.Ganesh V.Kokadwar</h5>
-								    <a class="drdegree row">MBBS,DGO,FIGE Reg No. : 2006/01/0167</a>
-								    <a class="drdegree row">(Gynacologist & Infertillity Specialist)</a>
+								    <h5 class="drnamesect mb-0 row" style="font-size: 1.2rem;">Dr.Ganesh V.Kokadwar</h5>
+								    <a class="drdegree row" style="font-size: 0.8rem;">MBBS,DGO,FIGE Reg No. : 2006/01/0167</a>
+								    <a class="drdegree row" style="font-size: 0.8rem;">(Gynacologist & Infertillity Specialist)</a>
 								   </div>
 								</div>
 								
@@ -407,6 +512,34 @@ max-height: 300px;
 		</div>
 
 <div id="notification"></div>
+
+
+<!-- profile details model -->
+<div class="modal fade" id="profiledetails" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg" style="border-radius: 15px;">
+      <div class="modal-body p-0">
+        <div class="row g-0">
+          <!-- Left Side -->
+          <div class="col-md-4 bg-primary text-white text-center p-4" style="border-radius: 15px;">
+            <img src="https://via.placeholder.com/120" class="rounded-circle mb-3">
+            <h5 th:text="${userdetails.name}">John Doe</h5>
+            <p class="mb-0" th:text="${userdetails.email}"><i class="fas fa-envelope"></i> john@example.com</p>
+          </div>
+          <!-- Right Side -->
+          <div class="col-md-8 p-4">
+            <h6><i class="fas fa-phone text-primary"></i> Phone</h6>
+            <p th:text="${userdetails.mobileNumber}">+91 9876543210</p>
+            <h6><i class="fas fa-venus-mars text-danger"></i> Gender</h6>
+            <p th:text="${userdetails.gender}">Male</p>
+            <h6><i class="fas fa-map-marker-alt text-success"></i> Address</h6>
+            <p th:text="${userdetails.address}">123 Main St, City</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 	</main>
 	

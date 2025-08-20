@@ -130,7 +130,7 @@
       </ul>
 
       <!-- Patient Name in Navbar -->
-      <span class="navbar-patient-name ms-4 animate-slide-in" style="animation-delay:0.2s;">
+      <span class="navbar-patient-name ms-4 animate-slide-in" data-bs-toggle="modal" data-bs-target="#profiledetails" style="animation-delay:0.2s;">
         Hello, <strong th:text="${PatientName}"></strong>
       </span>
     </div>
@@ -298,6 +298,33 @@
         <button type="button" class="btn btn-outline-secondary btn-3d" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-success btn-3d">Save changes</button>
       </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- user profile model -->
+<div class="modal fade" id="profiledetails" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg" style="border-radius: 15px;">
+      <div class="modal-body p-0">
+        <div class="row g-0">
+          <!-- Left Side -->
+          <div class="col-md-4 bg-primary text-white text-center p-4" style="border-radius: 15px;">
+            <img src="https://via.placeholder.com/120" class="rounded-circle mb-3">
+            <h5 th:text="${userdetails.name}">John Doe</h5>
+            <p class="mb-0" th:text="${userdetails.email}"><i class="fas fa-envelope"></i> john@example.com</p>
+          </div>
+          <!-- Right Side -->
+          <div class="col-md-8 p-4">
+            <h6><i class="fas fa-phone text-primary"></i> Phone</h6>
+            <p th:text="${userdetails.number}">+91 9876543210</p>
+            <h6><i class="fas fa-venus-mars text-danger"></i> Gender</h6>
+            <p th:text="${userdetails.gender}">Male</p>
+            <h6><i class="fas fa-map-marker-alt text-success"></i> Address</h6>
+            <p th:text="${userdetails.address}">123 Main St, City</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

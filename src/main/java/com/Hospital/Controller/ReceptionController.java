@@ -99,6 +99,10 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
 	    	
 	    	int count = all.size();
+	    	Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+	    	
+	    	
+	    	model.addAttribute("userdetails",userdetail);
 	    	
 	    	model.addAttribute("username",userdetails.getName());
 	    	model.addAttribute("all",all);
@@ -110,6 +114,11 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	    	
 	    	List<appointmentform> todayAppointments = appointmentrepository.findTodayAppointments();
 	    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+	    	
+	    	Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+	    	
+	    	
+	    	model.addAttribute("userdetails",userdetail);
 	    	model.addAttribute("username",userdetails.getName());
 	    	model.addAttribute("todayAppointments",todayAppointments);
 	        return "Recption/todyasAppointment"; // Ensure the view name matches your Thymeleaf template location
@@ -120,6 +129,11 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	    	
 	    	List<appointmentform> cancleAppointments = appointmentrepository.findCancleAppointments();
 	    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+	    	
+	    	Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+	    	
+	    	
+	    	model.addAttribute("userdetails",userdetail);
 	    	model.addAttribute("username",userdetails.getName());
 	    	model.addAttribute("cancleAppointments",cancleAppointments);
 	        return "Recption/cancleAppointment"; // Ensure the view name matches your Thymeleaf template location
@@ -130,6 +144,11 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	    	
 	    	List<appointmentform> tommorowAppointments = appointmentrepository.findTomorrowAppointments();
 	    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+	    	
+	    	Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+	    	
+	    	
+	    	model.addAttribute("userdetails",userdetail);
 	    	model.addAttribute("username",userdetails.getName());
 	    	model.addAttribute("tommorowAppointments",tommorowAppointments);
 	        return "Recption/tommorowAppointment"; // Ensure the view name matches your Thymeleaf template location
@@ -140,6 +159,11 @@ int findtotalcount = appointmentrepository.findtotalcount();
 		
         List<appointmentform> todayAppointments = appointmentrepository.findTodayAppointments();
         Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+        
+        Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+    	
+    	
+    	model.addAttribute("userdetails",userdetail);
     	model.addAttribute("username",userdetails.getName());
 		model.addAttribute("todayAppointments",todayAppointments);
 		
@@ -175,6 +199,11 @@ int findtotalcount = appointmentrepository.findtotalcount();
     	 
     	List<tablets> medicineslist = medicinesrepositories.findAll();
     	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+    	
+        Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+    	
+    	
+    	model.addAttribute("userdetails",userdetail);
     	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("medicineslist",medicineslist);
     	return "Recption/medicinesList";
@@ -219,6 +248,10 @@ int findtotalcount = appointmentrepository.findtotalcount();
     @GetMapping("/getInvoice/{name}")
     public String GetBill(@PathVariable("name") String name,Model model,Principal principal) {
     	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+        Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+    	
+    	
+    	model.addAttribute("userdetails",userdetail);
     	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("name",name);
     	return "Recption/GenrateMedicalBill";
@@ -243,7 +276,7 @@ int findtotalcount = appointmentrepository.findtotalcount();
     }
 
     
-    @PostMapping("/addReports")
+    @PostMapping("/addReports/{id}")
     public String addReports(@RequestParam("report") MultipartFile file,@PathVariable("id") int id ) {
     	
     	try {
@@ -265,6 +298,11 @@ int findtotalcount = appointmentrepository.findtotalcount();
     	
        List<Patient> allpatient = patientrepository.findAll();
        Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+       
+       Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+   	
+   	
+   	model.addAttribute("userdetails",userdetail);
    	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("allpatient",allpatient);
     	return "Recption/patientlist";
@@ -407,6 +445,10 @@ System.out.println("heehehhehehheheehh");
 	    Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
     	model.addAttribute("username",userdetails.getName());
 	    
+        Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+    	
+    	
+    	model.addAttribute("userdetails",userdetail);
 	    List<Reports> reports = reportsrepository.findreportsbypatientid(id);
 	    
 	    // Convert byte[] to Base64

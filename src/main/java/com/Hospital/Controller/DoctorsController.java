@@ -1,5 +1,6 @@
 package com.Hospital.Controller;
 
+import java.io.IOException;
 import java.lang.module.ResolutionException;
 import java.security.Principal;
 import java.util.Arrays;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.Hospital.entity.Doctors;
 import com.Hospital.entity.Patient;
@@ -94,6 +96,7 @@ public class DoctorsController {
     	model.addAttribute("DoneAppointmentCount",DoneAppointmentCount);
     	model.addAttribute("OnlinePaymentCount",OnlinePaymentCount);
     	model.addAttribute("username",userdetails.getName());
+    	model.addAttribute("userdetails",userdetails);
         return "Doctors/dashboard"; // Ensure the view name matches your Thymeleaf template location
     }
     
@@ -105,6 +108,7 @@ public class DoctorsController {
     	
     	int count = all.size();
     	
+    	model.addAttribute("userdetails",userdetails);
     	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("all",all);
         return "Doctors/totalappointment"; // Ensure the view name matches your Thymeleaf template location
@@ -115,6 +119,8 @@ public class DoctorsController {
     	
     	List<appointmentform> todayAppointments = appointmentrepository.findTodayAppointments();
     	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+    	
+    	model.addAttribute("userdetails",userdetails);
     	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("todayAppointments",todayAppointments);
         return "Doctors/todyasAppointment"; // Ensure the view name matches your Thymeleaf template location
@@ -125,6 +131,8 @@ public class DoctorsController {
     	
     	List<appointmentform> cancleAppointments = appointmentrepository.findCancleAppointments();
     	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+    	
+    	model.addAttribute("userdetails",userdetails);
     	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("cancleAppointments",cancleAppointments);
         return "Doctors/cancleAppointment"; // Ensure the view name matches your Thymeleaf template location
@@ -135,6 +143,8 @@ public class DoctorsController {
     	
     	List<appointmentform> tommorowAppointments = appointmentrepository.findTomorrowAppointments();
     	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+    	
+    	model.addAttribute("userdetails",userdetails);
     	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("tommorowAppointments",tommorowAppointments);
         return "Doctors/tommorowAppointment"; // Ensure the view name matches your Thymeleaf template location
@@ -171,6 +181,7 @@ public class DoctorsController {
     	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
     	model.addAttribute("username",userdetails.getName());
     	
+    	model.addAttribute("userdetails",userdetails);
     	model.addAttribute("patientname",name);
     	model.addAttribute("patientgender",gender);
     	return"Doctors/prescription";
@@ -189,6 +200,8 @@ public class DoctorsController {
     	 
     	List<tablets> medicineslist = medicinesrepositories.findAll();
     	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+    	
+    	model.addAttribute("userdetails",userdetails);
     	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("medicineslist",medicineslist);
     	return "Doctors/medicinesList";
@@ -255,6 +268,8 @@ public class DoctorsController {
         
         List<Doctors> findemployeebydoctors = doctorsRepositories.findemployeebydoctors(user.getId());
         Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+        
+        model.addAttribute("userdetails",userdetails);
     	model.addAttribute("username",userdetails.getName());
         model.addAttribute("employee",findemployeebydoctors);
         System.out.println(user);
@@ -291,6 +306,8 @@ public class DoctorsController {
     	
     	List<Patient> allpatient = patientrepository.findAll();
     	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+    	
+    	model.addAttribute("userdetails",userdetails);
     	model.addAttribute("username",userdetails.getName());
     	model.addAttribute("allpatient",allpatient);
     	return "Doctors/Patient";
@@ -413,9 +430,27 @@ public class DoctorsController {
 	        .map(report -> Base64.getEncoder().encodeToString(report.getReport())) // Convert byte[] to Base64 String
 	        .collect(Collectors.toList());
 
+	    model.addAttribute("userdetails",userdetails);
 	    model.addAttribute("reports", reportBase64List);
 	   
 	    return "Doctors/Reports"; // Ensure this matches your template filename
 	}
+    
+    @PostMapping("/addReports/{id}")
+    public String addReports(@RequestParam("report") MultipartFile file,@PathVariable("id") int id ) {
+    	
+    	try {
+            Reports report = new Reports();
+            System.out.println("data : " + file.getBytes());
+            report.setReport(file.getBytes());
+            System.out.println("id ;' " + id);// Convert file to byte array
+            report.setPatientid(id);
+            reportsrepository.save(report);  // Save to DB
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    	
+    	return "redirect:/doctors/patient";
+    }
 
 }
