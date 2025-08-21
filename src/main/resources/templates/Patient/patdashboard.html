@@ -139,7 +139,7 @@
 
 
 
-        <div class="p-3 d-flex flex-column flex-grow-1 dashboard-bg m-5" style="border-radius: 15px">
+        <div class="p-3 d-flex flex-column flex-grow-1 dashboard-bg m-3" style="border-radius: 15px">
 
   <!-- Main Dashboard Row -->
   <div class="card flex-grow-1  border-0 bg-transparent">
@@ -165,7 +165,7 @@
             </div>
 
             <!-- Book Appointment -->
-            <div class="action-card" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <div class="action-card" data-bs-toggle="modal" data-bs-target="#exampleModal" th:onclick="[[]]">
                 <img th:src="@{/images/online-appointment.png}" alt="Book Appointment">
                 <h5>Book Appointment</h5>
             </div>
@@ -194,11 +194,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="c, iterStat : ${appointmentist}">
+                    <tr th:each="c, iterStat : ${appointmentlist}" th:if="${appointmentlist != null and !appointmentlist.isEmpty()}">
                         <td th:text="${c.id}">1</td>
                         <td th:text="${c.AppointmentDate}">Mark</td>
                         <td th:text="${c.AppointmentTime}">Otto</td>
                         <td th:text="${c.doctor}">@mdo</td>
+                    </tr>
+                    
+                    <tr th:if="${appointmentlist == null or appointmentlist.isEmpty()}">
+                        <td colspan="4" class="text-danger fw-bold">Appointment not found</td>
                     </tr>
                 </tbody>
             </table>
@@ -233,15 +237,17 @@
           <div class="d-flex gap-3">
             <div class="flex-fill">
               <label class="form-label fw-semibold">Full Name</label>
-              <input type="text" name="name" class="form-control form-control-3d" placeholder="Enter your full name" required>
+              <input type="text" name="name" th:value="${userdetails.name}" class="form-control form-control-3d" placeholder="Enter your full name">
+              <span class="error-msg text-danger small"></span>
             </div>
             <div class="flex-fill">
               <label class="form-label fw-semibold">Gender</label>
-              <select name="gender" class="form-select form-control-3d" required>
-                <option value="">Select Gender</option>
+              <select name="gender" class="form-select form-control-3d">
+                <option  th:value="${userdetails.gender}">Select Gender</option>
                 <option>Male</option>
                 <option>Female</option>
               </select>
+              <span class="error-msg text-danger small"></span>
             </div>
           </div>
 
@@ -249,11 +255,13 @@
           <div class="d-flex gap-3">
             <div class="flex-fill">
               <label class="form-label fw-semibold">Appointment Date</label>
-              <input type="date" name="AppointmentDate" class="form-control form-control-3d" required>
+              <input type="date" name="AppointmentDate" class="form-control form-control-3d" >
+              <span class="error-msg text-danger small"></span>
             </div>
             <div class="flex-fill">
               <label class="form-label fw-semibold">Appointment Time</label>
-              <input type="time" name="AppointmentTime" class="form-control form-control-3d" required>
+              <input type="time" name="AppointmentTime" class="form-control form-control-3d" >
+             <span class="error-msg text-danger small"></span>
             </div>
           </div>
 
@@ -261,28 +269,32 @@
           <div class="d-flex gap-3">
             <div class="flex-fill">
               <label class="form-label fw-semibold">Phone</label>
-              <input type="tel" name="phone" class="form-control form-control-3d" placeholder="Enter your phone number" required>
+              <input type="tel" name="phone" th:value="${userdetails.number}" class="form-control form-control-3d" placeholder="Enter your phone number" >
+              <span class="error-msg text-danger small"></span>
             </div>
             <div class="flex-fill">
               <label class="form-label fw-semibold">Select Doctor</label>
-              <select name="doctor" class="form-select form-control-3d" required>
+              <select name="doctor" class="form-select form-control-3d" >
                 <option value="">Select a Doctor</option>
                 <option>Dr. Ganesh</option>
                 <option>Dr. Shradha</option>
               </select>
+              <span class="error-msg text-danger small"></span>
             </div>
           </div>
 
           <!-- Row 4 -->
           <div>
             <label class="form-label fw-semibold">Email</label>
-            <input type="email" name="email" class="form-control form-control-3d" placeholder="Enter your email" required>
+            <input type="email" name="email" th:value="${userdetails.email}" class="form-control form-control-3d" placeholder="Enter your email" >
+            <span class="error-msg text-danger small"></span>
           </div>
 
           <!-- Row 5 -->
           <div>
             <label class="form-label fw-semibold">Message</label>
             <textarea name="message" class="form-control form-control-3d" rows="3" placeholder="Enter any message"></textarea>
+            <span class="error-msg text-danger small"></span>
           </div>
 
           <!-- Button -->
@@ -331,14 +343,11 @@
 
 
 <script type="text/javascript">
-document.addEventListener("DOMContentLoaded", () => {
-    const rows = document.querySelectorAll("#appointment-body tr");
-    rows.forEach((row, index) => {
-        row.classList.add("stagger-row");
-        row.style.animationDelay = `${index * 0.15}s`; // Delay each row by 0.15s
-    });
-});
+
+
 
 </script>
+
+<script th:src="@{/js/Patient-Dashboard.js}"></script>
 </body>
 </html>

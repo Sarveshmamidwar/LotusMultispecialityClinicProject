@@ -120,80 +120,95 @@ document.addEventListener("DOMContentLoaded", function () {
 
    
    
-   function generatePdf() {
-     // Collect values
-     const name = document.getElementById('patientName').value.trim();
-     const age = document.getElementById('patientAge').value.trim();
-     const dob = document.getElementById('patientDob').value.trim();
-     const gender = document.getElementById('patientGender').value.trim();
-     const weight = document.getElementById('patientWeight').value.trim();
-     const address = document.getElementById('patientAddress').value.trim();
-     const tableRows = document.querySelectorAll('#prescriptionTableBody tr');
+   function generatePdf(reportName = "prescription") {
+       const name = document.getElementById('patientName').value.trim();
+       const age = document.getElementById('patientAge').value.trim();
+       const dob = document.getElementById('patientDob').value.trim();
+       const gender = document.getElementById('patientGender').value.trim();
+       const weight = document.getElementById('patientWeight').value.trim();
+       const address = document.getElementById('patientAddress').value.trim();
+       const tableRows = document.querySelectorAll('#prescriptionTableBody tr');
+       const patientId = document.getElementById("patientId").innerText.trim();
 
-     // Validation
-     if (!name) { showNotification("⚠️ Patient Name is required"); return; }
-     if (!age) { showNotification("⚠️ Age is required"); return; }
-     if (!dob) { showNotification("⚠️ Date of Birth is required"); return; }
-     if (!gender) { showNotification("⚠️ Gender is required"); return; }
-     if (!weight) { showNotification("⚠️ Weight is required"); return; }
-     if (!address) { showNotification("⚠️ Address is required"); return; }
-     if (tableRows.length === 0) { showNotification("⚠️ Add at least one prescription row"); return; }
+       // Validation
+       if (!name) { showNotification("⚠️ Patient Name is required"); return; }
+       if (!age) { showNotification("⚠️ Age is required"); return; }
+       if (!dob) { showNotification("⚠️ Date of Birth is required"); return; }
+       if (!gender) { showNotification("⚠️ Gender is required"); return; }
+       if (!weight) { showNotification("⚠️ Weight is required"); return; }
+       if (!address) { showNotification("⚠️ Address is required"); return; }
+       if (tableRows.length === 0) { showNotification("⚠️ Add at least one prescription row"); return; }
 
-     const element = document.getElementById('pdfContent');
-     const drSection = document.querySelector('.drsection');
-     const precard = document.querySelector('.precard');
+       const element = document.getElementById('pdfContent');
+       const drSection = document.querySelector('.drsection');
+       const precard = document.querySelector('.precard');
 
-     // 🔹 Convert inputs → spans (for PDF only)
-     const inputs = element.querySelectorAll('input, textarea');
-     const originalStates = [];
-     inputs.forEach(input => {
-       const span = document.createElement("span");
-       span.textContent = input.value || input.placeholder || "";
-       //span.style.borderBottom = "1px dotted #999"; // optional styling like underline
-       span.style.padding = "2px 4px";
-       originalStates.push({ input, span });
-       input.replaceWith(span);
-     });
-
-     // Apply styles for PDF
-     drSection.style.fontSize = '0.5rem';
-     precard.style.border = 'none';
-     element.style.width = '100%';
-     element.style.maxWidth = '210mm';
-     element.style.marginTop = '10px';
-
-     const contentHeight = element.scrollHeight;
-     const a4HeightPx = 1122;
-     if (contentHeight < a4HeightPx) {
-       element.style.minHeight = contentHeight + 'px';
-     } else {
-       element.style.minHeight = '297mm';
-     }
-
-     // Generate PDF
-     html2pdf().from(element).set({
-       margin: 0,
-       image: { type: 'jpeg', quality: 0.98 },
-       html2canvas: { scale: 2, scrollY: 0 },
-       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-     }).save('Prescription.pdf')
-     .then(() => {
-       // 🔹 Restore inputs back
-       originalStates.forEach(({ input, span }) => {
-         span.replaceWith(input);
+       // Convert inputs → spans (for PDF only)
+       const inputs = element.querySelectorAll('input, textarea');
+       const originalStates = [];
+       inputs.forEach(input => {
+           const span = document.createElement("span");
+           span.textContent = input.value || input.placeholder || "";
+           span.style.padding = "2px 4px";
+           originalStates.push({ input, span });
+           input.replaceWith(span);
        });
-	   setTimeout(() => {
-	               clearTableData();
-	               window.location.reload();
-	           }, 500);
 
-       // Reset styles
-       element.style.width = '';
-       element.style.maxWidth = '';
-       element.style.minHeight = '';
-       element.style.padding = '';
-     });
+       // PDF styles
+       drSection.style.fontSize = '0.5rem';
+       precard.style.border = 'none';
+       element.style.width = '100%';
+       element.style.maxWidth = '210mm';
+       element.style.marginTop = '10px';
+
+       // Generate PDF
+       html2pdf().from(element).set({
+           margin: 0,
+           image: { type: 'jpeg', quality: 0.98 },
+           html2canvas: { scale: 2, scrollY: 0 },
+           jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+       }).outputPdf('blob')
+       .then((pdfBlob) => {
+           // ✅ Open PDF in new tab for printing
+           const pdfUrl = URL.createObjectURL(pdfBlob);
+           window.open(pdfUrl); // Opens PDF in new tab
+
+           // ✅ Upload PDF to server
+           const pdfFile = new File([pdfBlob], reportName + ".pdf", { type: "application/pdf" });
+           const formData = new FormData();
+           formData.append("report", pdfFile);
+           formData.append("reportName", reportName);
+
+           fetch(`/doctors/addReports/${patientId}`, {
+               method: "POST",
+               body: formData
+           })
+           .then(res => {
+               if (res.ok) {
+                   showNotification(`✅ ${reportName} saved successfully!`);
+               } else {
+                   showNotification("❌ Failed to upload report.");
+               }
+           })
+           .catch(err => {
+               console.error("❌ Upload error:", err);
+               showNotification("❌ Error while uploading report.");
+           })
+           .finally(() => {
+               // Restore inputs
+               originalStates.forEach(({ input, span }) => {
+                   span.replaceWith(input);
+               });
+
+               setTimeout(() => {
+                   clearTableData();
+                   window.location.reload();
+               }, 500);
+           });
+       });
    }
+
+
 
 
    

@@ -303,7 +303,7 @@
         </thead>
         <tbody id="medicinesTableBody">
             <!-- Default rows will be loaded by Thymeleaf -->
-            <tr th:each="c : ${medicineslist}">
+            <tr th:each="c : ${medicineslist}" th:if="${medicineslist != null and !medicineslist.isEmpty()}">
                 <th th:text="${c.id}">1</th>
                 <td th:text="${c.tabletName}">Paracetamol</td>
                 <td th:text="${c.medicineCompanyName}">XYZ Pharma</td>
@@ -318,6 +318,10 @@
                     </div>
                 </td>
             </tr>
+            
+            <tr th:if="${medicineslist == null or medicineslist.isEmpty()}">
+                        <td colspan="5" class="text-danger fw-bold">Appointment not found</td>
+                    </tr>
         </tbody>
     </table>
 </div>
@@ -382,7 +386,7 @@
     	    .then(response => {
     	      if (response.ok) {
     	        // Redirect to the medicines list page after successful deletion
-    	        window.location.href = '/doctors/medicinesLists';
+    	        window.location.href = '/recption/medicinesLists';
     	      } else {
     	        console.error('Delete request failed');
     	      }

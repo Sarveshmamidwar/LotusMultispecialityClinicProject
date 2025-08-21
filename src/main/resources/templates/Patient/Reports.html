@@ -182,6 +182,63 @@
     transform: translateY(0) scale(1);
   }
 }
+/* Responsive improvements */
+
+/* Report cards grid: 4 per row on desktop, 2 on tablet, 1 on mobile */
+@media (max-width: 992px) {
+  .report-card {
+    margin-bottom: 20px;
+  }
+  .pdf-frame {
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pdf-frame {
+    height: 180px;
+  }
+  .report-title {
+    font-size: 13px;
+  }
+  .navbar-patient-name {
+    font-size: 14px;
+    margin-top: 10px;
+    display: block;
+    text-align: right;
+  }
+  .info-navbar .info-list {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .info-navbar .info-item span {
+    font-size: 13px;
+  }
+}
+
+/* Smallest screens (phones) */
+@media (max-width: 576px) {
+  .pdf-frame {
+    height: 150px;
+  }
+  .report-title {
+    font-size: 12px;
+  }
+  .logo {
+    width: 40px;
+    height: auto;
+  }
+  .navbar-patient-name {
+    font-size: 13px;
+  }
+  .modal-dialog {
+    margin: 10px;
+  }
+  .modal-content {
+    border-radius: 10px;
+  }
+}
 
     
     </style>

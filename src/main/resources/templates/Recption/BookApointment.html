@@ -171,7 +171,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr th:each="c : ${todayAppointments}">
+    <tr th:each="c : ${todayAppointments}"  th:if="${todayAppointments != null and !todayAppointments.isEmpty()}">
       <th th:text="${c.id}">1</th>
       <td th:text="${c.name}">Mark</td>
       <td th:text="${c.AppointmentDate}">Otto</td>
@@ -235,6 +235,9 @@
 
 
 						</tr>
+						<tr th:if="${todayAppointments == null or todayAppointments.isEmpty()}">
+                        <td colspan="9" class="text-danger fw-bold">Appointment not found</td>
+                    </tr>
     
   </tbody>
 </table>

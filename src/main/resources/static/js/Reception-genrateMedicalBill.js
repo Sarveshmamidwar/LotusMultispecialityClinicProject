@@ -174,10 +174,12 @@ function generatePDF() {
 	        }
 	    });
 
+		
 	    // After updating stock, clear & reload
 	    setTimeout(() => {
+			document.getElementById("formsubmit").click();
 	        clearTableData();
-	        window.location.reload();
+	       
 	    }, 800);
 	});
 

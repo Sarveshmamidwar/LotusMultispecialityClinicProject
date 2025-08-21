@@ -179,7 +179,7 @@
             </tr>
         </thead>
         <tbody id="patientTableBody">
-            <tr th:each="c : ${allpatient}">
+            <tr th:each="c : ${allpatient}"  th:if="${allpatient != null and !allpatient.isEmpty()}">
                 <td th:text="${c.id}">1</td>
                 <td th:text="${c.name}">Mark</td>
                 <td th:text="${c.email}">mark@mail.com</td>
@@ -210,6 +210,10 @@
 </td>
 
             </tr>
+            
+            <tr th:if="${allpatient == null or allpatient.isEmpty()}">
+                        <td colspan="8" class="text-danger fw-bold">Appointment not found</td>
+                    </tr>
         </tbody>
     </table>
 </div>
@@ -261,24 +265,24 @@
         <form th:action="@{/recption/AddPatient}" method="post">
 
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="Name" id="patientName" placeholder="Full Name" required>
+            <input type="text" class="form-control" name="Name" id="patientName" placeholder="Full Name">
             <label for="patientName">Full Name</label>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" name="email" id="patientEmail" placeholder="Email" required>
+            <input type="email" class="form-control" name="email" id="patientEmail" placeholder="Email" >
             <label for="patientEmail">Email</label>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="number" id="patientNumber" placeholder="Number" required>
+            <input type="text" class="form-control" name="number" id="patientNumber" placeholder="Number" >
             <label for="patientNumber">Number</label>
           </div>
 
           <div class="mb-3 d-flex align-items-center">
             <label class="me-3">Gender</label>
             <div class="btn-group w-100" role="group">
-              <input type="radio" class="btn-check" name="Gender" id="malePatient" value="MALE" autocomplete="off" required>
+              <input type="radio" class="btn-check" name="Gender" id="malePatient" value="MALE" autocomplete="off" >
               <label class="btn btn-outline-primary" for="malePatient">Male</label>
 
               <input type="radio" class="btn-check" name="Gender" id="femalePatient" value="FEMALE" autocomplete="off">
@@ -287,12 +291,12 @@
           </div>
 
           <div class="form-floating mb-3">
-            <input type="date" class="form-control" name="birthdate" id="birthDate" placeholder="Birth Date" required>
+            <input type="date" class="form-control" name="birthdate" id="birthDate" placeholder="Birth Date">
             <label for="birthDate">Birth Date</label>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="address" id="patientAddress" placeholder="Address" required>
+            <input type="text" class="form-control" name="address" id="patientAddress" placeholder="Address" >
             <label for="patientAddress">Address</label>
           </div>
 

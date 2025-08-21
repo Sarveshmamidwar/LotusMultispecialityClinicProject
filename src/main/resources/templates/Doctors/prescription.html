@@ -268,7 +268,7 @@ max-height: 300px;
             <a class="nav-link navtabs" th:href="@{/doctors/dashboard}">Dashboard</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/Prescription/00/00}">Prescription</a>
+            <a class="nav-link navtabs" th:href="@{/doctors/Prescription/00/00/00}">Prescription</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
             <a class="nav-link navtabs" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
@@ -400,7 +400,8 @@ max-height: 300px;
 								</div>
 								<div class="col-4 ">
 								   <div class="Hosname">
-								        <h1 class="mb-0 p-0 m-0" style="font-size: 4rem;">LOTUS</h1>
+								   <h1 th:text="${patientid}" id="patientId" hidden></h1>
+								        <h1 class="mb-0 p-0 m-0" style="font-size: 3.5rem;">LOTUS</h1>
 								        <a class="m-0 ps-2 pt-0" style="font-size: 1.3rem;">Multispeciality Clinic</a>
 								   </div>
 								  

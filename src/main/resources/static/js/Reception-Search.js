@@ -356,3 +356,10 @@ function searchPatient() {
 												            `;
 												        });
 												}
+												
+												function Precreptiondetails(patient) {
+												    // patient is now a JSON object
+												    console.log(patient); 
+												    localStorage.setItem("prescriptionData", JSON.stringify(patient));
+												}
+

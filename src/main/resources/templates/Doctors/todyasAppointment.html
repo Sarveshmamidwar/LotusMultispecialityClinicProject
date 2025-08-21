@@ -85,7 +85,7 @@
             <a class="nav-link navtabs" th:href="@{/doctors/dashboard}">Dashboard</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/Prescription/00/00}">Prescription</a>
+            <a class="nav-link navtabs" th:href="@{/doctors/Prescription/00/00/00}">Prescription</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
             <a class="nav-link navtabs" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
@@ -152,7 +152,7 @@
     </tr>
   </thead>
   <tbody id="apointmentTableBodyDoc">
-    <tr th:each="c : ${todayAppointments}">
+    <tr th:each="c : ${todayAppointments}"  th:if="${todayAppointments != null and !todayAppointments.isEmpty()}">
       <th th:text="${c.id}">1</th>
       <td th:text="${c.name}">Mark</td>
       <td th:text="${c.AppointmentDate}">Otto</td>
@@ -205,11 +205,15 @@
 
 
 						<td style="width: 10%"><button style="background: none;border: none;"  th:onclick="appoIDPrecreption([[${c.name}]],[[${c.gender}]])">
-<a th:href="@{'/doctors/Prescription/'+ ${c.name}+ '/'+ ${c.gender}}"><img class="" alt="" th:src="@{/images/prescription.png}" style="width: 30%"></a></button>
+<a th:href="@{'/doctors/Prescription/'+ ${c.name}+ '/'+ ${c.gender}+'/'+ ${c.id}}"><img class="" alt="" th:src="@{/images/prescription.png}" style="width: 30%"></a></button>
 </td>
 
 
     </tr>
+    
+    <tr th:if="${todayAppointments == null or todayAppointments.isEmpty()}">
+                        <td colspan="6" class="text-danger fw-bold">Appointment not found</td>
+                    </tr>
     
   </tbody>
 </table>

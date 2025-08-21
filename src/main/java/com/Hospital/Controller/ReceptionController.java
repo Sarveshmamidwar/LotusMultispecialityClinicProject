@@ -172,10 +172,18 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	
 	@PostMapping("/BookAppointment")
 	public String postMethodName(@ModelAttribute appointmentform appointmentform) {
-		appointmentform.setAppointmentStatus("Pending");
-		appointmentrepository.save(appointmentform);
-		return "redirect:/recption/listAppointment";
+	    try {
+	        appointmentform.setAppointmentStatus("Pending");
+	        appointmentrepository.save(appointmentform);
+	        return "redirect:/recption/listAppointment";
+	    } catch (Exception e) {
+	        // Log the error
+	        e.printStackTrace();
+	        // Redirect to an error page or fallback
+	        return "redirect:/recption/listAppointment";
+	    }
 	}
+
 	
 	@PostMapping("/update-status")
     public ResponseEntity<?> updateAppointmentStatus(@RequestBody Map<String, String> requestData) {
@@ -209,13 +217,22 @@ int findtotalcount = appointmentrepository.findtotalcount();
     	return "Recption/medicinesList";
     }
     
-    @PostMapping("/addmedicines")
-    public String addmedicines(@ModelAttribute tablets tablets) {
-    	
-    	medicinesrepositories.save(tablets);
-    	
-    	return "redirect:/recption/medicinesLists";
-    }
+	@PostMapping("/addmedicines")
+	public String addmedicines(@ModelAttribute tablets tablets) {
+	    try {
+	        if (tablets == null) {
+	            throw new IllegalArgumentException("Medicine data cannot be null!");
+	        }
+
+	        medicinesrepositories.save(tablets);
+	        return "redirect:/recption/medicinesLists";
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "redirect:/recption/medicinesListsr"; // fallback page
+	    }
+	}
+
     
     @PostMapping("/{id}/editmedicines")
     public String editMedicines(@ModelAttribute tablets updatedTablet, @RequestParam("id") int id) {
@@ -271,6 +288,7 @@ int findtotalcount = appointmentrepository.findtotalcount();
             }
         } catch (Exception e) {
             // Log the exception (optional)
+        	e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating payment status");
         }
     }
@@ -347,7 +365,7 @@ int findtotalcount = appointmentrepository.findtotalcount();
     	
     	medicalBillrepository.save(medicalBills);
     	
-    	return "redirect:/recption/getInvoice";
+    	return "redirect:/recption/getInvoice/" +medicalBills.getPatientName();
     }
     
     @PutMapping("/update-quantity")
@@ -368,7 +386,6 @@ int findtotalcount = appointmentrepository.findtotalcount();
         tablet.setQuantity(newQty);
 
         medicinesrepositories.save(tablet);
-System.out.println("heehehhehehheheehh");
         return ResponseEntity.ok("Stock updated successfully for " + drugName);
     }
     

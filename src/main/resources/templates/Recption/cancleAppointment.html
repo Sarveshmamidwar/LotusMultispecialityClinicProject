@@ -127,7 +127,7 @@
     </tr>
   </thead>
   <tbody  id="CancleapointmentTableBodyDoc">
-    <tr th:each="c : ${cancleAppointments}">
+    <tr th:each="c : ${cancleAppointments}" th:if="${ancleAppointments != null and !ancleAppointments.isEmpty()}">
       <th th:text="${c.id}">1</th>
       <td th:text="${c.name}">Mark</td>
       <td th:text="${c.AppointmentDate}">Otto</td>
@@ -135,6 +135,10 @@
       <td th:text="${c.doctor}">@mdo</td>
       <td th:text="${c.gender}">@mdo</td>
     </tr>
+    
+    <tr th:if="${cancleAppointments == null or cancleAppointments.isEmpty()}">
+                        <td colspan="6" class="text-danger fw-bold">Appointment not found</td>
+                    </tr>
     
   </tbody>
 </table>

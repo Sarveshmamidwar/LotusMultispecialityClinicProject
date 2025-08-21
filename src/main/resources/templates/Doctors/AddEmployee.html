@@ -142,7 +142,7 @@
             <a class="nav-link navtabs" th:href="@{/doctors/dashboard}">Dashboard</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
-            <a class="nav-link navtabs" th:href="@{/doctors/Prescription/00/00}">Prescription</a>
+            <a class="nav-link navtabs" th:href="@{/doctors/Prescription/00/00/00}">Prescription</a>
           </li>
           <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
             <a class="nav-link navtabs" th:href="@{/doctors/todyasAppointment}" onclick="speakAlert()">Appointments</a>
@@ -202,7 +202,7 @@
 
 
 <div class="card-body">
-<table class="table ">
+<table class="table text-center">
   <thead class="table-light">
     <tr>
       <th scope="col">Id</th>
@@ -214,7 +214,7 @@
     </tr>
   </thead>
   <tbody id="employeeTableBodyDoc">
-    <tr th:each="c : ${employee}">
+    <tr th:each="c : ${employee}" th:if="${employee != null and !employee.isEmpty()}">
       <th scope="row" th:text="${c.id}">1</th>
       <td th:text="${c.Name}">Mark</td>
       <td th:text="${c.email}">Mark</td>
@@ -222,6 +222,10 @@
       <td th:text="${c.Gender}">@mdo</td>
       <td th:text="${c.employeetype}">@mdo</td>
     </tr>
+    
+    <tr th:if="${employee == null or employee.isEmpty()}">
+                        <td colspan="6" class="text-danger fw-bold">Appointment not found</td>
+                    </tr>
     
   </tbody>
 </table>

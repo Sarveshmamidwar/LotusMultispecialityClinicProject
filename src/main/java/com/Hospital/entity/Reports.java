@@ -17,6 +17,7 @@ public class Reports {
 	private String Appointmentdate;
 	private int patientid;
 	private int appointmentid;
+	private String reportName;
 	@Lob
 	@Column(columnDefinition = "MEDIUMBLOB")
 	private byte[] report;
@@ -54,19 +55,27 @@ public class Reports {
 	public void setAppointmentid(int appointmentid) {
 		this.appointmentid = appointmentid;
 	}
-	
+
+	public String getReportName() {
+		return reportName;
+	}
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
+	}
 	public Reports() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Reports(int id, String appointmentdate, int patientid, int appointmentid, byte[] report) {
+	public Reports(int id, String appointmentdate, int patientid, int appointmentid, String reportName, byte[] report) {
 		super();
 		this.id = id;
 		Appointmentdate = appointmentdate;
 		this.patientid = patientid;
 		this.appointmentid = appointmentid;
+		this.reportName = reportName;
 		this.report = report;
 	}
+	
 	
 	
 	

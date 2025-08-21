@@ -127,7 +127,7 @@
     </tr>
   </thead>
   <tbody id="AllapointmentTableBodyDoc">
-    <tr th:each="c : ${all}">
+    <tr th:each="c : ${all}" th:if="${all != null and !all.isEmpty()}">
       <th th:text="${c.id}">1</th>
       <td th:text="${c.name}">Mark</td>
       <td th:text="${c.AppointmentDate}">Otto</td>
@@ -135,6 +135,10 @@
       <td th:text="${c.doctor}">@mdo</td>
       <td th:text="${c.gender}">@mdo</td>
     </tr>
+    
+     <tr th:if="${all == null or all.isEmpty()}">
+                        <td colspan="6" class="text-danger fw-bold">Appointment not found</td>
+                    </tr>
     
   </tbody>
 </table>
