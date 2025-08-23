@@ -14,4 +14,9 @@ public interface MedicalBillrepository extends JpaRepository<MedicalBills, Integ
 	
 	@Query(value = "SELECT sum(billing_amount) FROM medical_bills ", nativeQuery = true)
 	int  findTotaRevenue();
+	
+	@Query(value = "SELECT SUM(billing_amount) FROM medical_bills WHERE billing_date = DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d')", nativeQuery = true)
+	Integer getTodayTotalBilling();
+
+
 }

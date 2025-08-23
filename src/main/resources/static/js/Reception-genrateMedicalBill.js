@@ -271,6 +271,12 @@ function validateText() {
 				
 				document.addEventListener("DOMContentLoaded", function () {
 				    let today = new Date();
-				    let formattedDate = today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
+
+				    let year = today.getFullYear();
+				    let month = String(today.getMonth() + 1).padStart(2, "0");
+				    let day = String(today.getDate()).padStart(2, "0");
+
+				    let formattedDate = `${year}-${month}-${day}`; // Format: YYYY-MM-DD
 				    document.getElementById("todate").value = formattedDate;
-				});				
+				});
+		

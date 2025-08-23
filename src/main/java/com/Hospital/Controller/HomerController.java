@@ -103,5 +103,19 @@ public class HomerController {
 		return "Home/Signin";
 	}
 	
+	 @PostMapping("/BookAppointment")
+		public String postMethodName(@ModelAttribute appointmentform appointmentform) {
+		    try {
+		        appointmentform.setAppointmentStatus("Pending");
+		        appointmentrepository.save(appointmentform);
+		        return "redirect:/appointment";
+		    } catch (Exception e) {
+		        // Log the error
+		        e.printStackTrace();
+		        // Redirect to an error page or fallback
+		        return "redirect:/appointment";
+		    }
+		}
+	
 	
 }

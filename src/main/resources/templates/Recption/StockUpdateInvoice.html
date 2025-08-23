@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" th:href="@{/CSS/receptiondashboard.css}">
+<link rel="stylesheet" th:href="@{/CSS/reception-genrateInvoice.css}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+ <style>
+        /* Set the map size */
+        
+ 
+
+    </style>
+</head>
+<body>
+
+
+		<div class="card" style="height: 100vh;border: none;">
+		
+		<nav class="info-navbar">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a class="navbar-brand d-flex align-items-center" href="#" th:href="@{/}">
+      <img th:src="@{/images/logo.jpg}" alt="Logo" class="logo me-2">
+      Lotus Multispeciality Clinic
+    </a>
+    <ul class="info-list mb-0">
+      <li class="info-item">
+        <i class="fa-solid fa-phone-volume"></i>
+        <div>
+          <small>EMERGENCY</small>
+          <span>+91 2345678901</span>
+        </div>
+      </li>
+      <li class="info-item">
+        <i class="fa-regular fa-clock"></i>
+        <div>
+          <small>WORKING HOURS</small>
+          <span>Mon-Sat: 9AM - 9PM</span>
+        </div>
+      </li>
+      <li class="info-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <small>LOCATION</small>
+          <span>123 Lotus Street, City</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Main Navbar -->
+<nav class="navbar navbar-expand-lg main-navbar">
+  <div class="container-fluid justify-content-between align-items-center">
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#receptionNavbar" aria-controls="receptionNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="receptionNavbar">
+      <ul class="navbar-nav gap-3 fw-semibold fs-5">
+        <li class="nav-item animate-slide-in" style="animation-delay:0s;">
+          <a class="nav-link navtabs" th:href="@{/recption/recptionDashboard}">Dashboard</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.1s;">
+          <a class="nav-link navtabs" th:href="@{/recption/listAppointment}">Book Appointments</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.2s;">
+          <a class="nav-link navtabs" th:href="@{/recption/medicinesLists}">Medicines</a>
+        </li>
+        <li class="nav-item animate-slide-in" style="animation-delay:0.3s;">
+          <a class="nav-link navtabs" th:href="@{/recption/patientlist}">Patients</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-none d-lg-block logout-btn">
+  <a class="logout-link" th:href="@{/logout}" title="Logout">
+    <i class="fa-solid fa-power-off"></i> Logout
+  </a>
+</div>
+
+<span class="navbar-patient-name ms-4 animate-slide-in" data-bs-toggle="modal" data-bs-target="#profiledetails" style="animation-delay:0.2s;">
+        Hello, <strong th:text="${username}"></strong>
+      </span>
+  </div>
+</nav>
+
+
+			<div class="card h-100 m-5 main-card" style="border: none;">
+				<div class="row h-100 w-100 p-3">
+				 
+					<div class="col-4 h-100" style="border: 1px solid #D3D3D3;border-radius: 5px">
+					    <div class="card pt-3" style="border: none;">
+					    <div class="row p-2 pb-0">
+					    <h2>Add Stock</h2>
+					    </div>
+					          
+					         <div class=" row mt-1 p-2 d-flex" style=" display:flex; justify-content: center;align-items: center;">
+					            <div class="col ">
+					                <label class="fw-bold text-success">Sr No. :</label>
+					                <input class="w-100" type="text" id="srNo">
+					            </div>
+								<div class="col">
+									  <h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug Type</h6>
+		                              <input type="text" id="prescription"  oninput="validateText()">
+		                              <span id="error-message" style="color: red;"></span>
+								</div>
+
+							</div>
+							<div class="row p-2 ">
+							    <div class="col">
+							   <h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug Name</h6>
+							   <input class="w-100" type="text" id="drugName1">
+							   </div>
+							   <div id="suggestions" class="suggestion-box"></div>
+							</div>
+
+							<div class="row p-2 ">
+								<div class="col w-100">
+									<h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug QTY</h6>
+									 <input class="w-100" type="text" id="qty" oninput="validateNumber('qty', 'error-qty')">
+									 <span id="error-qty" style="color: red; display: none;"></span>
+								</div>
+
+								<div class="col ">
+									<h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug Price</h6>
+									 <input class="w-100" type="text"
+										id="price" oninput="validateNumber('price', 'error-price')">
+										<span id="error-price" style="color: red; display: none;"></span>
+								</div>
+
+								<!-- <div class="col w-100">
+									<label>Total Amount : </label> 
+									<input class="w-100" type="text"
+										id="total">
+								</div> -->
+
+
+							</div>
+
+							<div class="row mt-2 p-2 d-flex">
+							    <div class="d-flex justify-content-center">
+							       <button type="button" class="btn me-2 btn-primary" onclick="addStockMedice()" id="addPrescription">Add</button>
+							       <button type="button" class="btn " onclick="clearStockTableData()" id="clearTable" style="border-color: red"><i class="fa-solid fa-trash" style="color: #fa0000;"></i></button>
+							    </div>
+							</div>
+					    </div>
+					  
+					  <!-- <div class="card mt-3">
+							<div class="row">
+								<div class="col-8">
+								    <input type="text"> 
+								    <i class="fa-solid fa-trash" style="color: #fa0000;"></i>
+								</div>
+								<div class="col-4"></div>
+							</div>
+						</div> -->
+					  
+			
+					  <div class="card mt-2">
+					     <button type="button" style="background-color: #C0EC83;" class="btn" id="generatePdfBtn" onclick="generateStockInvoicePDFs()">Genrate PDF</button>
+					  </div>
+					</div>
+					
+					
+					<div class="col-8 h-100" id="InvoicepdfContent">
+						<div class="card p-3 precard h-100" >
+						  <form th:action="@{/recption/genrateStockInvoice}" id="stockInvoicedata" method="post"> 
+							<div class="row ">
+								<div class="col ms-2">
+								    <h3>Stock INVOICE</h3>
+								</div>
+								<div class="col ">
+								   
+								  
+								</div>
+								<div class="col drsection ">
+								  <div class="">
+								   <div class=" ">
+								       <img th:src="@{/images/logo.jpg}" class="logo prelogo" style="width: 20%;mix-blend-mode: multiply !important; ">
+								   </div>
+								   <div style="display: flex; flex-direction: column;font-size: 1.5rem">
+                                     <a >LOTUS</a>
+                                     <a>PHARMACY</a>
+                                   </div>
+								   </div>
+								</div>
+								
+							</div>
+							<hr style="border: none; border-top: 5px solid black;">
+
+							<div class="p-2">
+							  <!-- <form th:action="@{/doctors/genrateStockInvoice}" id="stockInvoicedata" method="post"> -->
+							   <label style="font-weight: bolder;">Employee Details,</label>
+								<div class="row mt-2">
+									<div class="col-7 d-flex ">
+										<label class="">Staff Name : </label> 
+										<input class="ms-3"  th:value="${userdetails.name}"  type="text" name="EmployeeName" placeholder="Enter Patient Name"
+											style="border: none; width: 70%" id="billname">
+									</div> 
+									<!-- <div class="col-2 d-flex align-items-center">
+										<label class="me-2">Age: </label> <input class="w-100"
+											type="text" placeholder="Enter Age" name="PatientAge" style="border: none;" id="patage">
+									</div> -->
+									
+									<input type="text" id="StockFullAmount"name="stockAmount" hidden>
+									<input type="text" id="employeeid"name="employeeid" th:value="${userdetails.id}" hidden>
+									
+									<div class="col-3 d-flex align-items-center">
+										<label class="me-2">Date:</label> <input class="w-100"
+											type="text" placeholder="Enter Date"
+											style="border: none; flex: 1;" name="StockUpdateDate" id="todate">
+									</div>
+
+								</div>
+
+								<!-- <div class="row mt-3 d-flex align-items-center">
+									<label class="col-auto">Address :</label>
+									<div class="col">
+										<input type="text" class="form-control" id="pataddress"
+											placeholder="Enter Address" name="PatientAddress" style="border: none;">
+									</div>
+								</div> -->
+								
+								<!-- </form> -->
+							</div>
+							
+							<hr style="border: none; border-top: 2px solid black;">
+
+							<div class="scrollspy-example prescriptiontable h-100" >
+								<table class="table ">
+									<thead class="" style="border-radius: 5px;">
+										<tr>
+											<th scope="col">Sr No.</th>
+											<th scope="col">Prescription</th>
+											<th scope="col">Drug Name</th>
+											<th scope="col">Qty</th>
+											<th scope="col">Price</th>
+											<th scope="col">Total Amount</th>
+											
+										</tr>
+									</thead>
+									<tbody id="InvoiceprescriptionTableBody" >
+										
+									</tbody>
+								</table>								
+								
+								<div class="totalamounttab w-100 ">
+							    <div class="row w-100 mt-5">
+							        <div class="col-8 text-end">
+							             <h5>Total Amount</h5>
+							        </div>
+							        <div class="col-4 text-center ">
+							            <div class="">
+							               <input id=totalAmount name="BillingAmount" class="p-0 m-0 w-100" style="border: none;font-size: 1.4rem;font-weight: bold;text-align: center;">
+							            </div>							             
+							        </div>
+							    </div>
+							
+							</div>
+							
+							<div class=" signtab m-2 mb-3">
+
+								<div class="row w-100" >
+									<div class="col-8"></div>
+									<div class="col-4" style="text-align: center; ">
+									   <div class="" style="display: flex;justify-content: center;" >
+									      <div class="imgstamp img-fluid "> 
+									          <img th:src="@{/images/stamp.jpg}"  class="img-fluid">
+ 									      </div>
+									      <div class="imgstamp">
+									          <img th:src="@{/images/Samantha_Signature.jpg}"  class="img-fluid">
+									      </div>
+									   
+									   </div>
+									   <label class="mt-2">Signature</label>
+									</div>
+								</div>
+							</div>
+							</div>
+							
+							<button type="submit" id="formsubmit" hidden=""></button>
+							</form> 
+						</div>
+  
+					</div>
+			
+				</div>
+			</div>
+			
+			<div id="errorNotify" class="notification">
+  <button class="close-btn" onclick="closeNotification()">✖</button>
+  <h4>❌ Validation Error</h4>
+  <p id="errorMessage"></p>
+</div>
+			
+
+		</div>
+
+	<div class="modal fade" id="profiledetails" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg" style="border-radius: 15px;">
+      <div class="modal-body p-0">
+        <div class="row g-0">
+          <!-- Left Side -->
+          <div class="col-md-4 bg-primary text-white text-center p-4" style="border-radius: 15px;">
+            <img src="https://via.placeholder.com/120" class="rounded-circle mb-3">
+            <h5 th:text="${userdetails.name}">John Doe</h5>
+            <p class="mb-0" th:text="${userdetails.email}"><i class="fas fa-envelope"></i> john@example.com</p>
+          </div>
+          <!-- Right Side -->
+          <div class="col-md-8 p-4">
+            <h6><i class="fas fa-phone text-primary"></i> Phone</h6>
+            <p th:text="${userdetails.mobileNumber}">+91 9876543210</p>
+            <h6><i class="fas fa-venus-mars text-danger"></i> Gender</h6>
+            <p th:text="${userdetails.gender}">Male</p>
+            <h6><i class="fas fa-map-marker-alt text-success"></i> Address</h6>
+            <p th:text="${userdetails.address}">123 Main St, City</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/js/StockUpdateInvoice.js}"></script>
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#drugName1").on("input", function () {
+        let searchTerm = $(this).val().trim();
+        let suggestionsDiv = $("#suggestions");
+
+        if (searchTerm.length > 0) {
+            $.ajax({
+                url: "/recption/search-tablets",
+                type: "GET",
+                data: { term: searchTerm },
+                success: function (response) {
+                    console.log("Response Data:", response); // Debugging
+                    suggestionsDiv.empty(); // Clear previous suggestions
+
+                    if (response.length > 0) {
+                        let list = $("<div></div>");
+                        response.forEach(function (tablet) {
+                            let itemContent = `
+                                <div class="icon">💊</div>
+                                <div>
+                                    <strong>${tablet.tabletName}</strong>
+                                    <small>ID: ${tablet.id || 'N/A'} | Price: ${tablet.price || '0'}</small>
+                                </div>
+                            `;
+                            let item = $("<div class='suggestion-item'></div>")
+                                .html(itemContent)
+                                .on("click", function () {
+                                    // Fill drug name
+                                    $("#drugName1").val(tablet.tabletName);
+                                    // Fill price
+                                    $("#price").val(tablet.price || 0);
+                                    // Hide suggestions
+                                    suggestionsDiv.empty().hide();
+                                });
+                            list.append(item);
+                        });
+
+                        suggestionsDiv.html(list).show();
+                    } else {
+                        suggestionsDiv.hide();
+                    }
+                }
+            });
+        } else {
+            suggestionsDiv.empty().hide();
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+</body>
+
+</html>

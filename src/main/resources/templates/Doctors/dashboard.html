@@ -102,6 +102,9 @@
           <li class="nav-item animate-slide-in" style="animation-delay:0.5s;">
             <a class="nav-link navtabs" th:href="@{/doctors/patient}">Patient</a>
           </li>
+          <li class="nav-item animate-slide-in" style="animation-delay:0.5s;">
+            <a class="nav-link navtabs" th:href="@{/doctors/getstockinovicce}">Stock</a>
+          </li>
         </ul>
       </div>
 
@@ -152,8 +155,8 @@
     <div class="col-md-6">
       <div class="stats-grid">
         <div class="card-glass text-center">
-          <h1 class="count" th:text="${DoneAppointmentCount}">2</h1>
-          <p>Today's Patient Count</p>
+          <h1 class="count" th:text="${todayFee}">2</h1>
+          <p>Today's Patient Fee</p>
         </div>
         <div class="card-glass text-center">
           <h1 class="count" >3</h1>

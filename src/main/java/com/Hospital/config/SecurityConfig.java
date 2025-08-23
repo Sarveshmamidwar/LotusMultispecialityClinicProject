@@ -31,7 +31,9 @@ public class SecurityConfig {
                 .requestMatchers("/patient/**").hasAnyRole("PATIENT")
                 .requestMatchers("/voice/**").permitAll() 
                 .requestMatchers("/h2-console/**").permitAll() 
-                .requestMatchers("/", "/about", "/ouserService","/ouserDoctors","/contacts","/appointment","/signUp","/getsignUp","/getsignin","/bookAppointment","/CSS/**", "/js/**","/images/**","/voice/**","/h2-console/**").permitAll()
+                .requestMatchers("/", "/about", "/ouserService","/ouserDoctors","/contacts","/appointment",
+                		"/signUp","/getsignUp","/getsignin","/bookAppointment","/CSS/**", "/js/**","/images/**",
+                		"/voice/**","/h2-console/**","/BookAppointment").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

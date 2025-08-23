@@ -30,10 +30,12 @@ import com.Hospital.entity.Doctors;
 import com.Hospital.entity.MedicalBills;
 import com.Hospital.entity.Patient;
 import com.Hospital.entity.Reports;
+import com.Hospital.entity.StockInvoice;
 import com.Hospital.entity.appointmentform;
 import com.Hospital.entity.tablets;
 import com.Hospital.repositories.DoctorsRepositories;
 import com.Hospital.repositories.MedicalBillrepository;
+import com.Hospital.repositories.MedicalStockInvoiceRepository;
 import com.Hospital.repositories.appointmentrepository;
 import com.Hospital.repositories.patientrepository;
 import com.Hospital.repositories.reportsrepository;
@@ -64,6 +66,9 @@ public class ReceptionController {
 	
 	@Autowired
 	private MedicalBillrepository medicalBillrepository;
+	
+	@Autowired
+	private MedicalStockInvoiceRepository medicalStockInvoiceRepository;
 	
 	@GetMapping("/recptionDashboard")
 	public String recptionDashboard(Model model,Principal principal) {
@@ -171,9 +176,11 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	}
 	
 	@PostMapping("/BookAppointment")
-	public String postMethodName(@ModelAttribute appointmentform appointmentform) {
+	public String postMethodName(@ModelAttribute appointmentform appointmentform,@RequestParam(value = "patientId", required = false, defaultValue = "0") int patientId) {
 	    try {
 	        appointmentform.setAppointmentStatus("Pending");
+	        appointmentform.setPaymentStatus("Pending");
+	        appointmentform.setPatientid(patientId);
 	        appointmentrepository.save(appointmentform);
 	        return "redirect:/recption/listAppointment";
 	    } catch (Exception e) {
@@ -389,6 +396,22 @@ int findtotalcount = appointmentrepository.findtotalcount();
         return ResponseEntity.ok("Stock updated successfully for " + drugName);
     }
     
+    @PutMapping("/increase-quantity")
+    public ResponseEntity<?> increaseQuantity(
+            @RequestParam String drugName, 
+            @RequestParam int qty) {
+        tablets tablet = medicinesrepositories.findByTabletName(drugName);
+        if (tablet == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tablet not found");
+        }
+
+        int newQty = tablet.getQuantity() + qty; // ✅ increase instead of reduce
+        tablet.setQuantity(newQty);
+
+        medicinesrepositories.save(tablet);
+        return ResponseEntity.ok("Stock increased successfully for " + drugName);
+    }
+    
     @GetMapping("/searchPatient")
     @ResponseBody
     public ResponseEntity<?> searchepatients(@RequestParam String name){
@@ -477,5 +500,26 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	   
 	    return "Recption/Reports"; // Ensure this matches your template filename
 	}
+    
+    @GetMapping("/getStockInvoice")
+    public String getStockInvoice(Model model, Principal principal) {
+    	Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+    	
+    	model.addAttribute("userdetails",userdetail);
+    	return "Recption/StockUpdateInvoice";
+    }
+    
+    @PostMapping("/genrateStockInvoice")
+    public String genrateStockInvoice(@ModelAttribute StockInvoice stockInvoicedata,
+                                      @RequestParam("file") MultipartFile file) {
+        try {
+            stockInvoicedata.setReport(file.getBytes()); // assuming report is byte[] in entity
+            medicalStockInvoiceRepository.save(stockInvoicedata);
+            return "redirect:/recption/getStockInvoice";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/recption/getStockInvoice";
+        }
+    }
 
 }

@@ -65,5 +65,9 @@ public interface appointmentrepository  extends JpaRepository<appointmentform, I
 	
 	@Query(value = "SELECT * FROM appointmentform WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')) AND appointment_date = CURRENT_DATE + INTERVAL 1 DAY", nativeQuery = true)
 	List<appointmentform> findTommAppointmentsByNaame(@Param("name") String name);
+	
+	@Query(value = "SELECT SUM(fees) FROM appointmentform WHERE appointment_date = CURRENT_DATE", nativeQuery = true)
+	Integer findTodayTotalFee();
+
 
 }

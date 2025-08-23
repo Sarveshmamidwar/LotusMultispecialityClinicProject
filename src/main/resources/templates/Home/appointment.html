@@ -95,15 +95,17 @@
           <a class="nav-link navtabs" href="#" th:href="@{/appointment}">Appointment</a>
         </li>
       </ul>
-    </div>
+      
+          </div>
 
-    <div class="d-none d-lg-block">
+<div class="d-none d-lg-block">
       <a th:href="@{/getsignUp}">
         <button type="button" class="btn signup-btn">
           Sign Up
         </button>
       </a>
     </div>
+    
   </div>
 </nav>
 
@@ -148,7 +150,7 @@
       <!-- Back -->
       <div class="appointment-back">
         <h3 class="text-center mb-4">Appointment Form</h3>
-        <form id="appointmentForm">
+        <form th:action="@{/BookAppointment}"  method="post" id="appointmentForm">
           <div class="row g-3">
             <div class="col-md-6">
               <input type="text" name="name" class="form-control" placeholder="Full Name" required>

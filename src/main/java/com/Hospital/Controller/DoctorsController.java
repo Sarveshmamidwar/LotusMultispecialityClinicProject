@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,14 +30,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Hospital.entity.Doctors;
+import com.Hospital.entity.MedicalBills;
 import com.Hospital.entity.Patient;
 import com.Hospital.entity.Reports;
+import com.Hospital.entity.StockInvoice;
 import com.Hospital.entity.appointmentform;
 import com.Hospital.entity.staff;
 import com.Hospital.entity.tablets;
 import com.Hospital.repositories.DoctorsRepositories;
 import com.Hospital.repositories.HositalStaffrepository;
 import com.Hospital.repositories.MedicalBillrepository;
+import com.Hospital.repositories.MedicalStockInvoiceRepository;
 import com.Hospital.repositories.appointmentrepository;
 import com.Hospital.repositories.patientrepository;
 import com.Hospital.repositories.reportsrepository;
@@ -70,6 +74,12 @@ public class DoctorsController {
 	
 	@Autowired
 	private reportsrepository reportsrepository;
+	
+	@Autowired
+	private MedicalStockInvoiceRepository medicalStockInvoiceRepository;
+	
+	@Autowired
+	private MedicalStockInvoiceRepository stockInvoiceRepository;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model,Principal principal) {
@@ -81,9 +91,11 @@ public class DoctorsController {
     	int rutineApointmentCount = appointmentrepository.findRutineAppointmentsCount();
     	int DoneAppointmentCount = appointmentrepository.findDoneAppointmentsCount();
     	int OnlinePaymentCount = appointmentrepository.findOnlinePaymentCount();
-    	int totaRevenue = medicalBillrepository.findTotaRevenue();
+    	Integer totaRevenue = medicalBillrepository.getTodayTotalBilling();
+    	Integer todayTotalFee = appointmentrepository.findTodayTotalFee();
     	
-    	model.addAttribute("totalrevenue",totaRevenue);
+    	model.addAttribute("todayFee", todayTotalFee == null ? 0 : todayTotalFee);
+    	model.addAttribute("totalrevenue",totaRevenue == null ? 0 : totaRevenue);
     	model.addAttribute("totalCount",findtotalcount);
     	model.addAttribute("todayAppointmentsCount",todayAppointmentsCount);
     	model.addAttribute("cancleAppointmentsCount",cancleAppointmentsCount);
@@ -497,7 +509,136 @@ public class DoctorsController {
 
         return "redirect:/doctors/patient";
     }
+    
+    @PostMapping("/BookAppointment")
+	public String postMethodName(@ModelAttribute appointmentform appointmentform,@RequestParam(value = "patientId", required = false, defaultValue = "0") int patientId) {
+	    try {
+	        appointmentform.setAppointmentStatus("Pending");
+            appointmentform.setPaymentStatus("Pending");
+	        appointmentform.setPatientid(patientId);
+	        appointmentrepository.save(appointmentform);
+	        return "redirect:/doctors/todyasAppointment";
+	    } catch (Exception e) {
+	        // Log the error
+	        e.printStackTrace();
+	        // Redirect to an error page or fallback
+	        return "redirect:/doctors/todyasAppointment";
+	    }
+	}
+    
+    @GetMapping("/getInvoice/{id}")
+    public String GetBill(@PathVariable("id") int id,Model model,Principal principal) {
+    	Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+        Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+        
+       Patient patientdetails = patientrepository.findByid(id);
+    	
+    	
+    	model.addAttribute("userdetails",userdetail);
+    	model.addAttribute("username",userdetails.getName());
+    	model.addAttribute("patientdetails",patientdetails);
+    	return "Doctors/GenrateMedicalBill";
+    }
+    
+    @PutMapping("/update-quantity")
+    public ResponseEntity<?> updateQuantity(
+            @RequestParam String drugName, 
+            @RequestParam int qty) {
 
+        tablets tablet = medicinesrepositories.findByTabletName(drugName);
 
+        if (tablet == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                 .body("Tablet not found");
+        }
 
+        // Reduce stock
+        int newQty = tablet.getQuantity() - qty;
+        if (newQty < 0) newQty = 0; // prevent negative stock
+        tablet.setQuantity(newQty);
+
+        medicinesrepositories.save(tablet);
+        return ResponseEntity.ok("Stock updated successfully for " + drugName);
+    }
+    
+    @PutMapping("/increase-quantity")
+    public ResponseEntity<?> increaseQuantity(
+            @RequestParam String drugName, 
+            @RequestParam int qty) {
+        tablets tablet = medicinesrepositories.findByTabletName(drugName);
+        if (tablet == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tablet not found");
+        }
+
+        int newQty = tablet.getQuantity() + qty; // ✅ increase instead of reduce
+        tablet.setQuantity(newQty);
+
+        medicinesrepositories.save(tablet);
+        return ResponseEntity.ok("Stock increased successfully for " + drugName);
+    }
+
+    
+    @PostMapping("/addbill")
+    public String Genratemedicalbill(@ModelAttribute MedicalBills medicalBills) {
+    	
+    	
+    	medicalBillrepository.save(medicalBills);
+    	
+    	return "redirect:/doctors/patient";
+    }
+
+    @GetMapping("/getStockInvoice")
+    public String getStockInvoice(Model model, Principal principal) {
+    	Doctors userdetail = doctorsRepositories.findByEmail(principal.getName());
+    	
+    	model.addAttribute("userdetails",userdetail);
+    	return "Doctors/StockUpdateInvoice";
+    }
+    
+    @PostMapping("/genrateStockInvoice")
+    public String genrateStockInvoice(@ModelAttribute StockInvoice stockInvoicedata,
+                                      @RequestParam("file") MultipartFile file) {
+        try {
+            stockInvoicedata.setReport(file.getBytes()); // assuming report is byte[] in entity
+            medicalStockInvoiceRepository.save(stockInvoicedata);
+            return "redirect:/doctors/getStockInvoice";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/doctors/getStockInvoice";
+        }
+    }
+    
+    @GetMapping("/getstockinovicce")
+	public String GetReports(Model model, Principal principal) {
+	    try {
+	        if (principal == null || principal.getName() == null) {
+	            model.addAttribute("errorMessage", "User is not logged in.");
+	            return "error"; 
+	        }
+	        Doctors userdetails = doctorsRepositories.findByEmail(principal.getName());
+	       
+	        List<StockInvoice> reports = stockInvoiceRepository.findAll();
+	        if (reports == null || reports.isEmpty()) {
+	            model.addAttribute("message", "No reports found.");
+	            model.addAttribute("userdetails", userdetails);
+	            //model.addAttribute("PatientName", patient.getName());
+	            return "Doctors/AllStockInvoice"; 
+	        }
+	        List<String> reportBase64List = reports.stream()
+	            .map(report -> Base64.getEncoder().encodeToString(report.getReport()))
+	            .collect(Collectors.toList());
+
+	        model.addAttribute("userdetails", userdetails);
+	        model.addAttribute("reports", reportBase64List);
+	        model.addAttribute("PatientName", userdetails);
+	        return "Doctors/AllStockInvoice";
+
+	    } catch (Exception e) {
+	        e.printStackTrace(); 
+	        model.addAttribute("errorMessage", "Something went wrong while fetching reports.");
+	        return "Doctors/AllStockInvoice"; 
+	    }
+	}
+
+   
 }

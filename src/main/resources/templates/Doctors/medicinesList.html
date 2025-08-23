@@ -101,6 +101,9 @@
           <li class="nav-item animate-slide-in" style="animation-delay:0.5s;">
             <a class="nav-link navtabs" th:href="@{/doctors/patient}">Patient</a>
           </li>
+          <li class="nav-item animate-slide-in" style="animation-delay:0.5s;">
+            <a class="nav-link navtabs" th:href="@{/doctors/getstockinovicce}">Stock</a>
+          </li>
         </ul>
       </div>
 
@@ -261,6 +264,8 @@
     <!-- Add Patient Button (absolute right) -->
     <div class="position-absolute end-0 me-5">
  <button class="p-2 btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Medicines</button>
+ 
+ <a th:href="@{/doctors/getStockInvoice}"><button class="p-2 btn btn-secondary" >Stock Invoice</button></a>
     </div>
 </div>
 		   
@@ -275,6 +280,7 @@
       <th scope="col"> Company Name</th>
       <th scope="col">Medicine Name</th>
       <th scope="col">Medicine Type</th>
+      <th scope="col">Quantity</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -284,6 +290,7 @@
       <td th:text="${c.tabletName}">Mark</td>
       <td th:text="${c.medicineCompanyName}">Otto</td>
       <td th:text="${c.medecineType}">@mdo</td>
+      <td th:text="${c.quantity}">@mdo</td>
       <td >
          <div style="width: 100px; display: flex;justify-content:space-around;align-items: center;">
                 <img alt="Edit" th:src="@{/images/edit.png}" width="15%" 
