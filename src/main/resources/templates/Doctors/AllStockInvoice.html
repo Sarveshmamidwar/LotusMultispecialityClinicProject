@@ -309,7 +309,10 @@
           <li class="nav-item animate-slide-in" style="animation-delay:0.4s;">
             <a class="nav-link navtabs" th:href="@{/doctors/GetAddEmployee}">Staff</a>
           </li>
-          <li class="nav-item animate-slide-in" style="animation-delay:0.4s;">
+          <li class="nav-item animate-slide-in" style="animation-delay:0.5s;">
+            <a class="nav-link navtabs" th:href="@{/doctors/patient}">Patient</a>
+          </li>
+          <li class="nav-item animate-slide-in" style="animation-delay:0.5s;">
             <a class="nav-link navtabs" th:href="@{/doctors/getstockinovicce}">Stock</a>
           </li>
         </ul>
@@ -322,7 +325,7 @@
 </div>
 
 <span class="navbar-patient-name ms-4 animate-slide-in" data-bs-toggle="modal" data-bs-target="#profiledetails" style="animation-delay:0.2s;">
-        Hello, <strong th:text="${userdetails.name}"></strong>
+        Hello, <strong th:text="${username}"></strong>
       </span>
     </div>
   </nav>

@@ -91,7 +91,24 @@
   font-size: 0.8rem;
   transition: all 0.3s ease;
 }
-       
+.input-error {
+    border: 2px solid red !important;
+}
+#notification {
+  position: fixed;
+  top: 20px;
+  left: -350px; /* hidden initially */
+  background: #f44336; /* red for error */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: left 0.5s ease-in-out;
+  z-index: 9999;
+}
+
+   
     </style>
 </head>
 <body>
@@ -252,31 +269,31 @@
         <form id="employeeForm" th:action="@{/doctors/Addemployee}" method="post">
           
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="Name" placeholder="Full Name" id="name" required>
+            <input type="text" class="form-control" name="Name" placeholder="Full Name" id="name" >
             <label for="name">Full Name</label>
             <small class="text-danger d-none" id="nameError">Please enter a valid name (letters only).</small>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" name="email" placeholder="Email" id="email" required>
+            <input type="email" class="form-control" name="email" placeholder="Email" id="email" >
             <label for="email">Email</label>
             <small class="text-danger d-none" id="emailError">Please enter a valid email.</small>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="password" class="form-control" name="Password" placeholder="Password" id="password" required>
+            <input type="password" class="form-control" name="Password" placeholder="Password" id="password" >
             <label for="password">Password</label>
             <small class="text-danger d-none" id="passwordError">Password is required.</small>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="mobileNumber" placeholder="Mobile Number" id="mobileNumber" required>
+            <input type="text" class="form-control" name="mobileNumber" placeholder="Mobile Number" id="mobileNumber" >
             <label for="mobileNumber">Mobile Number</label>
             <small class="text-danger d-none" id="mobileError">Please enter a valid mobile number.</small>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="address" placeholder="Address" id="address" required>
+            <input type="text" class="form-control" name="address" placeholder="Address" id="address" >
             <label for="address">Address</label>
             <small class="text-danger d-none" id="addressError">Please enter a valid address.</small>
           </div>
@@ -284,18 +301,19 @@
           <div class="mb-3 d-flex align-items-center">
             <label class="me-3">Gender </label>
             <div class="btn-group w-100" role="group">
-              <input type="radio" class="btn-check" name="Gender" id="male" value="MALE" autocomplete="off" required>
+              <input type="radio" class="btn-check" name="Gender" id="male" value="MALE" autocomplete="off" >
               <label class="btn btn-outline-primary" for="male">Male</label>
 
               <input type="radio" class="btn-check" name="Gender" id="female" value="FEMALE" autocomplete="off">
               <label class="btn btn-outline-primary" for="female">Female</label>
             </div>
-            <small class="text-danger d-none" id="genderError">Please select a gender.</small>
+            
           </div>
+          <small class="text-danger d-none m-0" id="genderError">Please select a gender.</small>
 
           <div class="mt-4 d-flex justify-content-end gap-2">
             <button type="button" class="btn btn-secondary btn-hover" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary btn-hover btn-submit">Submit</button>
+            <button type="button" class="btn btn-primary btn-hover btn-submit" onclick="addEmployee(event)">Submit</button>
           </div>
 
         </form>
@@ -330,85 +348,13 @@
     </div>
   </div>
 </div>
-
+<div id="notification"></div>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Get input elements
-    const nameInput = document.getElementById("name");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const mobileInput = document.getElementById("mobileNumber");
-    const addressInput = document.getElementById("address");
-    const genderMale = document.getElementById("male");
-    const genderFemale = document.getElementById("female");
-
-    // Error message elements
-    const nameError = document.getElementById("nameError");
-    const emailError = document.getElementById("emailError");
-    const passwordError = document.getElementById("passwordError");
-    const mobileError = document.getElementById("mobileError");
-    const addressError = document.getElementById("addressError");
-    const genderError = document.getElementById("genderError");
-
-    // Validation patterns
-    const namePattern = /^[A-Za-z\s]+$/;
-    const mobilePattern = /^[0-9]+$/;
-    const addressPattern = /^[A-Za-z0-9\s,.-]+$/;
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    
-    // Function to validate input fields
-    function validateInput(inputElement, errorElement, pattern) {
-      if (!pattern.test(inputElement.value.trim())) {
-        errorElement.classList.remove("d-none");
-      } else {
-        errorElement.classList.add("d-none");
-      }
-    }
-
-    // Add event listeners for real-time validation
-    nameInput.addEventListener("input", function () {
-      validateInput(nameInput, nameError, namePattern);
-    });
-
-    emailInput.addEventListener("input", function () {
-    	  if (!emailPattern.test(emailInput.value.trim())) {
-    	    emailError.classList.remove("d-none");
-    	  } else {
-    	    emailError.classList.add("d-none");
-    	  }
-    	  toggleSubmitButton();
-    	});
-    
-
-    passwordInput.addEventListener("input", function () {
-      if (passwordInput.value.trim() === "") {
-        passwordError.classList.remove("d-none");
-      } else {
-        passwordError.classList.add("d-none");
-      }
-    });
-
-    mobileInput.addEventListener("input", function () {
-      validateInput(mobileInput, mobileError, mobilePattern);
-    });
-
-    addressInput.addEventListener("input", function () {
-      validateInput(addressInput, addressError, addressPattern);
-    });
-
-    // Gender validation
-    document.getElementById("employeeForm").addEventListener("submit", function (event) {
-      if (!genderMale.checked && !genderFemale.checked) {
-        genderError.classList.remove("d-none");
-        event.preventDefault();
-      } else {
-        genderError.classList.add("d-none");
-      }
-    });
-  });
+ 
 </script>
 
 <script th:src="@{/js/Reception-Search.js}"></script>
+<script th:src="@{/js/Doctor-AddStaff.js}"></script>
 
 </main>
 

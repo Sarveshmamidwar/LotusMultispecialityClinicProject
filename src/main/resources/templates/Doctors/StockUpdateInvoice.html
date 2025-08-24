@@ -117,11 +117,12 @@
 					         <div class=" row mt-1 p-2 d-flex" style=" display:flex; justify-content: center;align-items: center;">
 					            <div class="col ">
 					                <label class="fw-bold text-success">Sr No. :</label>
-					                <input class="w-100" type="text" id="srNo">
+					                <input class="w-100" type="text" id="srNo" oninput="validateSrNo()">
+					                <small id="srNoError" class="text-danger"></small>
 					            </div>
 								<div class="col">
 									  <h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug Type</h6>
-		                              <input type="text" id="prescription"  oninput="validateText()">
+		                              <input type="text" id="prescription"  oninput="validateDrugType('prescription','error-message')">
 		                              <span id="error-message" style="color: red;"></span>
 								</div>
 
@@ -129,7 +130,7 @@
 							<div class="row p-2 ">
 							    <div class="col">
 							   <h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug Name</h6>
-							   <input class="w-100" type="text" id="drugName1">
+							   <input class="w-100" type="text" id="drugName1" >
 							   </div>
 							   <div id="suggestions" class="suggestion-box"></div>
 							</div>
@@ -137,15 +138,15 @@
 							<div class="row p-2 ">
 								<div class="col w-100">
 									<h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug QTY</h6>
-									 <input class="w-100" type="text" id="qty" oninput="validateNumber('qty', 'error-qty')">
-									 <span id="error-qty" style="color: red; display: none;"></span>
+									 <input class="w-100" type="text" id="qty" oninput="validateNumber('qty','error-qty')">
+									 <span id="error-qty" style="color: red; "></span>
 								</div>
 
 								<div class="col ">
 									<h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug Price</h6>
 									 <input class="w-100" type="text"
-										id="price" oninput="validateNumber('price', 'error-price')">
-										<span id="error-price" style="color: red; display: none;"></span>
+										id="price" oninput="validateNumber('price','error-price')">
+										<span id="error-price" style="color: red; "></span>
 								</div>
 
 								<!-- <div class="col w-100">
@@ -159,7 +160,7 @@
 
 							<div class="row mt-2 p-2 d-flex">
 							    <div class="d-flex justify-content-center">
-							       <button type="button" class="btn me-2 btn-primary" onclick="addStockMedice()" id="addPrescription">Add</button>
+							       <button type="button" class="btn me-2 btn-primary" onclick="addStockMedice();addPrescription();" id="addPrescription">Add</button>
 							       <button type="button" class="btn " onclick="clearStockTableData()" id="clearTable" style="border-color: red"><i class="fa-solid fa-trash" style="color: #fa0000;"></i></button>
 							    </div>
 							</div>
@@ -401,7 +402,62 @@ $(document).ready(function () {
     });
 });
 
+function addPrescription() {
+    // Get input values
+    let srNo = document.getElementById("srNo").value.trim();
+    let prescription = document.getElementById("prescription").value.trim();
+    let drugName = document.getElementById("drugName1").value.trim();
+    let schedule = document.getElementById("schedule").value.trim();
+    let duration = document.getElementById("duration").value.trim();
+    let qty = document.getElementById("qty").value.trim();
 
+    // ✅ Validation
+    if (!srNo || !prescription || !drugName || !schedule || !duration || !qty) {
+        showNotification("⚠️ All Prescription fields are required!");
+        return;
+    }
+
+    // Sr No must be only numbers
+    if (!/^[0-9]+$/.test(srNo)) {
+        showNotification("⚠️ Sr No should contain numbers only.");
+        return;
+    }
+
+    // Drug Type must be only alphabets
+    if (!/^[A-Za-z\s]+$/.test(prescription)) {
+        showNotification("⚠️ Drug Type should contain alphabets only.");
+        return;
+    }
+
+    // Duration must be only numbers
+    if (!/^[0-9]+$/.test(duration)) {
+        showNotification("⚠️ Duration should contain numbers only.");
+        return;
+    }
+
+    // ✅ Create a row object
+    let rowData = { srNo, prescription, drugName, schedule, duration, qty };
+
+    // Get existing data from localStorage
+    let storedData = JSON.parse(localStorage.getItem("prescriptions")) || [];
+
+    // Add new row to stored data
+    storedData.push(rowData);
+
+    // Save updated data to localStorage
+    localStorage.setItem("prescriptions", JSON.stringify(storedData));
+
+    // Append row to table
+    appendRowToTable(rowData);
+
+    // Clear input fields
+    document.getElementById("srNo").value = "";
+    document.getElementById("prescription").value = "";
+    document.getElementById("drugName1").value = "";
+    document.getElementById("schedule").value = "";
+    document.getElementById("duration").value = "";
+    document.getElementById("qty").value = "";
+}
 
 
 

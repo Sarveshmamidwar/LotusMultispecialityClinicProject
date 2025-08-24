@@ -117,7 +117,8 @@
 					         <div class=" row mt-1 p-2 d-flex" style=" display:flex; justify-content: center;align-items: center;">
 					            <div class="col ">
 					                <label class="fw-bold text-success">Sr No. :</label>
-					                <input class="w-100" type="text" id="srNo">
+					                <input class="w-100" type="text" id="srNo" oninput="validateNumber('patientNumber','Numbererror-message')">
+					                <span id="Numbererror-message" style="color: red;"></span>
 					            </div>
 								<div class="col">
 									  <h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug Type</h6>

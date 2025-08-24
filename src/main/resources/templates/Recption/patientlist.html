@@ -63,6 +63,23 @@
             font-size: 16px;
             z-index: 1000;
         }
+         #notification {
+  position: fixed;
+  top: 20px;
+  left: -350px; /* hidden initially */
+  background: #f44336; /* red for error */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: left 0.5s ease-in-out;
+  z-index: 9999;
+}
+/* Add this CSS */
+.input-error {
+  border: 2px solid red !important;
+}
     </style>
 </head>
 <body>
@@ -165,6 +182,14 @@
 
 <!-- Table -->
 <div class="card h-100 mt-3 m-5 main-card p-3">
+<div th:if="${errorMessage}" class="alert alert-danger" role="alert" id="alertBox">
+    <span th:text="${errorMessage}"></span>
+</div>
+<div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert" id="alertBox">
+    <span th:text="${successMessage}"></span>
+</div>
+
+
     <table class="table">
         <thead class="table-light">
             <tr>
@@ -227,29 +252,45 @@
 
 <!-- Modal -->
 <div class="modal fade" id="addreports" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Reports</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <input type="text" name="report" class="form-control mb-4 rounded-pill" id="patientid" >
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0 rounded-4 overflow-hidden">
       
-      <div class="modal-body">
-         <form id="reportForm"  th:action="@{/recption/addReports/0}" method="post" enctype="multipart/form-data">
-         
-         <input type="text" id="patientid" hidden="" name="id">
-    <div >
-        <label>Add Reports :</label>
-        <input type="file" name="report">
-    </div>
-    <div class="mt-5 text-center">
-    
-    <button type="submit" class="btn btn-primary rounded-pill" style="width: 80%;">Upload</button>
-    </div>
-</form>
+      <!-- Header with gradient -->
+      <div class="modal-header text-white" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+        <h5 class="modal-title fw-bold" id="exampleModalLabel">
+          <i class="fa-solid fa-file-medical me-2"></i> Upload Patient Report
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      
+
+      <!-- Top input for Patient ID -->
+
+      <!-- Body with background -->
+      <div class="modal-body text-center" style="background: url('https://img.icons8.com/clouds/500/file.png') no-repeat center 20px; background-size: 100px;">
+
+        <!-- Upload Form -->
+        <form id="reportForm" th:action="@{/recption/addReports/0}" method="post" enctype="multipart/form-data" class="mt-5">
+          
+          <input type="text" id="patientid" hidden name="id">
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Select Report File</label>
+            <input type="file" name="report" class="form-control shadow-sm rounded-pill">
+          </div>
+
+          <!-- Friendly message -->
+          <p class="text-muted fst-italic small mb-4">
+            <i class="fa-solid fa-circle-info me-1"></i> Please upload clear and valid medical reports.
+          </p>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 shadow">
+              <i class="fa-solid fa-upload me-2"></i> Upload Report
+            </button>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 </div>
@@ -307,7 +348,7 @@
 
           <div class="mt-4 d-flex justify-content-end gap-2">
             <button type="button" class="btn btn-secondary btn-hover" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary btn-hover btn-submit">Submit</button>
+            <button type="button" class="btn btn-primary btn-hover btn-submit" th:onclick=addPatient()>Submit</button>
           </div>
 
         </form>
@@ -419,7 +460,7 @@
             <!-- Buttons -->
             <div class="d-flex justify-content-end gap-2 mt-4">
               <button type="button" class="btn btn-secondary btn-close-card" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary btn-submit-card">Submit</button>
+              <button type="button" class="btn btn-primary btn-submit-card" onclick="addAppointmentReception()">Submit</button>
             </div>
             
           </form>
@@ -438,6 +479,8 @@
   </div>
 </div>
 
+
+<div id="notification"></div>
 <script type="text/javascript">
   function addfiles(patientid){
 	  document.getElementById("patientid").value = patientid;
@@ -465,10 +508,87 @@
 		    
 		}
 
+	 
+	 function addPatient(event) {
+		    event?.preventDefault();
+
+		    // Get input elements
+		    let fullnameEl = document.getElementById("patientName");
+		    let emailEl    = document.getElementById("patientEmail");
+		    let phoneEl    = document.getElementById("patientNumber");
+		    let maleEl     = document.getElementById("malePatient");
+		    let femaleEl   = document.getElementById("femalePatient");
+		    let birthEl    = document.getElementById("birthDate");
+		    let addressEl  = document.getElementById("patientAddress");
+
+		    // Remove old error styles
+		    [fullnameEl, emailEl, phoneEl, birthEl, addressEl]
+		        .forEach(el => el.classList.remove("input-error"));
+
+		    let fullname = fullnameEl.value.trim();
+		    let email    = emailEl.value.trim();
+		    let phone    = phoneEl.value.trim();
+		    let gender   = maleEl.checked ? "MALE" : (femaleEl.checked ? "FEMALE" : "");
+		    let birth    = birthEl.value.trim();
+		    let address  = addressEl.value.trim();
+
+		    // ✅ Validation
+		    let hasError = false;
+
+		    if (!fullname) { fullnameEl.classList.add("input-error"); hasError = true; }
+		    if (!email)    { emailEl.classList.add("input-error"); hasError = true; }
+		    if (!phone)    { phoneEl.classList.add("input-error"); hasError = true; }
+		    if (!gender)   { hasError = true; }
+		    if (!birth)    { birthEl.classList.add("input-error"); hasError = true; }
+		    if (!address)  { addressEl.classList.add("input-error"); hasError = true; }
+
+		    if (hasError) {
+		        showNotification("⚠️ All required fields must be filled!");
+		        return;
+		    }
+
+		    if (!/^[A-Za-z\s]+$/.test(fullname)) {
+		        fullnameEl.classList.add("input-error");
+		        showNotification("⚠️ Full Name should contain alphabets only.");
+		        return;
+		    }
+		    if (!/^[0-9]{10,15}$/.test(phone)) {
+		        phoneEl.classList.add("input-error");
+		        showNotification("⚠️ Please enter a valid phone number (10–15 digits).");
+		        return;
+		    }
+		    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+		        emailEl.classList.add("input-error");
+		        showNotification("⚠️ Please enter a valid email address.");
+		        return;
+		    }
+
+		    // ✅ Store locally (optional, like appointment)
+		    let patientData = { fullname, email, phone, gender, birth, address };
+		    let storedPatients = JSON.parse(localStorage.getItem("patients")) || [];
+		    storedPatients.push(patientData);
+		    localStorage.setItem("patients", JSON.stringify(storedPatients));
+
+		    // ✅ If everything is valid → submit form
+		    document.querySelector("#exampleModal form").submit();
+		}
+
+		// Clear errors when modal closes
+		document.getElementById("exampleModal").addEventListener("hidden.bs.modal", function () {
+		    document.querySelectorAll("#exampleModal input, #exampleModal select, #exampleModal textarea")
+		        .forEach(el => el.classList.remove("input-error"));
+		});
 </script>
 <script th:src="@{/js/Reception-Search.js}"></script>
-
-
+<script th:src="@{/js/Reception-BookAppointment.js}"></script>
+<script>
+  setTimeout(function () {
+    let alertBox = document.getElementById("alertBox");
+    if (alertBox) {
+      alertBox.style.display = "none";
+    }
+  }, 3000); // hides after 5 seconds
+</script>
 </body>
 
 </html>

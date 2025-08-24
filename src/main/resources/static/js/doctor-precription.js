@@ -17,19 +17,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
    function addPrescription() {
        // Get input values
-       let srNo = document.getElementById("srNo").value;
-       let prescription = document.getElementById("prescription").value;
-       let drugName = document.getElementById("drugName1").value;
-       let schedule = document.getElementById("schedule").value;
-       let duration = document.getElementById("duration").value;
-       let qty = document.getElementById("qty").value;
+       let srNo = document.getElementById("srNo").value.trim();
+       let prescription = document.getElementById("prescription").value.trim();
+       let drugName = document.getElementById("drugName1").value.trim();
+       let schedule = document.getElementById("schedule").value.trim();
+       let duration = document.getElementById("duration").value.trim();
+       let qty = document.getElementById("qty").value.trim();
 
+       // ✅ Validation
        if (!srNo || !prescription || !drugName || !schedule || !duration || !qty) {
-           showNotification("⚠️ All Precription fields are required!");
+           showNotification("⚠️ All Prescription fields are required!");
            return;
        }
 
-       // Create a row object
+       // Sr No must be only numbers
+       if (!/^[0-9]+$/.test(srNo)) {
+           showNotification("⚠️ Sr No should contain numbers only.");
+           return;
+       }
+
+       // Drug Type must be only alphabets
+       if (!/^[A-Za-z\s]+$/.test(prescription)) {
+           showNotification("⚠️ Drug Type should contain alphabets only.");
+           return;
+       }
+
+       // Duration must be only numbers
+       if (!/^[0-9]+$/.test(duration)) {
+           showNotification("⚠️ Duration should contain numbers only.");
+           return;
+       }
+
+       // ✅ Create a row object
        let rowData = { srNo, prescription, drugName, schedule, duration, qty };
 
        // Get existing data from localStorage
@@ -52,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
        document.getElementById("duration").value = "";
        document.getElementById("qty").value = "";
    }
+
 
 
    function appendRowToTable(rowData) {
@@ -130,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
        const tableRows = document.querySelectorAll('#prescriptionTableBody tr');
        const patientId = document.getElementById("patientId").innerText.trim();
 
-       // Validation
+       // ✅ Required field validation
        if (!name) { showNotification("⚠️ Patient Name is required"); return; }
        if (!age) { showNotification("⚠️ Age is required"); return; }
        if (!dob) { showNotification("⚠️ Date of Birth is required"); return; }
@@ -139,6 +159,25 @@ document.addEventListener("DOMContentLoaded", function () {
        if (!address) { showNotification("⚠️ Address is required"); return; }
        if (tableRows.length === 0) { showNotification("⚠️ Add at least one prescription row"); return; }
 
+       // ✅ Regex validation
+       if (!/^[A-Za-z\s]+$/.test(name)) {
+           showNotification("⚠️ Patient Name should contain alphabets only.");
+           return;
+       }
+       if (!/^[0-9]+$/.test(age)) {
+           showNotification("⚠️ Age should contain numbers only.");
+           return;
+       }
+       if (!/^[A-Za-z\s]+$/.test(gender)) {
+           showNotification("⚠️ Gender should contain alphabets only.");
+           return;
+       }
+       if (!/^[0-9]+$/.test(weight)) {
+           showNotification("⚠️ Weight should contain numbers only.");
+           return;
+       }
+
+       // 🔽 Original code unchanged from here 🔽
        const element = document.getElementById('pdfContent');
        const drSection = document.querySelector('.drsection');
        const precard = document.querySelector('.precard');
@@ -207,6 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
            });
        });
    }
+
 
 
 
@@ -301,3 +341,53 @@ document.addEventListener("DOMContentLoaded", function () {
 	   let duration = parseInt(durationInput.value) || 0;
 	   qtyInput.value = schedule * duration;
 	 }
+	 
+	 function validateSrNo() {
+	     const srNo = document.getElementById("srNo").value.trim();
+	     const errorMsg = document.getElementById("srNoError");
+
+	     if (srNo === "") {
+	         errorMsg.textContent = "";
+	         return;
+	     }
+
+	     if (!/^\d+$/.test(srNo)) {
+	         errorMsg.textContent = "⚠️ Please enter numbers only.";
+	     } else {
+	         errorMsg.textContent = "";
+	     }
+	 }
+
+	 function validateDrugType(inputId, errorId) {
+	     const inputValue = document.getElementById(inputId).value.trim();
+	     const errorMsg = document.getElementById(errorId);
+
+	     if (inputValue === "") {
+	         errorMsg.textContent = "";
+	         return;
+	     }
+
+	     if (!/^[A-Za-z\s]+$/.test(inputValue)) {
+	         errorMsg.textContent = "⚠️ Please enter alphabets only.";
+	     } else {
+	         errorMsg.textContent = "";
+	     }
+	 }
+
+	 function validateNumber(inputId,errorId) {
+	     const drugType = document.getElementById(inputId).value.trim();
+	     const errorMsg = document.getElementById(errorId);
+
+	     if (drugType === "") {
+	         errorMsg.textContent = "";
+	         return;
+	     }
+
+	     // Allow only numbers
+	     if (!/^[0-9]+$/.test(drugType)) {
+	         errorMsg.textContent = "⚠️ Please enter numbers only.";
+	     } else {
+	         errorMsg.textContent = "";
+	     }
+	 }
+

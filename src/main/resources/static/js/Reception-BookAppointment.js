@@ -1,15 +1,4 @@
-function appoIDPrecreption(name, age, address, gender) {
-    document.getElementById("patientName").value = name;
-    document.getElementById("patientAge").value = age;
-    document.getElementById("patientAddress").value = address;
-    document.getElementById("patientGender").value = gender;
-
-    // Auto-fill today's date
-    let today = new Date().toISOString().split('T')[0];
-    document.getElementById("patientDate").value = today;
-}
-
-function addAppointment(event) {
+function addAppointmentReception(event) {
     event?.preventDefault();
 
     // Get input elements
@@ -76,6 +65,7 @@ function addAppointment(event) {
     // ✅ If everything is valid → submit form
     document.getElementById("appointmentForm").submit();
 }
+
 document.getElementById("AppointmentForm").addEventListener("hidden.bs.modal", function () {
     document.querySelectorAll("#appointmentForm input, #appointmentForm select, #appointmentForm textarea")
         .forEach(el => el.classList.remove("input-error"));
@@ -92,36 +82,36 @@ function showNotification(message) {
       setTimeout(() => {
           notification.style.left = "-350px";
       }, 3000);
-  }
-  
-  function validateDrugType(inputId, errorId) {
-  	     const inputValue = document.getElementById(inputId).value.trim();
-  	     const errorMsg = document.getElementById(errorId);
+}
 
-  	     if (inputValue === "") {
-  	         errorMsg.textContent = "";
-  	         return;
-  	     }
+function validateDrugType(inputId, errorId) {
+    const inputValue = document.getElementById(inputId).value.trim();
+    const errorMsg = document.getElementById(errorId);
 
-  	     if (!/^[A-Za-z\s]+$/.test(inputValue)) {
-  	         errorMsg.textContent = "⚠️ Please enter alphabets only.";
-  	     } else {
-  	         errorMsg.textContent = "";
-  	     }
-  }
-  function validateNumber(inputId,errorId) {
-  	     const drugType = document.getElementById(inputId).value.trim();
-  	     const errorMsg = document.getElementById(errorId);
+    if (inputValue === "") {
+        errorMsg.textContent = "";
+        return;
+    }
 
-  	     if (drugType === "") {
-  	         errorMsg.textContent = "";
-  	         return;
-  	     }
+    if (!/^[A-Za-z\s]+$/.test(inputValue)) {
+        errorMsg.textContent = "⚠️ Please enter alphabets only.";
+    } else {
+        errorMsg.textContent = "";
+    }
+}
+function validateNumber(inputId,errorId) {
+    const drugType = document.getElementById(inputId).value.trim();
+    const errorMsg = document.getElementById(errorId);
 
-  	     // Allow only numbers
-  	     if (!/^[0-9]+$/.test(drugType)) {
-  	         errorMsg.textContent = "⚠️ Please enter numbers only.";
-  	     } else {
-  	         errorMsg.textContent = "";
-  	     }
-  }
+    if (drugType === "") {
+        errorMsg.textContent = "";
+        return;
+    }
+
+    // Allow only numbers
+    if (!/^[0-9]+$/.test(drugType)) {
+        errorMsg.textContent = "⚠️ Please enter numbers only.";
+    } else {
+        errorMsg.textContent = "";
+    }
+}

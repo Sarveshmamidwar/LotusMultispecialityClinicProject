@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Hospital.entity.Doctors;
 import com.Hospital.entity.MedicalBills;
@@ -178,6 +180,8 @@ int findtotalcount = appointmentrepository.findtotalcount();
 	@PostMapping("/BookAppointment")
 	public String postMethodName(@ModelAttribute appointmentform appointmentform,@RequestParam(value = "patientId", required = false, defaultValue = "0") int patientId) {
 	    try {
+	    	
+	    	List<appointmentform> todayAppointments = appointmentrepository.findTodayAppointments();
 	        appointmentform.setAppointmentStatus("Pending");
 	        appointmentform.setPaymentStatus("Pending");
 	        appointmentform.setPatientid(patientId);
@@ -334,27 +338,43 @@ int findtotalcount = appointmentrepository.findtotalcount();
     }
     
     @PostMapping("/AddPatient")
-    public String AddPatient(@ModelAttribute Patient patient, Principal principal) {
+    public String AddPatient(@ModelAttribute Patient patient, Principal principal, Model model,RedirectAttributes redirectAttributes) {
         try {
-            Doctors user = doctorsRepositories.findByEmail(principal.getName());
+            Doctors loggedInDoctor = doctorsRepositories.findByEmail(principal.getName());
+            if (loggedInDoctor == null) {
+                throw new RuntimeException("Logged-in doctor not found.");
+            }
+
+            // 🔹 Check if patient email already exists
+            Doctors existingPatient = doctorsRepositories.findByEmail(patient.getEmail());
+            if (existingPatient != null) {
+                redirectAttributes.addFlashAttribute("errorMessage", "This email id is already registered as a patient.");
+                return "redirect:/recption/patientlist";
+            }
+
             String encodedPassword = bCryptPasswordEncoder.encode(patient.getBirthdate());
 
-            Doctors doctors = new Doctors();
-            doctors.setName(patient.getName());
-            doctors.setEmail(patient.getEmail());
-            doctors.setPassword(encodedPassword);
-            doctors.setRole("PATIENT");
-            doctors.setMobileNumber(patient.getNumber());
-            doctors.setAddress(patient.getAddress());
-            doctors.setDoctorId(user.getId());
+            Doctors newPatient = new Doctors();
+            newPatient.setName(patient.getName());
+            newPatient.setEmail(patient.getEmail());
+            newPatient.setPassword(encodedPassword);
+            newPatient.setRole("PATIENT");
+            newPatient.setMobileNumber(patient.getNumber());
+            newPatient.setAddress(patient.getAddress());
+            newPatient.setDoctorId(loggedInDoctor.getId());
+            doctorsRepositories.save(newPatient);
 
-            doctorsRepositories.save(doctors);
             patientrepository.save(patient);
-            
+            redirectAttributes.addFlashAttribute("successMessage", "Patient added successfully!");
+            return "redirect:/recption/patientlist";
+        } catch (DataIntegrityViolationException e) {
+            e.printStackTrace();
+            model.addAttribute("errorMessage", "Database constraint error.");
             return "redirect:/recption/patientlist";
         } catch (Exception e) {
-            e.printStackTrace(); // Log the error for debugging
-            return "error"; // You can return an error page or message
+            e.printStackTrace();
+            model.addAttribute("errorMessage", "Something went wrong, please try again.");
+            return "redirect:/recption/patientlist";
         }
     }
 

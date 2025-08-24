@@ -4,36 +4,70 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function addPrescription() {
-    let srNo = document.getElementById("srNo").value;
-    let prescription = document.getElementById("prescription").value;
-    let drugName = document.getElementById("drugName1").value;
-    let schedule = document.getElementById("price").value;
-    let qty = document.getElementById("qty").value;
+    // Get input values
+    let srNo = document.getElementById("srNo").value.trim();
+    let prescription = document.getElementById("prescription").value.trim();
+    let drugName = document.getElementById("drugName1").value.trim();
+    let schedule = document.getElementById("price").value.trim();
+    let qty = document.getElementById("qty").value.trim();
 
+    // ✅ Validation
     if (!srNo || !prescription || !drugName || !schedule || !qty) {
-        alert("Please fill all fields before adding.");
+        showNotification("⚠️ All Prescription fields are required!");
         return;
     }
 
+    // Sr No must be only numbers
+    if (!/^[0-9]+$/.test(srNo)) {
+        showNotification("⚠️ Sr No should contain numbers only.");
+        return;
+    }
+
+    // Drug Type must be only alphabets
+    if (!/^[A-Za-z\s]+$/.test(prescription)) {
+        showNotification("⚠️ Drug Type should contain alphabets only.");
+        return;
+    }
+
+    // Price must be only numbers (or decimal)
+    if (!/^[0-9]+(\.[0-9]+)?$/.test(schedule)) {
+        showNotification("⚠️ Schedule should be a valid number.");
+        return;
+    }
+
+    // Qty must be only numbers
+    if (!/^[0-9]+$/.test(qty)) {
+        showNotification("⚠️ Quantity should contain numbers only.");
+        return;
+    }
+
+    // ✅ Calculate total
     const total = qty * schedule;
-    console.log("total", total);
 
-    let rowData = { srNo, prescription, drugName, schedule, total, qty };
+    // ✅ Create row object
+    let rowData = { srNo, prescription, drugName, schedule, qty, total };
 
+    // Get existing data from localStorage
     let storedData = JSON.parse(localStorage.getItem("Invoiceprescriptions")) || [];
+
+    // Add new row
     storedData.push(rowData);
+
+    // Save updated data
     localStorage.setItem("Invoiceprescriptions", JSON.stringify(storedData));
 
+    // Append row to table
     appendRowToTable(rowData);
-    updateTotalAmount(); // Update total after adding a row
+    updateTotalAmount(); // Update total after adding row
 
-    // Clear input fields after adding
+    // Clear fields
     document.getElementById("srNo").value = "";
     document.getElementById("prescription").value = "";
     document.getElementById("drugName1").value = "";
     document.getElementById("price").value = "";
     document.getElementById("qty").value = "";
 }
+
 
 function appendRowToTable(rowData) {
     let tableBody = document.getElementById("InvoiceprescriptionTableBody");

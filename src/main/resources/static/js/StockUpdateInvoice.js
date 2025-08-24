@@ -7,40 +7,74 @@ document.addEventListener("DOMContentLoaded", function () {
 
 				    let formattedDate = `${year}-${month}-${day}`; // Format: YYYY-MM-DD
 				    document.getElementById("todate").value = formattedDate;
-				});
+});
 
 
 function addStockMedice() {
-    let srNo = document.getElementById("srNo").value;
-    let prescription = document.getElementById("prescription").value;
-    let drugName = document.getElementById("drugName1").value;
-    let schedule = document.getElementById("price").value;
-    let qty = document.getElementById("qty").value;
+    // Get input values
+    let srNo = document.getElementById("srNo").value.trim();
+    let prescription = document.getElementById("prescription").value.trim();
+    let drugName = document.getElementById("drugName1").value.trim();
+    let schedule = document.getElementById("price").value.trim();
+    let qty = document.getElementById("qty").value.trim();
 
+    // ✅ Validation
     if (!srNo || !prescription || !drugName || !schedule || !qty) {
-        alert("Please fill all fields before adding.");
+        showNotification("⚠️ All Stock fields are required!");
         return;
     }
 
+    // Sr No must be only numbers
+    if (!/^[0-9]+$/.test(srNo)) {
+        showNotification("⚠️ Sr No should contain numbers only.");
+        return;
+    }
+
+    // Drug Type must be only alphabets
+    if (!/^[A-Za-z\s]+$/.test(prescription)) {
+        showNotification("⚠️ Drug Type should contain alphabets only.");
+        return;
+    }
+
+    // Price must be only numbers (or decimal)
+    if (!/^[0-9]+(\.[0-9]+)?$/.test(schedule)) {
+        showNotification("⚠️ Price should be a valid number.");
+        return;
+    }
+
+    // Qty must be only numbers
+    if (!/^[0-9]+$/.test(qty)) {
+        showNotification("⚠️ Quantity should contain numbers only.");
+        return;
+    }
+
+    // ✅ Calculate total
     const total = qty * schedule;
-    console.log("total", total);
 
-    let rowData = { srNo, prescription, drugName, schedule, total, qty };
+    // ✅ Create a row object
+    let rowData = { srNo, prescription, drugName, schedule, qty, total };
 
+    // Get existing data from localStorage
     let storedData = JSON.parse(localStorage.getItem("Invoiceprescriptions")) || [];
+
+    // Add new row
     storedData.push(rowData);
+
+    // Save updated data to localStorage
     localStorage.setItem("Invoiceprescriptions", JSON.stringify(storedData));
 
+    // Append row to table
     appendRowToTable(rowData);
     updateTotalAmount(); // Update total after adding a row
 
-    // Clear input fields after adding
+    // Clear input fields
     document.getElementById("srNo").value = "";
     document.getElementById("prescription").value = "";
     document.getElementById("drugName1").value = "";
     document.getElementById("price").value = "";
     document.getElementById("qty").value = "";
 }
+
 
 function appendRowToTable(rowData) {
     let tableBody = document.getElementById("InvoiceprescriptionTableBody");
@@ -405,3 +439,49 @@ function updateStockFromTablerep() {
     localStorage.removeItem("Invoiceprescriptions");
 }
 
+function validateSrNo() {
+	     const srNo = document.getElementById("srNo").value.trim();
+	     const errorMsg = document.getElementById("srNoError");
+
+	     if (srNo === "") {
+	         errorMsg.textContent = "";
+	         return;
+	     }
+
+	     if (!/^\d+$/.test(srNo)) {
+	         errorMsg.textContent = "⚠️ Please enter numbers only.";
+	     } else {
+	         errorMsg.textContent = "";
+	     }
+}
+function validateDrugType(inputId, errorId) {
+	     const inputValue = document.getElementById(inputId).value.trim();
+	     const errorMsg = document.getElementById(errorId);
+
+	     if (inputValue === "") {
+	         errorMsg.textContent = "";
+	         return;
+	     }
+
+	     if (!/^[A-Za-z\s]+$/.test(inputValue)) {
+	         errorMsg.textContent = "⚠️ Please enter alphabets only.";
+	     } else {
+	         errorMsg.textContent = "";
+	     }
+}
+function validateNumber(inputId,errorId) {
+	     const drugType = document.getElementById(inputId).value.trim();
+	     const errorMsg = document.getElementById(errorId);
+
+	     if (drugType === "") {
+	         errorMsg.textContent = "";
+	         return;
+	     }
+
+	     // Allow only numbers
+	     if (!/^[0-9]+$/.test(drugType)) {
+	         errorMsg.textContent = "⚠️ Please enter numbers only.";
+	     } else {
+	         errorMsg.textContent = "";
+	     }
+}

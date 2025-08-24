@@ -323,11 +323,13 @@ max-height: 300px;
       <div class="row mt-1 p-2 d-flex justify-content-center align-items-center">
         <div class="col">
           <label class="fw-bold text-success">Sr No. :</label>
-          <input class="w-100 form-control input-animate" type="text" id="srNo">
+          <input class="w-100 form-control input-animate" type="text" id="srNo" oninput="validateSrNo()">
+          <small id="srNoError" class="text-danger"></small>
         </div>
         <div class="col">
           <h6 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Drug Type</h6>
-          <input class="form-control input-animate" type="text" id="prescription">
+          <input class="form-control input-animate" type="text" id="prescription" oninput="validateDrugType('prescription','drugTypeError')">
+          <small id="drugTypeError" class="text-danger"></small>
         </div>
       </div>
 
@@ -357,7 +359,8 @@ max-height: 300px;
 </div>
         <div class="col">
           <label>Duration :</label>
-          <input class="w-100 form-control input-animate" type="text" id="duration">
+          <input class="w-100 form-control input-animate" type="text" id="duration" oninput="validateNumber('duration','drugDurationError')">
+          <small id="drugDurationError" class="text-danger"></small>
         </div>
         <div class="col">
           <label>QTY :</label>
@@ -429,11 +432,13 @@ max-height: 300px;
     <div class="col-7 d-flex ">
       <label class="">Patient Name : </label>
       <input id="patientName" class="ms-3" type="text" th:value="${patientname}" placeholder="Enter Patient Name"
-        style="border: none; width: 70%">
+        style="border: none; width: 70%" oninput="validateDrugType('patientName','patientNameError')">
+        <small id="patientNameError" class="text-danger"></small>
     </div>
     <div class="col-2 d-flex align-items-center">
       <label class="me-2">Age: </label>
-      <input id="patientAge" class="w-100" type="text" placeholder="Enter Age" style="border: none;">
+      <input id="patientAge" class="w-100" type="text" placeholder="Enter Age" style="border: none;" oninput="validateNumber('patientAge','patientAgeError')">
+      <small id="patientAgeError" class="text-danger"></small>
     </div>
     <div class="col-3 d-flex align-items-center">
       <label class="me-2">Date:</label>
@@ -449,11 +454,14 @@ max-height: 300px;
     </div>
     <div class="col-4">
       <label>Gender : </label>
-      <input id="patientGender" class="" type="text" placeholder="Enter Gender" th:value="${patientgender}" style="border: none;">
+      <input id="patientGender" class="" type="text" placeholder="Enter Gender" th:value="${patientgender}" style="border: none;"
+      oninput="validateDrugType('patientGender','patientGenderError')">
+      <small id="patientGenderError" class="text-danger"></small>
     </div>
     <div class="col-4">
       <label>WT(kg) : </label>
-      <input id="patientWeight" class="" type="text" placeholder="Enter Weight" style="border: none; width: 70%">
+      <input id="patientWeight" class="" type="text" placeholder="Enter Weight" style="border: none; width: 70%" oninput="validateNumber('patientWeight','patientWeightError')">
+      <small id="patientWeightError" class="text-danger"></small>
     </div>
   </div>
 
@@ -461,7 +469,8 @@ max-height: 300px;
     <label class="col-auto">Address :</label>
     <div class="col">
       <input id="patientAddress" type="text" class="form-control"
-        placeholder="Enter Address" style="border: none;">
+        placeholder="Enter Address" style="border: none;"oninput="validateDrugType('patientAddress','patientAddressError')">
+        <small id="patientAddressError" class="text-danger"></small>
     </div>
   </div>
 </div>
